@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
+    <changeset id="004_xp" author="dave">
+        <query>CREATE (n:Model { name: 'Extreme Programming' })</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Test-Driven Development'})-[:REALISED_BY]->(n)</query> 
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Pair Programming'})-[:REALISED_BY]->(n)</query> 
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Continuous Integration'})-[:REALISED_BY]->(n)</query> 
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Coding Standards'})-[:REALISED_BY]->(n)</query> 
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Collective Code Ownership'})-[:REALISED_BY]->(n)</query>
+    </changeset>
+</changelog>

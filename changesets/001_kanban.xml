@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
+    <changeset id="001_kanban" author="dave">
+        <query>CREATE (n:Model { name: 'Kanban' })</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML0:MaturityLevel { name: 'Oblivious', code: 'ML0'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML1:MaturityLevel { name: 'Emerging', code: 'ML1'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML2:MaturityLevel { name: 'Defined', code: 'ML2'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML3:MaturityLevel { name: 'Managed', code: 'ML3'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML4:MaturityLevel { name: 'Quantitatively Managed', code: 'ML4'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML5:MaturityLevel { name: 'Optimizing', code: 'ML5'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (ML6:MaturityLevel { name: 'Congruent', code: 'ML6'})&lt;-[:LEVEL]-(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (m:Practice { name: 'Visualisation', code: 'VZ' })-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (LW:Practice {name: 'Limit Work-in-Progress', code: 'LW'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (MF:Practice {name: 'Manage Flow', code: 'MF'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (XP:Practice {name: 'Explicit Policies', code: 'XP'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (FL:Practice {name: 'Implement Feedback Loops', code: 'FL'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Kanban') CREATE (IE:Practice {name: 'Improve Collaboratively, Evolve Experimentally', code: 'IE'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (ML0:MaturityLevel) WHERE (ML0.code = 'ML0') CREATE (VZ0_1:Practice {name: 'Visualize an individual’s work by means of a personal kanban board.', code: 'VZ0.1'})-[:APPLIED_AT]->(ML0)</query>
+        <query>MATCH (ML0:MaturityLevel) WHERE (ML0.code = 'ML0') CREATE (VZ0_2:Practice {name: 'Visualize basic work item related information on a ticket.', code: 'VZ0.2'})-[:APPLIED_AT]->(ML0)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (VZ1_1:Practice {name: 'Visualize work for several individuals by means of an aggregated personal kanban board.', code: 'VZ1.1'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (VZ1_2:Practice {name: 'Visualize the work carried out by a team by means of a team kanban board.', code: 'VZ1.2'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (VZ1_3:Practice {name: 'Use avatars to visualize an individual’s workload.', code: 'VZ1.3'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (VZ1_4:Practice {name: 'Visualize initial policies.', code: 'VZ1.4'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (VZ1_5:Practice {name: 'Visualize teamwork by means of an emergent workflow kanban board.', code: 'VZ1.5'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_1:Practice {name: 'Visualize work items by means of a delivery kanban board with per- person WIP limits.', code: 'VZ2.1'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_2:Practice {name: 'Visualize work types by means of card colors or board rows.', code: 'VZ2.2'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_3:Practice {name: 'Visualize blocked work items.', code: 'VZ2.3'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_4:Practice {name: 'Visualize development of options by means of a discovery kanban board.', code: 'VZ2.4'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_5:Practice {name: 'Visualize individual workload on a discovery kanban board by means of per-person WIP limits, potentially implemented using avatars.', code: 'VZ2.5'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_6:Practice {name: 'Visualize basic policies.', code: 'VZ2.6'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_7:Practice {name: 'Ticket design: Visualize concurrent or unordered activities with checkboxes.', code: 'VZ2.7'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_8:Practice {name: 'Ticket design: Visualize concurrent activities performed by specialist teams using partial rows.', code: 'VZ2.8'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_9:Practice {name: 'Board design: Visualize sequential activities where no dependency or preferred sequence exists using rows or vertical spaces.', code: 'VZ2.9'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_10:Practice {name: 'Visualize defects and other rework types.', code: 'VZ2.10'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_11:Practice {name: 'Use CONWIP with an emergent workflow delivery kanban board to provide workflow-level relief from overburdening and basic mechanics of a pull system, with separate replenishment and delivery cadences.', code: 'VZ2.11'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_12:Practice {name: 'Visualize workflow by means of enhanced discovery/delivery boards.', code: 'VZ2.12'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (VZ2_13:Practice {name: 'Visualize project progress on a portfolio kanban board.', code: 'VZ2.13'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_1:Practice {name: 'Visualize “ready to commit” status, also known as “ready to pull.”', code: 'VZ3.1'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_2:Practice {name: 'Visualize “ready to pull” criteria, also known as “definition of ready,” or “entry criteria.”', code: 'VZ3.2'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_3:Practice {name: 'Visualize workflow and teamwork items by means of aggregated team kanban board.', code: 'VZ3.3'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_4:Practice {name: 'Visualize project work items on a two-tiered project kanban board.', code: 'VZ3.4'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_5:Practice {name: 'Visualize parent–child and peer–peer dependencies.', code: 'VZ3.5'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_6:Practice {name: 'Use a parking lot to visualize dependent work requests of another service or system currently waiting or blocked.', code: 'VZ3.6'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_7:Practice {name: 'Visualize upstream options by means of an upstream/discovery kanban board.', code: 'VZ3.7'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_8:Practice {name: 'Visualize discarded options using a bin on an upstream/discovery kanban board.', code: 'VZ3.8'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_9:Practice {name: 'Visualize replenishment signals.', code: 'VZ3.9'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_10:Practice {name: 'Visualize pull signals.', code: 'VZ3.10'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_11:Practice {name: 'Visualize pull criteria (also known as “pull policies,” “definition of ready,” or “exit criteria”).', code: 'VZ3.11'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_12:Practice {name: 'Visualize available capacity.', code: 'VZ3.12'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_13:Practice {name: 'Visualize work item aging.', code: 'VZ3.13'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_14:Practice {name: 'Visualize target date or SLA.', code: 'VZ3.14'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_15:Practice {name: 'Visualize failure demand versus value demand.', code: 'VZ3.15'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_16:Practice {name: 'Visualize aborted work.', code: 'VZ3.16'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_17:Practice {name: 'Visualize class of service using ticket colors, board rows, or ticket decorators.', code: 'VZ3.17'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (VZ3_18:Practice {name: 'Use Earned Value portfolio kanban board to visualize project progress and schedule or budget risk.', code: 'VZ3.18'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_1:Practice {name: 'Visualize local cycle time.', code: 'VZ4.1'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_2:Practice {name: 'Use ticket decorators to indicate risks.', code: 'VZ4.2'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_3:Practice {name: 'Visualize risk classes with different swim lanes', code: 'VZ4.3'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_4:Practice {name: 'Visualize split-and-merge workflows.', code: 'VZ4.4'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_5:Practice {name: 'Visualize WIP limits on dependencies parking lot.', code: 'VZ4.5'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_6:Practice {name: 'Visualize waiting time in dependencies parking lot.', code: 'VZ4.6'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (VZ4_7:Practice {name: 'Visualize SLA exceeded in dependencies parking lot.', code: 'VZ4.7'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML5:MaturityLevel) WHERE (ML5.code = 'ML5') CREATE (VZ5_1:Practice {name: 'Visualize fixed teams and floating workers (shared resources) across aggregated services.', code: 'VZ5.1'})-[:APPLIED_AT]->(ML5)</query>
+        <query>MATCH (ML0:MaturityLevel) WHERE (ML0.code = 'ML0') CREATE (LW0_1:Practice {name: 'Establish personal WIP limits.', code: 'LW0.1'})-[:APPLIED_AT]->(ML0)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (LW1_1:Practice {name: 'Establish per-person WIP limits.', code: 'LW1.1'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (LW1_2:Practice {name: 'Establish team WIP limits.', code: 'LW1.2'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (LW2_1:Practice {name: 'Establish activity based WIP limits.', code: 'LW2.1'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (LW2_2:Practice {name: 'Establish CONWIP limits on emergent workflow.', code: 'LW2.2'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (LW3_1:Practice {name: 'Use an order point (min limit) for upstream replenishment.', code: 'LW3.1'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (LW3_2:Practice {name: 'Use a max limit to define capacity.', code: 'LW3.2'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (LW3_3:Practice {name: 'Bracket WIP limits for different states.', code: 'LW3.3'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (LW4_1:Practice {name: 'Limit WIP on dependency parking lot.', code: 'LW4.1'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML0:MaturityLevel) WHERE (ML0.code = 'ML0') CREATE (MF0_1:Practice {name: 'Define work types based on nature of tasks.', code: 'MF0.1'})-[:APPLIED_AT]->(ML0)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (MF2_1:Practice {name: 'Define work types based on customer requests.', code: 'MF2.1'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (MF2_2:Practice {name: 'Map upstream and downstream flow.', code: 'MF2.2'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (MF2_3:Practice {name: 'Manage blocking issues.', code: 'MF2.3'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (MF2_4:Practice {name: 'Manage defects and other rework types.', code: 'MF2.4'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_1:Practice {name: 'Organize around the knowledge discovery process.', code: 'MF3.1'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_2:Practice {name: 'Defer commitment (decide at the “last responsible moment.”)', code: 'MF3.2'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_3:Practice {name: 'Use cumulative flow diagram to monitor queues.', code: 'MF3.3'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_4:Practice {name: 'Use Little’s Law.', code: 'MF3.4'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_5:Practice {name: 'Gradually eliminate infinite buffers.', code: 'MF3.5'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_6:Practice {name: 'Report rudimentary flow efficiency to understand the value of reducing buffers and the leverage of eliminating sources of delay.', code: 'MF3.6'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_7:Practice {name: 'Actively close upstream requests that meet the abandonment', code: 'MF3.7'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_8:Practice {name: 'Develop triage discipline.', code: 'MF3.8'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_9:Practice {name: 'Manage dependencies.', code: 'MF3.9'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_10:Practice {name: 'Analyze and report aborted work items.', code: 'MF3.10'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_11:Practice {name: 'Use classes of service to affect selection.', code: 'MF3.11'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_12:Practice {name: 'Forecast delivery.', code: 'MF3.12'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (MF3_13:Practice {name: 'Apply qualitative Real Options Thinking.', code: 'MF3.13'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_1:Practice {name: 'Collect and report detailed flow efficiency analysis.', code: 'MF4.1'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_2:Practice {name: 'Use explicit buffers to smooth flow.', code: 'MF4.2'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_3:Practice {name: 'Use two-phase commit for delivery commitment.', code: 'MF4.3'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_4:Practice {name: 'Analyze to anticipate dependencies.', code: 'MF4.4'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_5:Practice {name: 'Establish refutable versus irrefutable demand.', code: 'MF4.5'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_6:Practice {name: 'Determine reference class data set.', code: 'MF4.6'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_7:Practice {name: 'Forecast using reference classes, Monte Carlo simulations, and other models.', code: 'MF4.7'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_8:Practice {name: 'Allocate capacity across swim lanes.', code: 'MF4.8'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_9:Practice {name: 'Allocate capacity by color of work item.', code: 'MF4.9'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_10:Practice {name: 'Make appropriate use of forecasting.', code: 'MF4.10'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_11:Practice {name: 'Assess forecasting models for robustness.', code: 'MF4.11'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (MF4_12:Practice {name: 'Use statistical methods for decision making.', code: 'MF4.12'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML5:MaturityLevel) WHERE (ML5.code = 'ML5') CREATE (MF5_1:Practice {name: 'Utilize hybrid fixed service teams together with a flexible labor pool.', code: 'MF5.1'})-[:APPLIED_AT]->(ML5)</query>
+        <query>MATCH (ML0:MaturityLevel) WHERE (ML0.code = 'ML0') CREATE (XP0_1:Practice {name: 'Define personal kanban policies.', code: 'XP0.1'})-[:APPLIED_AT]->(ML0)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (XP1_1:Practice {name: 'Define initial policies.', code: 'XP1.1'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (XP2_1:Practice {name: 'Define initial services.', code: 'XP2.1'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (XP2_2:Practice {name: 'Elaborate further policies.', code: 'XP2.2'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (XP2_3:Practice {name: 'Define blocking issue escalation policies.', code: 'XP2.3'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (XP2_4:Practice {name: 'Define policies for managing defects and other rework types.', code: 'XP2.4'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_1:Practice {name: 'Establish explicit purpose of metrics.', code: 'XP3.1'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_2:Practice {name: 'Establish initial request acceptance policies.', code: 'XP3.2'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_3:Practice {name: 'Define work request abandonment policies.', code: 'XP3.3'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_4:Practice {name: 'Establish replenishment commitment point.', code: 'XP3.4'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_5:Practice {name: 'Establish pull criteria.', code: 'XP3.5'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_6:Practice {name: 'Establish a delivery commitment point.', code: 'XP3.6'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_7:Practice {name: 'Establish customer acceptance criteria for each work item or a class', code: 'XP3.7'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (XP3_8:Practice {name: 'Define classes of service.', code: 'XP3.8'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (XP4_1:Practice {name: 'Explicitly define fitness-for-purpose, and manage based on metrics.', code: 'XP4.1'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (XP4_2:Practice {name: 'Establish demand shaping policies.', code: 'XP4.2'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (XP4_3:Practice {name: 'Establish SLA on dependent services.', code: 'XP4.3'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML5:MaturityLevel) WHERE (ML5.code = 'ML5') CREATE (XP5_1:Practice {name: 'Align strategy and capability.', code: 'XP5.1'})-[:APPLIED_AT]->(ML5)</query>
+        <query>MATCH (ML0:MaturityLevel) WHERE (ML0.code = 'ML0') CREATE (FL0_1:Practice {name: 'Engage in personal reflection.', code: 'FL0.1'})-[:APPLIED_AT]->(ML0)</query>
+        <query>MATCH (ML1:MaturityLevel) WHERE (ML1.code = 'ML1') CREATE (FL1_1:Practice {name: 'Conduct Kanban Meeting.', code: 'FL1.1'})-[:APPLIED_AT]->(ML1)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (FL2_1:Practice {name: 'Conduct internal team Replenishment Meeting.', code: 'FL2.1'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (FL2_2:Practice {name: 'Hold a Team Retrospective.', code: 'FL2.2'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (FL3_1:Practice {name: 'Conduct Replenishment Meeting.', code: 'FL3.1'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (FL3_2:Practice {name: 'Conduct Suggestion Box Review.', code: 'FL3.2'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (FL3_3:Practice {name: 'Conduct System Capability Review.', code: 'FL3.3'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (FL3_4:Practice {name: 'Conduct Delivery Planning Meeting.', code: 'FL3.4'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (FL3_5:Practice {name: 'Conduct Service Delivery Review.', code: 'FL3.5'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (FL3_6:Practice {name: 'Conduct Options Review (upstream).', code: 'FL3.6'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (FL4_1:Practice {name: 'Conduct Risk Review.', code: 'FL4.1'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (FL4_2:Practice {name: 'Conduct Portfolio Review.', code: 'FL4.2'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (FL4_3:Practice {name: 'Conduct Operations Review.', code: 'FL4.3'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML5:MaturityLevel) WHERE (ML5.code = 'ML5') CREATE (FL5_1:Practice {name: 'Conduct Strategy Review.', code: 'FL5.1'})-[:APPLIED_AT]->(ML5)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (IE2_1:Practice {name: 'Identify sources of dissatisfaction.', code: 'IE2.1'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML2:MaturityLevel) WHERE (ML2.code = 'ML2') CREATE (IE2_2:Practice {name: 'Identify problematic policies.', code: 'IE2.2'})-[:APPLIED_AT]->(ML2)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (IE3_1:Practice {name: 'Suggest improvements using a suggestion box.', code: 'IE3.1'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (IE3_2:Practice {name: 'Identify sources of delay.', code: 'IE3.2'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (IE3_3:Practice {name: 'Analyze blocker likelihood and impact.', code: 'IE3.3'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (IE3_4:Practice {name: 'Analyze lead time tail risk.', code: 'IE3.4'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML3:MaturityLevel) WHERE (ML3.code = 'ML3') CREATE (IE3_5:Practice {name: 'After meetings: discuss a problem spontaneously, and bring it to the Service Delivery Review', code: 'IE3.5'})-[:APPLIED_AT]->(ML3)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (IE4_1:Practice {name: 'Develop qualitative understanding of common versus special cause for process performance variation.', code: 'IE4.1'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (IE4_2:Practice {name: 'Identify the impact of shared resources.', code: 'IE4.2'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (IE4_3:Practice {name: 'Identify bottleneck and resolve it.', code: 'IE4.3'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (IE4_4:Practice {name: 'Identify transaction and coordination costs.', code: 'IE4.4'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML4:MaturityLevel) WHERE (ML4.code = 'ML4') CREATE (IE4_5:Practice {name: 'Develop quantitative understanding of common versus chance cause for process performance variation.', code: 'IE4.5'})-[:APPLIED_AT]->(ML4)</query>
+        <query>MATCH (ML5:MaturityLevel) WHERE (ML5.code = 'ML5') CREATE (IE5_1:Practice {name: 'After meetings: Discuss – Suggest – Take actions – Seek forgiveness.', code: 'IE5.1'})-[:APPLIED_AT]->(ML5)</query>
+        <query>MATCH (ML6:MaturityLevel) WHERE (ML6.code = 'ML6') CREATE (IE6_1:Practice {name: 'After meetings: Take congruent actions with confidence.', code: 'IE6.1'})-[:APPLIED_AT]->(ML6)</query>
+        <query>MATCH (VZ0_1:Practice), (VZ:Practice) WHERE (VZ0_1.code = 'VZ0.1' AND VZ.code = 'VZ') CREATE (VZ0_1)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ0_2:Practice), (VZ:Practice) WHERE (VZ0_2.code = 'VZ0.2' AND VZ.code = 'VZ') CREATE (VZ0_2)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ1_1:Practice), (VZ:Practice) WHERE (VZ1_1.code = 'VZ1.1' AND VZ.code = 'VZ') CREATE (VZ1_1)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ1_2:Practice), (VZ:Practice) WHERE (VZ1_2.code = 'VZ1.2' AND VZ.code = 'VZ') CREATE (VZ1_2)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ1_3:Practice), (VZ:Practice) WHERE (VZ1_3.code = 'VZ1.3' AND VZ.code = 'VZ') CREATE (VZ1_3)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ1_4:Practice), (VZ:Practice) WHERE (VZ1_4.code = 'VZ1.4' AND VZ.code = 'VZ') CREATE (VZ1_4)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ1_5:Practice), (VZ:Practice) WHERE (VZ1_5.code = 'VZ1.5' AND VZ.code = 'VZ') CREATE (VZ1_5)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_1:Practice), (VZ:Practice) WHERE (VZ2_1.code = 'VZ2.1' AND VZ.code = 'VZ') CREATE (VZ2_1)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_2:Practice), (VZ:Practice) WHERE (VZ2_2.code = 'VZ2.2' AND VZ.code = 'VZ') CREATE (VZ2_2)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_3:Practice), (VZ:Practice) WHERE (VZ2_3.code = 'VZ2.3' AND VZ.code = 'VZ') CREATE (VZ2_3)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_4:Practice), (VZ:Practice) WHERE (VZ2_4.code = 'VZ2.4' AND VZ.code = 'VZ') CREATE (VZ2_4)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_5:Practice), (VZ:Practice) WHERE (VZ2_5.code = 'VZ2.5' AND VZ.code = 'VZ') CREATE (VZ2_5)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_6:Practice), (VZ:Practice) WHERE (VZ2_6.code = 'VZ2.6' AND VZ.code = 'VZ') CREATE (VZ2_6)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_7:Practice), (VZ:Practice) WHERE (VZ2_7.code = 'VZ2.7' AND VZ.code = 'VZ') CREATE (VZ2_7)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_8:Practice), (VZ:Practice) WHERE (VZ2_8.code = 'VZ2.8' AND VZ.code = 'VZ') CREATE (VZ2_8)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_9:Practice), (VZ:Practice) WHERE (VZ2_9.code = 'VZ2.9' AND VZ.code = 'VZ') CREATE (VZ2_9)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_10:Practice), (VZ:Practice) WHERE (VZ2_10.code = 'VZ2.10' AND VZ.code = 'VZ') CREATE (VZ2_10)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_11:Practice), (VZ:Practice) WHERE (VZ2_11.code = 'VZ2.11' AND VZ.code = 'VZ') CREATE (VZ2_11)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_12:Practice), (VZ:Practice) WHERE (VZ2_12.code = 'VZ2.12' AND VZ.code = 'VZ') CREATE (VZ2_12)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ2_13:Practice), (VZ:Practice) WHERE (VZ2_13.code = 'VZ2.13' AND VZ.code = 'VZ') CREATE (VZ2_13)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_1:Practice), (VZ:Practice) WHERE (VZ3_1.code = 'VZ3.1' AND VZ.code = 'VZ') CREATE (VZ3_1)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_2:Practice), (VZ:Practice) WHERE (VZ3_2.code = 'VZ3.2' AND VZ.code = 'VZ') CREATE (VZ3_2)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_3:Practice), (VZ:Practice) WHERE (VZ3_3.code = 'VZ3.3' AND VZ.code = 'VZ') CREATE (VZ3_3)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_4:Practice), (VZ:Practice) WHERE (VZ3_4.code = 'VZ3.4' AND VZ.code = 'VZ') CREATE (VZ3_4)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_5:Practice), (VZ:Practice) WHERE (VZ3_5.code = 'VZ3.5' AND VZ.code = 'VZ') CREATE (VZ3_5)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_6:Practice), (VZ:Practice) WHERE (VZ3_6.code = 'VZ3.6' AND VZ.code = 'VZ') CREATE (VZ3_6)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_7:Practice), (VZ:Practice) WHERE (VZ3_7.code = 'VZ3.7' AND VZ.code = 'VZ') CREATE (VZ3_7)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_8:Practice), (VZ:Practice) WHERE (VZ3_8.code = 'VZ3.8' AND VZ.code = 'VZ') CREATE (VZ3_8)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_9:Practice), (VZ:Practice) WHERE (VZ3_9.code = 'VZ3.9' AND VZ.code = 'VZ') CREATE (VZ3_9)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_10:Practice), (VZ:Practice) WHERE (VZ3_10.code = 'VZ3.10' AND VZ.code = 'VZ') CREATE (VZ3_10)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_11:Practice), (VZ:Practice) WHERE (VZ3_11.code = 'VZ3.11' AND VZ.code = 'VZ') CREATE (VZ3_11)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_12:Practice), (VZ:Practice) WHERE (VZ3_12.code = 'VZ3.12' AND VZ.code = 'VZ') CREATE (VZ3_12)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_13:Practice), (VZ:Practice) WHERE (VZ3_13.code = 'VZ3.13' AND VZ.code = 'VZ') CREATE (VZ3_13)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_14:Practice), (VZ:Practice) WHERE (VZ3_14.code = 'VZ3.14' AND VZ.code = 'VZ') CREATE (VZ3_14)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_15:Practice), (VZ:Practice) WHERE (VZ3_15.code = 'VZ3.15' AND VZ.code = 'VZ') CREATE (VZ3_15)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_16:Practice), (VZ:Practice) WHERE (VZ3_16.code = 'VZ3.16' AND VZ.code = 'VZ') CREATE (VZ3_16)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_17:Practice), (VZ:Practice) WHERE (VZ3_17.code = 'VZ3.17' AND VZ.code = 'VZ') CREATE (VZ3_17)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ3_18:Practice), (VZ:Practice) WHERE (VZ3_18.code = 'VZ3.18' AND VZ.code = 'VZ') CREATE (VZ3_18)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_1:Practice), (VZ:Practice) WHERE (VZ4_1.code = 'VZ4.1' AND VZ.code = 'VZ') CREATE (VZ4_1)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_2:Practice), (VZ:Practice) WHERE (VZ4_2.code = 'VZ4.2' AND VZ.code = 'VZ') CREATE (VZ4_2)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_3:Practice), (VZ:Practice) WHERE (VZ4_3.code = 'VZ4.3' AND VZ.code = 'VZ') CREATE (VZ4_3)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_4:Practice), (VZ:Practice) WHERE (VZ4_4.code = 'VZ4.4' AND VZ.code = 'VZ') CREATE (VZ4_4)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_5:Practice), (VZ:Practice) WHERE (VZ4_5.code = 'VZ4.5' AND VZ.code = 'VZ') CREATE (VZ4_5)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_6:Practice), (VZ:Practice) WHERE (VZ4_6.code = 'VZ4.6' AND VZ.code = 'VZ') CREATE (VZ4_6)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ4_7:Practice), (VZ:Practice) WHERE (VZ4_7.code = 'VZ4.7' AND VZ.code = 'VZ') CREATE (VZ4_7)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (VZ5_1:Practice), (VZ:Practice) WHERE (VZ5_1.code = 'VZ5.1' AND VZ.code = 'VZ') CREATE (VZ5_1)-[:SPECIALIZATION]->(VZ)</query>
+        <query>MATCH (LW0_1:Practice), (LW:Practice) WHERE (LW0_1.code = 'LW0.1' AND LW.code = 'LW') CREATE (LW0_1)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW1_1:Practice), (LW:Practice) WHERE (LW1_1.code = 'LW1.1' AND LW.code = 'LW') CREATE (LW1_1)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW1_2:Practice), (LW:Practice) WHERE (LW1_2.code = 'LW1.2' AND LW.code = 'LW') CREATE (LW1_2)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW2_2:Practice), (LW:Practice) WHERE (LW2_2.code = 'LW2.2' AND LW.code = 'LW') CREATE (LW2_2)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW3_1:Practice), (LW:Practice) WHERE (LW3_1.code = 'LW3.1' AND LW.code = 'LW') CREATE (LW3_1)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW3_2:Practice), (LW:Practice) WHERE (LW3_2.code = 'LW3.2' AND LW.code = 'LW') CREATE (LW3_2)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW3_3:Practice), (LW:Practice) WHERE (LW3_3.code = 'LW3.3' AND LW.code = 'LW') CREATE (LW3_3)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (LW4_1:Practice), (LW:Practice) WHERE (LW4_1.code = 'LW4.1' AND LW.code = 'LW') CREATE (LW4_1)-[:SPECIALIZATION]->(LW)</query>
+        <query>MATCH (MF0_1:Practice), (MF:Practice) WHERE (MF0_1.code = 'MF0.1' AND MF.code = 'MF') CREATE (MF0_1)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF2_1:Practice), (MF:Practice) WHERE (MF2_1.code = 'MF2.1' AND MF.code = 'MF') CREATE (MF2_1)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF2_2:Practice), (MF:Practice) WHERE (MF2_2.code = 'MF2.2' AND MF.code = 'MF') CREATE (MF2_2)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF2_3:Practice), (MF:Practice) WHERE (MF2_3.code = 'MF2.3' AND MF.code = 'MF') CREATE (MF2_3)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF2_4:Practice), (MF:Practice) WHERE (MF2_4.code = 'MF2.4' AND MF.code = 'MF') CREATE (MF2_4)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_1:Practice), (MF:Practice) WHERE (MF3_1.code = 'MF3.1' AND MF.code = 'MF') CREATE (MF3_1)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_2:Practice), (MF:Practice) WHERE (MF3_2.code = 'MF3.2' AND MF.code = 'MF') CREATE (MF3_2)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_3:Practice), (MF:Practice) WHERE (MF3_3.code = 'MF3.3' AND MF.code = 'MF') CREATE (MF3_3)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_4:Practice), (MF:Practice) WHERE (MF3_4.code = 'MF3.4' AND MF.code = 'MF') CREATE (MF3_4)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_5:Practice), (MF:Practice) WHERE (MF3_5.code = 'MF3.5' AND MF.code = 'MF') CREATE (MF3_5)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_6:Practice), (MF:Practice) WHERE (MF3_6.code = 'MF3.6' AND MF.code = 'MF') CREATE (MF3_6)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_7:Practice), (MF:Practice) WHERE (MF3_7.code = 'MF3.7' AND MF.code = 'MF') CREATE (MF3_7)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_8:Practice), (MF:Practice) WHERE (MF3_8.code = 'MF3.8' AND MF.code = 'MF') CREATE (MF3_8)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_9:Practice), (MF:Practice) WHERE (MF3_9.code = 'MF3.9' AND MF.code = 'MF') CREATE (MF3_9)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_10:Practice), (MF:Practice) WHERE (MF3_10.code = 'MF3.10' AND MF.code = 'MF') CREATE (MF3_10)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_11:Practice), (MF:Practice) WHERE (MF3_11.code = 'MF3.11' AND MF.code = 'MF') CREATE (MF3_11)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_12:Practice), (MF:Practice) WHERE (MF3_12.code = 'MF3.12' AND MF.code = 'MF') CREATE (MF3_12)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF3_13:Practice), (MF:Practice) WHERE (MF3_13.code = 'MF3.13' AND MF.code = 'MF') CREATE (MF3_13)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_1:Practice), (MF:Practice) WHERE (MF4_1.code = 'MF4.1' AND MF.code = 'MF') CREATE (MF4_1)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_2:Practice), (MF:Practice) WHERE (MF4_2.code = 'MF4.2' AND MF.code = 'MF') CREATE (MF4_2)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_3:Practice), (MF:Practice) WHERE (MF4_3.code = 'MF4.3' AND MF.code = 'MF') CREATE (MF4_3)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_4:Practice), (MF:Practice) WHERE (MF4_4.code = 'MF4.4' AND MF.code = 'MF') CREATE (MF4_4)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_5:Practice), (MF:Practice) WHERE (MF4_5.code = 'MF4.5' AND MF.code = 'MF') CREATE (MF4_5)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_6:Practice), (MF:Practice) WHERE (MF4_6.code = 'MF4.6' AND MF.code = 'MF') CREATE (MF4_6)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_7:Practice), (MF:Practice) WHERE (MF4_7.code = 'MF4.7' AND MF.code = 'MF') CREATE (MF4_7)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_8:Practice), (MF:Practice) WHERE (MF4_8.code = 'MF4.8' AND MF.code = 'MF') CREATE (MF4_8)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_9:Practice), (MF:Practice) WHERE (MF4_9.code = 'MF4.9' AND MF.code = 'MF') CREATE (MF4_9)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_10:Practice), (MF:Practice) WHERE (MF4_10.code = 'MF4.10' AND MF.code = 'MF') CREATE (MF4_10)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_11:Practice), (MF:Practice) WHERE (MF4_11.code = 'MF4.11' AND MF.code = 'MF') CREATE (MF4_11)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF4_12:Practice), (MF:Practice) WHERE (MF4_12.code = 'MF4.12' AND MF.code = 'MF') CREATE (MF4_12)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (MF5_1:Practice), (MF:Practice) WHERE (MF5_1.code = 'MF5.1' AND MF.code = 'MF') CREATE (MF5_1)-[:SPECIALIZATION]->(MF)</query>
+        <query>MATCH (XP0_1:Practice), (XP:Practice) WHERE (XP0_1.code = 'XP0.1' AND XP.code = 'XP') CREATE (XP0_1)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP1_1:Practice), (XP:Practice) WHERE (XP1_1.code = 'XP1.1' AND XP.code = 'XP') CREATE (XP1_1)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP2_1:Practice), (XP:Practice) WHERE (XP2_1.code = 'XP2.1' AND XP.code = 'XP') CREATE (XP2_1)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP2_2:Practice), (XP:Practice) WHERE (XP2_2.code = 'XP2.2' AND XP.code = 'XP') CREATE (XP2_2)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP2_3:Practice), (XP:Practice) WHERE (XP2_3.code = 'XP2.3' AND XP.code = 'XP') CREATE (XP2_3)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP2_4:Practice), (XP:Practice) WHERE (XP2_4.code = 'XP2.4' AND XP.code = 'XP') CREATE (XP2_4)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_1:Practice), (XP:Practice) WHERE (XP3_1.code = 'XP3.1' AND XP.code = 'XP') CREATE (XP3_1)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_2:Practice), (XP:Practice) WHERE (XP3_2.code = 'XP3.2' AND XP.code = 'XP') CREATE (XP3_2)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_3:Practice), (XP:Practice) WHERE (XP3_3.code = 'XP3.3' AND XP.code = 'XP') CREATE (XP3_3)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_4:Practice), (XP:Practice) WHERE (XP3_4.code = 'XP3.4' AND XP.code = 'XP') CREATE (XP3_4)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_5:Practice), (XP:Practice) WHERE (XP3_5.code = 'XP3.5' AND XP.code = 'XP') CREATE (XP3_5)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_6:Practice), (XP:Practice) WHERE (XP3_6.code = 'XP3.6' AND XP.code = 'XP') CREATE (XP3_6)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_7:Practice), (XP:Practice) WHERE (XP3_7.code = 'XP3.7' AND XP.code = 'XP') CREATE (XP3_7)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP3_8:Practice), (XP:Practice) WHERE (XP3_8.code = 'XP3.8' AND XP.code = 'XP') CREATE (XP3_8)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP4_1:Practice), (XP:Practice) WHERE (XP4_1.code = 'XP4.1' AND XP.code = 'XP') CREATE (XP4_1)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP4_2:Practice), (XP:Practice) WHERE (XP4_2.code = 'XP4.2' AND XP.code = 'XP') CREATE (XP4_2)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP4_3:Practice), (XP:Practice) WHERE (XP4_3.code = 'XP4.3' AND XP.code = 'XP') CREATE (XP4_3)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (XP5_1:Practice), (XP:Practice) WHERE (XP5_1.code = 'XP5.1' AND XP.code = 'XP') CREATE (XP5_1)-[:SPECIALIZATION]->(XP)</query>
+        <query>MATCH (FL0_1:Practice), (FL:Practice) WHERE (FL0_1.code = 'FL0.1' AND FL.code = 'FL') CREATE (FL0_1)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL1_1:Practice), (FL:Practice) WHERE (FL1_1.code = 'FL1.1' AND FL.code = 'FL') CREATE (FL1_1)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL2_1:Practice), (FL:Practice) WHERE (FL2_1.code = 'FL2.1' AND FL.code = 'FL') CREATE (FL2_1)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL2_2:Practice), (FL:Practice) WHERE (FL2_2.code = 'FL2.2' AND FL.code = 'FL') CREATE (FL2_2)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL3_1:Practice), (FL:Practice) WHERE (FL3_1.code = 'FL3.1' AND FL.code = 'FL') CREATE (FL3_1)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL3_2:Practice), (FL:Practice) WHERE (FL3_2.code = 'FL3.2' AND FL.code = 'FL') CREATE (FL3_2)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL3_3:Practice), (FL:Practice) WHERE (FL3_3.code = 'FL3.3' AND FL.code = 'FL') CREATE (FL3_3)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL3_4:Practice), (FL:Practice) WHERE (FL3_4.code = 'FL3.4' AND FL.code = 'FL') CREATE (FL3_4)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL3_5:Practice), (FL:Practice) WHERE (FL3_5.code = 'FL3.5' AND FL.code = 'FL') CREATE (FL3_5)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL3_6:Practice), (FL:Practice) WHERE (FL3_6.code = 'FL3.6' AND FL.code = 'FL') CREATE (FL3_6)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL4_1:Practice), (FL:Practice) WHERE (FL4_1.code = 'FL4.1' AND FL.code = 'FL') CREATE (FL4_1)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL4_2:Practice), (FL:Practice) WHERE (FL4_2.code = 'FL4.2' AND FL.code = 'FL') CREATE (FL4_2)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL4_3:Practice), (FL:Practice) WHERE (FL4_3.code = 'FL4.3' AND FL.code = 'FL') CREATE (FL4_3)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (FL5_1:Practice), (FL:Practice) WHERE (FL5_1.code = 'FL5.1' AND FL.code = 'FL') CREATE (FL5_1)-[:SPECIALIZATION]->(FL)</query>
+        <query>MATCH (IE2_1:Practice), (IE:Practice) WHERE (IE2_1.code = 'IE2.1' AND IE.code = 'IE') CREATE (IE2_1)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE2_2:Practice), (IE:Practice) WHERE (IE2_2.code = 'IE2.2' AND IE.code = 'IE') CREATE (IE2_2)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE3_1:Practice), (IE:Practice) WHERE (IE3_1.code = 'IE3.1' AND IE.code = 'IE') CREATE (IE3_1)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE3_2:Practice), (IE:Practice) WHERE (IE3_2.code = 'IE3.2' AND IE.code = 'IE') CREATE (IE3_2)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE3_3:Practice), (IE:Practice) WHERE (IE3_3.code = 'IE3.3' AND IE.code = 'IE') CREATE (IE3_3)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE3_4:Practice), (IE:Practice) WHERE (IE3_4.code = 'IE3.4' AND IE.code = 'IE') CREATE (IE3_4)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE3_5:Practice), (IE:Practice) WHERE (IE3_5.code = 'IE3.5' AND IE.code = 'IE') CREATE (IE3_5)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE4_1:Practice), (IE:Practice) WHERE (IE4_1.code = 'IE4.1' AND IE.code = 'IE') CREATE (IE4_1)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE4_2:Practice), (IE:Practice) WHERE (IE4_2.code = 'IE4.2' AND IE.code = 'IE') CREATE (IE4_2)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE4_3:Practice), (IE:Practice) WHERE (IE4_3.code = 'IE4.3' AND IE.code = 'IE') CREATE (IE4_3)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE4_4:Practice), (IE:Practice) WHERE (IE4_4.code = 'IE4.4' AND IE.code = 'IE') CREATE (IE4_4)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE4_5:Practice), (IE:Practice) WHERE (IE4_5.code = 'IE4.5' AND IE.code = 'IE') CREATE (IE4_5)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE5_1:Practice), (IE:Practice) WHERE (IE5_1.code = 'IE5.1' AND IE.code = 'IE') CREATE (IE5_1)-[:SPECIALIZATION]->(IE)</query>
+        <query>MATCH (IE6_1:Practice), (IE:Practice) WHERE (IE6_1.code = 'IE6.1' AND IE.code = 'IE') CREATE (IE6_1)-[:SPECIALIZATION]->(IE)</query>
+    </changeset>
+</changelog>

@@ -7,7 +7,7 @@ CREATE (DeploymentAutomation:Capability {
     name: 'Automate your deployment process'
 })-[:IN_CATEGORY]->(CD)
 CREATE (CI:Capability {
-    name: 'Implement continuous ingration'
+    name: 'Implement continuous integration'
 })-[:IN_CATEGORY]->(CD)
 CREATE (TrunkBased:Capability {
     name: 'Use trunk-based development methods'
@@ -40,7 +40,7 @@ CREATE (GatherCustomerFeedback:Capability {
     name: 'Product and Process'
 })
 CREATE (MakeWorkVisible:Capability {
-    name: 'Make the flow of work visible through the value stream.'
+    name: 'Make the flow of work visible through the value stream'
 })-[:IN_CATEGORY]->(ProductProcess)
 CREATE (SmallBatches:Capability {
     name: 'Work is small batches'
