@@ -7,5 +7,7 @@
         <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Continuous Integration'})-[:REALISED_BY]->(n)</query> 
         <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Coding Standards'})-[:REALISED_BY]->(n)</query> 
         <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Collective Code Ownership'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Onsite Customer'})-[:REALISED_BY]->(n)</query>
+        <query>MATCH (n:Model) WHERE (n.name = 'Extreme Programming') CREATE (p:Practice {name: 'Iteration Planning'})-[:REALISED_BY]->(n)</query>
     </changeset>
 </changelog>

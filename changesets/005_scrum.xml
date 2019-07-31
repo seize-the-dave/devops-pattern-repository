@@ -6,5 +6,10 @@
         <query>MATCH (m:Model) WHERE (m.name = 'Scrum') CREATE (p:Practice {name: 'Sprint Retrospective'})-[:REALISED_BY]->(m)</query> 
         <query>MATCH (m:Model) WHERE (m.name = 'Scrum') CREATE (p:Practice {name: 'Sprint Review'})-[:REALISED_BY]->(m)</query> 
         <query>MATCH (m:Model) WHERE (m.name = 'Scrum') CREATE (p:Practice {name: 'Daily Scrum'})-[:REALISED_BY]->(m)</query> 
+        <query>MATCH (m:Model) WHERE (m.name = 'Scrum') CREATE (p:Practice {name: 'Product Owner'})-[:REALISED_BY]->(m)</query>
+        <query>MATCH (m:Model) WHERE (m.name = 'Scrum') CREATE (p:Practice {name: 'Sprint Backlog'})-[:REALISED_BY]->(m)</query>
+        <query>MATCH (m:Model) WHERE (m.name = 'Scrum') CREATE (p:Practice {name: 'Product Backlog'})-[:REALISED_BY]->(m)</query>
+        <query>MATCH (oc:Practice), (po:Practice) WHERE (oc.name = 'Onsite Customer' AND po.name = 'Product Owner') CREATE (oc)-[:ALSO_KNOWN_AS]->(po)</query>
+        <query>MATCH (ip:Practice), (sp:Practice) WHERE (ip.name = 'Iteration Planning' AND sp.name = 'Sprint Planning') CREATE (ip)-[:ALSO_KNOWN_AS]->(sp)</query>
     </changeset>
 </changelog>

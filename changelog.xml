@@ -3,4 +3,5 @@
     <import resource="changesets/001_kanban.xml" />
     <import resource="changesets/004_xp.xml" />
     <import resource="changesets/005_scrum.xml" />
+    <import resource="changesets/006_less.xml" />
 </changelog>
