@@ -1,8 +1,11 @@
 // XP
 
-CREATE (XP:Method {name: 'Extreme Programming'})
+CREATE (XP:Method {name: 'Extreme Programming'})-[:DESCRIBED_BY]->(XPE:Book {name: 'Extreme Programming Explained', isbn: '9780321278654'})-[:WRITTEN_BY]->(KentBeck:Person {name: 'Kent Beck'})
 
 CREATE (TestDrivenDevelopment:Practice {name: 'Test-Driven Development'})-[:PRACTICE_OF]->(XP)
+CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(TDDByExample:Book {name: 'Test-Driven Development'})-[:WRITTEN_BY]->(KentBeck)
+CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(GOOS:Book {name: 'Growing Object-Oriented Software, Guided by Tests'})-[:WRITTEN_BY]->(SteveFreeman:Person {name: 'Steve Freeman'})
+CREATE (GOOS)-[:WRITTEN_BY]->(NatPryce:Person {name: 'Nat Pryce'})
 CREATE (PairProgramming:Practice {name: 'Pair Programming'})-[:PRACTICE_OF]->(XP)
 CREATE (ContinuousIntegration:Practice {name: 'Continuous Integration'})-[:PRACTICE_OF]->(XP)
 CREATE (ContinuousIntegrationBook:Book {name: 'Continuous Integration', isbn: '9780321336385'})<-[:DESCRIBED_BY]-(ContinuousIntegration)
@@ -13,9 +16,27 @@ CREATE (OnsiteCustomer:Practice {name: 'Onsite Customer'})-[:PRACTICE_OF]->(XP)
 CREATE (IterationPlanning:Practice {name: 'Iteration Planning'})-[:PRACTICE_OF]->(XP)
 CREATE (UserStories:Practice {name: 'User Stories'})-[:PRACTICE_OF]->(XP)
 
+CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
+
 // Kanban
 
 CREATE (Kanban:Method {name: 'Kanban'})
+
+CREATE (Kanban)-[:DESCRIBED_BY]->(BlueBook:Book {name: 'Kanban', isbn: '0984521402'})-[:WRITTEN_BY]->(DavidAnderson:Person {name: 'David J. Anderson'})
+CREATE (Kanban)-[:DESCRIBED_BY]->(EssentialKanban:Book {name: 'Essential Kanban Condensed', isbn: '0984521429'})-[:WRITTEN_BY]->(DavidAnderson)
+CREATE (Kanban)-[:DESCRIBED_BY]->(KanbanInside:Book {name: 'Kanban From the Inside', isbn: '0985305193'})-[:WRITTEN_BY]->(MikeBurrows:Person {name: 'Mike Burrows'})
+CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
+CREATE (EssentialKanban)-[:WRITTEN_BY]->(AndyCarmichael:Person {name: 'Andy Carmichael'})
+
+
+CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
+
+CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
+
+CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})
+
+CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
+CREATE (MakingWorkVisible:Book {name: 'Making Work Visible', isbn: '1942788150'})-[:WRITTEN_BY]->(DomincaDeGrandis:Person {name: 'Dominica DeGrandis'})
 
 // Kanban Core Practices
 
@@ -39,6 +60,8 @@ CREATE (DeliveryPlanning:Practice {name: 'Delivery Planning Meeting'})-[:MEETING
 // Kanban Maturity Model
 
 CREATE (KMM:MaturityModel {name: 'Kanban Maturity Model'})
+CREATE (KMM)-[:DESCRIBED_BY]->(KMMBook:Book {name: 'Kanban Maturity Model', isbn: '0985305150'})-[:WRITTEN_BY]->(DavidAnderson)
+CREATE (KMMBook)-[:WRITTEN_BY]->(TeodoraBozheva:Person {name: 'Teodora Bozheva'})
 
 CREATE (ML0:MaturityLevel {name: 'Oblivious', code: 'ML0'})-[:LEVEL_OF]->(KMM)
 CREATE (ML1:MaturityLevel {name: 'Emerging', code: 'ML1'})-[:LEVEL_OF]->(KMM)
@@ -67,6 +90,7 @@ CREATE (ML2)<-[:APPLIES_AT]-(VZ2_9:Practice {name: 'Board design: Visualize sequ
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_10:Practice {name: 'Visualize defects and other rework types.', code: 'VZ2.10'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_11:Practice {name: 'Use CONWIP with an emergent workflow delivery kanban board to provide workflow-level relief from overburdening and basic mechanics of a pull system, with separate replenishment and delivery cadences.', code: 'VZ2.11'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_12:Practice {name: 'Visualize workflow by means of enhanced discovery/delivery boards.', code: 'VZ2.12'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ2_12)<-[:DESCRIBED_BY]-(UpstreamKanban)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_13:Practice {name: 'Visualize project progress on a portfolio kanban board.', code: 'VZ2.13'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_1:Practice {name: 'Visualize “ready to commit” status, also known as “ready to pull.”', code: 'VZ3.1'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_2:Practice {name: 'Visualize “ready to pull” criteria, also known as “definition of ready,” or “entry criteria.”', code: 'VZ3.2'})-[:SPECIALISM_OF]->(Visualization)
@@ -181,12 +205,60 @@ CREATE (ML4)<-[:APPLIES_AT]-(IE4_5:Practice {name: 'Develop quantitative underst
 CREATE (ML5)<-[:APPLIES_AT]-(IE5_1:Practice {name: 'After meetings: Discuss – Suggest – Take actions – Seek forgiveness.', code: 'IE5.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 CREATE (ML6)<-[:APPLIES_AT]-(IE6_1:Practice {name: 'After meetings: Take congruent actions with confidence.', code: 'IE6.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 
+// Kanban Guide
+
+// There's significant overlap between KMM and KG.  These need to be rationalised.
+
+// CREATE (DemandAnalysis:Practice {name: 'Demand Analysis / Work Item Types'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (WorkflowVisualization:Practice {name: 'Workflow Visualization / Kanban Board'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (CommitmentDeliveryPoints:Practice {name: 'Commitment and Delivery Points'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (WorkItemTicketDesign:Practice {name: 'Work Item Ticket Design'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (Avatars:Practice {name: 'Avatars'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (Swimlanes:Practice {name: 'Swimlanes'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (BacklogVisualization:Practice {name: 'Backlog Visualization'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (ElectronicTracking:Practice {name: 'Electronic Tracking'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (ModellingConcurrentActivity:Practice {name: 'Modelling Concurrent Activity'})-[:SPECIALISM_OF]->(Visualization)
+// CREATE (StickyBuddies:Practice {name: 'Sticky Buddies'})-[:SPECIALISM_OF]->(Visualization)
+
+// CREATE (ColumnWipLimits:Practice {name: 'Column / State WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
+// CREATE (PersonWipLimits:Practice {name: 'Person WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
+// CREATE (AllocatedCapacity:Practice {name: 'Allocated Capacity (Lane WIP Limits)'})-[:SPECIALISM_OF]->(LimitWIP)
+// CREATE (BoardLevelLimits:Practice {name: 'Board Level WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
+
+// CREATE (CFD:Practice {name: 'Cumulative Flow Diagram'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (QueueReplenishment:Practice {name: 'Queue Replenishment (Cadence and Policy)'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (LeadTimeDistribution:Practice {name: 'Lead Time Distribution (Average, Sized, Weighted)'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (FlowEfficiency:Measure {name: 'Flow Efficiency'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (InputQueuePrioritisationMethod:Practice {name: 'Input Queue Prioritisation Method'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (InputQueueSizing:Practice {name: 'Input Queue Sizing'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (Throughput:Measure {name: 'Input Queue Sizing'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (ClassesOfService:Practice {name: 'Classes of Service'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (SLE:Practice {name: 'Clarifying and Displayed Service Level Expectations'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (DueDatePerformance:Measure {name: 'Input Queue Sizing'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (SetServiceDeliveryTargets:Practice {name: 'Set Service Delivery Targets'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (InitialQuality:Measure {name: 'Initial Quality (Defects per Work Item'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (ReleasePlanning:Practice {name: 'Release Planning'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (Triage:Practice {name: 'Triage (In or Out)'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (FailureLoad:Measure {name: 'Failure Load (Production Defect Rate)'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (HandlingExternalDependencies:Practice {name: 'Handling External Dependencies'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (BacklogPrioritisationMethod:Practice {name: 'Backlog Prioritisation Method'})-[:SPECIALISM_OF]->(ManageFlow)
+// CREATE (DefectPercentageRate:Measure {name: 'Defect Percentage Rate'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (NetFlowPerWeek:Measure {name: 'Net Flow per Week'})-[:MEASUREMENT_OF]->(ManageFlow)
+// CREATE (ValueBasedWorkItem:Practice {name: 'Value Based Work Item Granularity (MMF)'})-[:SPECIALISM_OF]->(ManageFlow)
+
+
 // Continuous Delivery
 
 CREATE (ContinuousDeliveryBook:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
 CREATE (JezHumble:Person {name: 'Jez Humble'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (DavidFarley:Person {name: 'David Farley'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
+
+CREATE (ContinuousDelivery)-[:GUIDED_BY]->(BuildQualityIn:Principal {name: 'Build Quality In'})
+CREATE (ContinuousDelivery)-[:GUIDED_BY]->(WorkInSmallBatches:Principal {name: 'Work in Small Batches'})
+CREATE (ContinuousDelivery)-[:GUIDED_BY]->(ComputersDoRepetition:Principal {name: 'Computers Perform Repetitive Tasks, People Solve Problems'})
+CREATE (ContinuousDelivery)-[:GUIDED_BY]->(ContinuousImprovement:Principal {name: 'Relentlessly Pursue Continuous Improvement'})
+CREATE (ContinuousDelivery)-[:GUIDED_BY]->(EveryoneIsResponsible:Principal {name: 'Everyone is Responsible'})
 
 // Measures from Accelerate
 
@@ -305,6 +377,9 @@ CREATE (SprintRetrospective:Practice {name: 'Sprint Retrospective'})-[:MEETING_O
 CREATE (SprintReview:Practice {name: 'Sprint Review'})-[:MEETING_OF]->(Scrum)
 CREATE (DailyScrum:Practice {name: 'Daily Scrum'})-[:MEETING_OF]->(Scrum)
 
+CREATE (ProductBacklog:Artefact {name: 'Product Backlog'})-[:ARTEFACT_OF]->(Scrum)
+CREATE (SprintBacklog:Artefact {name: 'Sprint Backlog'})-[:ARTEFACT_OF]->(Scrum)
+
 CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(DailyStandup)
 CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(IterationPlanning)
 
@@ -341,7 +416,9 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 
 // Test Automation
 
-CREATE (BDD:Practice {name: 'BDD'}) 
-CREATE (ATDD:Practice {name: 'ATDD'})
+CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ThreeAmigos:Practice {name: '3 Amigos'})
 CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
+
+CREATE (COP:Practice {name: 'Communities of Practice'})
