@@ -5,6 +5,8 @@ CREATE (XP:Method {name: 'Extreme Programming'})
 CREATE (TestDrivenDevelopment:Practice {name: 'Test-Driven Development'})-[:PRACTICE_OF]->(XP)
 CREATE (PairProgramming:Practice {name: 'Pair Programming'})-[:PRACTICE_OF]->(XP)
 CREATE (ContinuousIntegration:Practice {name: 'Continuous Integration'})-[:PRACTICE_OF]->(XP)
+CREATE (ContinuousIntegrationBook:Book {name: 'Continuous Integration', isbn: '9780321336385'})
+CREATE (PaulDuvall:Person {name: 'Paul Duvall'})<-[:WRITTEN_BY]-(ContinuousIntegrationBook)
 CREATE (CodingStandards:Practice {name: 'Coding Standards'})-[:PRACTICE_OF]->(XP)
 CREATE (CollectiveCodeOwnership:Practice {name: 'Collective Code Ownership'})-[:PRACTICE_OF]->(XP)
 CREATE (OnsiteCustomer:Practice {name: 'Onsite Customer'})-[:PRACTICE_OF]->(XP)
@@ -182,15 +184,20 @@ CREATE (IE6_1:Practice {name: 'After meetings: Take congruent actions with confi
 // Continuous Delivery
 
 CREATE (ContinuousDeliveryBook:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
-CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:SOURCE]->(ContinuousDeliveryBook)
+CREATE (JezHumble:Person {name: 'Jez Humble'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
+CREATE (DavidFarley:Person {name: 'David Farley'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
+CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
 
 // Measures from Accelerate
 
-CREATE (Accelerate:Book {name: 'Accelerate'})
-CREATE (DeploymentFrequency:Measure {name: 'Deployment Frequency'})-[:SOURCE]->(Accelerate)
-CREATE (LeadTime:Measure {name: 'Lead Time for Change'})-[:SOURCE]->(Accelerate)
-CREATE (MTTR:Measure {name: 'Mean Time to Restore'})-[:SOURCE]->(Accelerate)
-CREATE (ChangeFailureRate:Measure {name: 'Change Failure Rate'})-[:SOURCE]->(Accelerate)
+CREATE (Accelerate:Book {name: 'Accelerate', isbn: '1942788339'})
+CREATE (NicoleForsgren:Person {name: 'Nicole Forsgren'})<-[:WRITTEN_BY]-(Accelerate)
+CREATE (JezHumble)<-[:WRITTEN_BY]-(Accelerate)
+CREATE (GeneKim:Person {name: 'Gene Kim'})<-[:WRITTEN_BY]-(Accelerate)
+CREATE (DeploymentFrequency:Measure {name: 'Deployment Frequency'})
+CREATE (LeadTime:Measure {name: 'Lead Time for Change'})
+CREATE (MTTR:Measure {name: 'Mean Time to Restore'})
+CREATE (ChangeFailureRate:Measure {name: 'Change Failure Rate'})
 
 CREATE (OrganizationalPerformance:Measure {name: 'Organizational Performance'})
 
@@ -204,6 +211,7 @@ CREATE (SoftwareDeliveryPerformance)-[:COMPOSED_OF]->(DeploymentFrequency)
 CREATE (SoftwareDeliveryPerformance)-[:COMPOSED_OF]->(LeadTime)
 CREATE (SoftwareDeliveryPerformance)-[:COMPOSED_OF]->(MTTR)
 CREATE (SoftwareDeliveryPerformance)-[:COMPOSED_OF]->(ChangeFailureRate)
+CREATE (SoftwareDeliveryPerformance)-[:DESCRIBED_BY]->(Accelerate)
 
 CREATE (WestrumOrganizationalCulture)-[:IMPACTS]->(SoftwareDeliveryPerformance)
 CREATE (WestrumOrganizationalCulture)-[:IMPACTS]->(OrganizationalPerformance)
@@ -245,6 +253,8 @@ CREATE (GatherCustomerFeedback:Practice {name: 'Gather & Implement Customer Feed
 CREATE (TeamExperimentation:Practice {name: 'Team Experimentation'})
 
 CREATE (LeanProductDevelopment:Practice {name: 'Lean Product Development'})
+CREATE (FlowBook:Book {name: 'The Principles of Product Development Flow'})<-[:WRITTEN_BY]-(DonReinertsen:Person {name: 'Don Reinertsen'})
+CREATE (LeanProductDevelopment)-[:DESCRIBED_BY]->(FlowBook)
 CREATE (LeanProductDevelopment)-[:COMPOSED_OF]->(SmallBatches)
 CREATE (LeanProductDevelopment)-[:COMPOSED_OF]->(MakeWorkVisible)
 CREATE (LeanProductDevelopment)-[:COMPOSED_OF]->(GatherCustomerFeedback)
@@ -305,8 +315,8 @@ CREATE (DailyScrum:Practice {name: 'Daily Scrum'})-[:MEETING_OF]->(Scrum)
 CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(DailyStandup)
 CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(IterationPlanning)
 
-CREATE (DefinitionOfReady {name: 'Definition of Ready'})-[:EXTENDS]->(ExplicitPolicies)
-CREATE (DefinitionOfDone {name: 'Definition of Done'})-[:EXTENDS]->(ExplicitPolicies)
+CREATE (DefinitionOfReady:Practice {name: 'Definition of Ready'})-[:EXTENDS]->(ExplicitPolicies)
+CREATE (DefinitionOfDone:Practice {name: 'Definition of Done'})-[:EXTENDS]->(ExplicitPolicies)
 
 // LeSS
 
