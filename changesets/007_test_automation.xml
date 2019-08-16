@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
-    <changeset id="007_test_automation" author="dave">
-        <query>CREATE (p:Practice {name: 'BDD'})</query> 
-        <query>CREATE (p:Practice {name: 'ATDD'})</query> 
-        <query>CREATE (p:Practice {name: '3 Amigos'})</query>
-        <query>CREATE (p:Practice {name: 'Specification by Example'})</query>
-    </changeset>
-</changelog>

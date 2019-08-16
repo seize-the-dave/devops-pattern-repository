@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
-    <import resource="changesets/001_kanban.xml" />
-    <import resource="changesets/004_xp.xml" />
-    <import resource="changesets/005_scrum.xml" />
-    <import resource="changesets/006_less.xml" />
-</changelog>

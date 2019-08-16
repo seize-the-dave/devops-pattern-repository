@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
-    <changeset id="006_less" author="dave">
-        <query>CREATE (m:Model { name: 'LeSS' })</query>
-        <query>MATCH (m:Model) WHERE (m.name = 'LeSS') CREATE (p:Practice {name: 'Sprint Planning One'})-[:REALISED_BY]->(m)</query> 
-        <query>MATCH (m:Model) WHERE (m.name = 'LeSS') CREATE (p:Practice {name: 'Sprint Planning Two'})-[:REALISED_BY]->(m)</query> 
-        <query>MATCH (m:Model) WHERE (m.name = 'LeSS') CREATE (p:Practice {name: 'Overall Retrospective'})-[:REALISED_BY]->(m)</query> 
-    </changeset>
-</changelog>

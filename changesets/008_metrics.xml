@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<changelog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.liquigraph.org/schema/1.0/liquigraph.xsd">
-    <changeset id="008_metrics" author="dave">
-        <query>CREATE (p:Metric {name: 'Lead Time'})</query> 
-        <query>CREATE (p:Metric {name: 'Throughput'})</query> 
-        <query>CREATE (p:Metric {name: 'Flow Efficiency'})</query> 
-    </changeset>
-</changelog>
