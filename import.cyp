@@ -34,9 +34,12 @@ CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBo
 CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
 
 CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
+CREATE (CustomerKanban:Practice {name: 'Customer Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban)
 
 CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
 CREATE (MakingWorkVisible:Book {name: 'Making Work Visible', isbn: '1942788150'})-[:WRITTEN_BY]->(DomincaDeGrandis:Person {name: 'Dominica DeGrandis'})
+
+
 
 // Kanban Core Practices
 
@@ -127,6 +130,7 @@ CREATE (ML3)<-[:APPLIES_AT]-(LW3_1:Practice {name: 'Use an order point (min limi
 CREATE (ML3)<-[:APPLIES_AT]-(LW3_2:Practice {name: 'Use a max limit to define capacity.', code: 'LW3.2'})-[:SPECIALISM_OF]->(LimitWIP)
 CREATE (ML3)<-[:APPLIES_AT]-(LW3_3:Practice {name: 'Bracket WIP limits for different states.', code: 'LW3.3'})-[:SPECIALISM_OF]->(LimitWIP)
 CREATE (ML4)<-[:APPLIES_AT]-(LW4_1:Practice {name: 'Limit WIP on dependency parking lot.', code: 'LW4.1'})-[:SPECIALISM_OF]->(LimitWIP)
+
 CREATE (ML0)<-[:APPLIES_AT]-(MF0_1:Practice {name: 'Define work types based on nature of tasks.', code: 'MF0.1'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML2)<-[:APPLIES_AT]-(MF2_1:Practice {name: 'Define work types based on customer requests.', code: 'MF2.1'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML2)<-[:APPLIES_AT]-(MF2_2:Practice {name: 'Map upstream and downstream flow.', code: 'MF2.2'})-[:SPECIALISM_OF]->(ManageFlow)
@@ -382,6 +386,8 @@ CREATE (SprintBacklog:Artefact {name: 'Sprint Backlog'})-[:ARTEFACT_OF]->(Scrum)
 
 CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(DailyStandup)
 CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(IterationPlanning)
+CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(ReplenishmentMeeting)
+CREATE (SprintRetrospective)-[:ALSO_KNOWN_AS]->(RiskReview)
 
 CREATE (DefinitionOfReady:Practice {name: 'Definition of Ready'})-[:EXTENDS]->(ExplicitPolicies)
 CREATE (DefinitionOfDone:Practice {name: 'Definition of Done'})-[:EXTENDS]->(ExplicitPolicies)
