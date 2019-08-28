@@ -13,8 +13,16 @@ CREATE (PaulDuvall:Person {name: 'Paul Duvall'})<-[:WRITTEN_BY]-(ContinuousInteg
 CREATE (CodingStandards:Practice {name: 'Coding Standards'})-[:PRACTICE_OF]->(XP)
 CREATE (CollectiveCodeOwnership:Practice {name: 'Collective Code Ownership'})-[:PRACTICE_OF]->(XP)
 CREATE (OnsiteCustomer:Practice {name: 'Onsite Customer'})-[:PRACTICE_OF]->(XP)
-CREATE (IterationPlanning:Practice {name: 'Iteration Planning'})-[:PRACTICE_OF]->(XP)
+CREATE (IterationPlanning:Event {name: 'Iteration Planning'})-[:PRACTICE_OF]->(XP)
 CREATE (UserStories:Practice {name: 'User Stories'})-[:PRACTICE_OF]->(XP)
+CREATE (SpikeSolution:Practice {name: 'Spike Solution'})-[:PRACTICE_OF]->(XP)
+CREATE (ReleasePlanning:Event {name: 'Release Planning'})-[:MEETING_OF]->(XP)
+CREATE (ReleasePlan:Artefact {name: 'Release Plan'})-[:ARTEFACT_OF]->(XP)
+CREATE (Iteration:Event {name: 'Iteration'})-[:MEETING_OF]->(XP)
+CREATE (Velocity:Measure {name: 'Velocity'})-[:MEASUREMENT_OF]->(XP)
+CREATE (XPDailyStandUp:Event {name: 'Daily Stand Up Meeting'})-[:MEETING_OF]->(XP)
+CREATE (Refactoring:Practice {name: 'Refactoring'})-[:PRACTICE_OF]->(XP)
+CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring', isbn: ' 0134757599'})-[:WRITTEN_BY]->(MartinFowler:Person {name: 'Martin Fowler'})
 
 CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
 
@@ -25,13 +33,16 @@ CREATE (Kanban:Method {name: 'Kanban'})
 CREATE (Kanban)-[:DESCRIBED_BY]->(BlueBook:Book {name: 'Kanban', isbn: '0984521402'})-[:WRITTEN_BY]->(DavidAnderson:Person {name: 'David J. Anderson'})
 CREATE (Kanban)-[:DESCRIBED_BY]->(EssentialKanban:Book {name: 'Essential Kanban Condensed', isbn: '0984521429'})-[:WRITTEN_BY]->(DavidAnderson)
 CREATE (Kanban)-[:DESCRIBED_BY]->(KanbanInside:Book {name: 'Kanban From the Inside', isbn: '0985305193'})-[:WRITTEN_BY]->(MikeBurrows:Person {name: 'Mike Burrows'})
-CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
 CREATE (EssentialKanban)-[:WRITTEN_BY]->(AndyCarmichael:Person {name: 'Andy Carmichael'})
+
+CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
+CREATE (BlockerClustering:Practice {name: 'Blocker Clustering'})-[:DESCRIBED_BY]->(PracticalKanban)
 
 
 CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
 
 CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
+CREATE (FlightLevels)-[:DESCRIBED_BY]->(PracticalKanban)
 
 CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
 CREATE (CustomerKanban:Practice {name: 'Customer Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban)
@@ -52,13 +63,14 @@ CREATE (ImproveCollaboratively:Practice {name: 'Improve Collaboratively, Evolve 
 
 // Kanban Cadences
 
-CREATE (StrategyReview:Practice {name: 'Strategy Review'})-[:MEETING_OF]->(Kanban)
-CREATE (OperationsReview:Practice {name: 'Operations Review'})-[:MEETING_OF]->(Kanban)
-CREATE (RiskReview:Practice {name: 'Risk Review'})-[:MEETING_OF]->(Kanban)
-CREATE (ServiceDeliveryReview:Practice {name: 'Service Delivery Review'})-[:MEETING_OF]->(Kanban)
-CREATE (ReplenishmentMeeting:Practice {name: 'Replenishment/Commitment Meeting'})-[:MEETING_OF]->(Kanban)
-CREATE (DailyStandup:Practice {name: 'Daily Standup'})-[:MEETING_OF]->(Kanban)
-CREATE (DeliveryPlanning:Practice {name: 'Delivery Planning Meeting'})-[:MEETING_OF]->(Kanban)
+CREATE (StrategyReview:Event {name: 'Strategy Review'})-[:MEETING_OF]->(Kanban)
+CREATE (OperationsReview:Event {name: 'Operations Review'})-[:MEETING_OF]->(Kanban)
+CREATE (RiskReview:Event {name: 'Risk Review'})-[:MEETING_OF]->(Kanban)
+CREATE (ServiceDeliveryReview:Event {name: 'Service Delivery Review'})-[:MEETING_OF]->(Kanban)
+CREATE (ReplenishmentMeeting:Event {name: 'Replenishment/Commitment Meeting'})-[:MEETING_OF]->(Kanban)
+CREATE (KanbanDailyStandUp:Event {name: 'Daily Standup'})-[:MEETING_OF]->(Kanban)
+CREATE (KanbanDailyStandUp)-[:ALSO_KNOWN_AS]->(XPDailyStandUp)
+CREATE (DeliveryPlanning:Event {name: 'Delivery Planning Meeting'})-[:MEETING_OF]->(Kanban)
 
 // Kanban Maturity Model
 
@@ -74,140 +86,213 @@ CREATE (ML4:MaturityLevel {name: 'Quantitatively Managed', code: 'ML4'})-[:LEVEL
 CREATE (ML5:MaturityLevel {name: 'Optimizing', code: 'ML5'})-[:LEVEL_OF]->(KMM)
 CREATE (ML6:MaturityLevel {name: 'Congruent', code: 'ML6'})-[:LEVEL_OF]->(KMM)
 
+// VZ 0 Consolidation
 CREATE (ML0)<-[:APPLIES_AT]-(VZ0_1:Practice {name: 'Visualize an individual’s work by means of a personal kanban board.', code: 'VZ0.1'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML0)<-[:APPLIES_AT]-(VZ0_2:Practice {name: 'Visualize basic work item related information on a ticket.', code: 'VZ0.2'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 1 Transition
 CREATE (ML1)<-[:APPLIES_AT]-(VZ1_1:Practice {name: 'Visualize work for several individuals by means of an aggregated personal kanban board.', code: 'VZ1.1'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML1)<-[:APPLIES_AT]-(VZ1_2:Practice {name: 'Visualize the work carried out by a team by means of a team kanban board.', code: 'VZ1.2'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML1)<-[:APPLIES_AT]-(VZ1_3:Practice {name: 'Use avatars to visualize an individual’s workload.', code: 'VZ1.3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML1)<-[:APPLIES_AT]-(VZ1_4:Practice {name: 'Visualize initial policies.', code: 'VZ1.4'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML1)<-[:APPLIES_AT]-(VZ1_5:Practice {name: 'Visualize teamwork by means of an emergent workflow kanban board.', code: 'VZ1.5'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_1:Practice {name: 'Visualize work items by means of a delivery kanban board with per- person WIP limits.', code: 'VZ2.1'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_2:Practice {name: 'Visualize work types by means of card colors or board rows.', code: 'VZ2.2'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_3:Practice {name: 'Visualize blocked work items.', code: 'VZ2.3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_4:Practice {name: 'Visualize development of options by means of a discovery kanban board.', code: 'VZ2.4'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_5:Practice {name: 'Visualize individual workload on a discovery kanban board by means of per-person WIP limits, potentially implemented using avatars.', code: 'VZ2.5'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_6:Practice {name: 'Visualize basic policies.', code: 'VZ2.6'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_7:Practice {name: 'Ticket design: Visualize concurrent or unordered activities with checkboxes.', code: 'VZ2.7'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_8:Practice {name: 'Ticket design: Visualize concurrent activities performed by specialist teams using partial rows.', code: 'VZ2.8'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_9:Practice {name: 'Board design: Visualize sequential activities where no dependency or preferred sequence exists using rows or vertical spaces.', code: 'VZ2.9'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_10:Practice {name: 'Visualize defects and other rework types.', code: 'VZ2.10'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_11:Practice {name: 'Use CONWIP with an emergent workflow delivery kanban board to provide workflow-level relief from overburdening and basic mechanics of a pull system, with separate replenishment and delivery cadences.', code: 'VZ2.11'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_12:Practice {name: 'Visualize workflow by means of enhanced discovery/delivery boards.', code: 'VZ2.12'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ2_12)<-[:DESCRIBED_BY]-(UpstreamKanban)
-CREATE (ML2)<-[:APPLIES_AT]-(VZ2_13:Practice {name: 'Visualize project progress on a portfolio kanban board.', code: 'VZ2.13'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML1)<-[:APPLIES_AT]-(VZ1_2:Practice {name: 'Visualize discovered initial policies.', code: 'VZ1.2'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 1 Consolidation
+CREATE (ML1)<-[:APPLIES_AT]-(VZ1_3:Practice {name: 'Visualize the work carried out by a team by means of a team kanban board.', code: 'VZ1.3'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML1)<-[:APPLIES_AT]-(VZ1_4:Practice {name: 'Use avatars to visualize an individual’s workload.', code: 'VZ1.4'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML1)<-[:APPLIES_AT]-(VZ1_5:Practice {name: 'Visualize basic policies.', code: 'VZ1.5'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 2 Transition
+CREATE (ML1)<-[:APPLIES_AT]-(VZ2_1:Practice {name: 'Visualize teamwork by means of an emergent workflow kanban board.', code: 'VZ2.1'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_2:Practice {name: 'Visualize work items by means of a delivery kanban board with per-person WIP limits.', code: 'VZ2.2'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_3:Practice {name: 'Visualize work types by means of card colors or board rows.', code: 'VZ2.3'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_4:Practice {name: 'Visualize blocked work items.', code: 'VZ2.4'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_5:Practice {name: 'Visualize work requests on another service or system.', code: 'VZ2.5'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_6:Practice {name: 'Visualize work item aging.', code: 'VZ2.6'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ2_7:Practice {name: 'Visualize basic service policies.', code: 'VZ2.7'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_8:Practice {name: 'Visualize development of options by means of a upstream kanban board.', code: 'VZ2.8'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_9:Practice {name: 'Visualize avatars on an upstream kanban board.', code: 'VZ2.9'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 2 Consolidation
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_10:Practice {name: 'Visualize constant WIP [CONWIP] on an emergent workflow delivery kanban board', code: 'VZ2.10'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_11:Practice {name: 'Visualize concurrent or unordered activities with checkboxes.', code: 'VZ2.11'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_12:Practice {name: 'Visualize concurrent activities performed by specialist teams using partial rows.', code: 'VZ2.12'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_13:Practice {name: 'Visualize sequential activities where no dependency or preferred sequence exists using rows or vertical spaces.', code: 'VZ2.13'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_14:Practice {name: 'Visualize defects and other rework types.', code: 'VZ2.14'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_15:Practice {name: 'Visualize defined workflow using a kanban board.', code: 'VZ2.15'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_16:Practice {name: 'Visualize project progress on a simple portfolio kanban board.', code: 'VZ2.16'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML2)<-[:APPLIES_AT]-(VZ2_17:Practice {name: 'Visualize a program as an aggregated service delivery overview.', code: 'VZ2.17'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 3 Transition
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_1:Practice {name: 'Visualize “ready to commit” status, also known as “ready to pull.”', code: 'VZ3.1'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_2:Practice {name: 'Visualize “ready to pull” criteria, also known as “definition of ready,” or “entry criteria.”', code: 'VZ3.2'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_3:Practice {name: 'Visualize workflow and teamwork items by means of aggregated team kanban board.', code: 'VZ3.3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_4:Practice {name: 'Visualize project work items on a two-tiered project kanban board.', code: 'VZ3.4'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_5:Practice {name: 'Visualize parent–child and peer–peer dependencies.', code: 'VZ3.5'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_6:Practice {name: 'Use a parking lot to visualize dependent work requests of another service or system currently waiting or blocked.', code: 'VZ3.6'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_3:Practice {name: 'Visualize project work items on a two-tiered project kanban board.', code: 'VZ3.3'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_4:Practice {name: 'Visualize workflow and teamwork items by means of aggregated team kanban board.', code: 'VZ3.4'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_5:Practice {name: 'Visualize discarded options using a bin on an upstream/discovery kanban board.', code: 'VZ3.5'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_6:Practice {name: 'Visualize parent–child and peer–peer dependencies.', code: 'VZ3.6'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_7:Practice {name: 'Visualize upstream options by means of an upstream/discovery kanban board.', code: 'VZ3.7'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_8:Practice {name: 'Visualize discarded options using a bin on an upstream/discovery kanban board.', code: 'VZ3.8'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_9:Practice {name: 'Visualize replenishment signals.', code: 'VZ3.9'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_10:Practice {name: 'Visualize pull signals.', code: 'VZ3.10'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_11:Practice {name: 'Visualize pull criteria (also known as “pull policies,” “definition of ready,” or “exit criteria”).', code: 'VZ3.11'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_12:Practice {name: 'Visualize available capacity.', code: 'VZ3.12'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_13:Practice {name: 'Visualize work item aging.', code: 'VZ3.13'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_14:Practice {name: 'Visualize target date or SLA.', code: 'VZ3.14'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_15:Practice {name: 'Visualize failure demand versus value demand.', code: 'VZ3.15'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_16:Practice {name: 'Visualize aborted work.', code: 'VZ3.16'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_17:Practice {name: 'Visualize class of service using ticket colors, board rows, or ticket decorators.', code: 'VZ3.17'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML3)<-[:APPLIES_AT]-(VZ3_18:Practice {name: 'Use Earned Value portfolio kanban board to visualize project progress and schedule or budget risk.', code: 'VZ3.18'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 3 Consolidation
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_8:Practice {name: 'Visualize replenishment signals.', code: 'VZ3.8'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_9:Practice {name: 'Visualize pull signals.', code: 'VZ3.9'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_10:Practice {name: 'Visualize pull criteria (also known as “pull policies,” “definition of ready,” or “exit criteria”).', code: 'VZ3.10'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_11:Practice {name: 'Visualize available capacity.', code: 'VZ3.11'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_12:Practice {name: 'Visualize target date or SLA.', code: 'VZ3.12'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_13:Practice {name: 'Visualize failure demand versus value demand.', code: 'VZ3.13'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_14:Practice {name: 'Visualize aborted work.', code: 'VZ3.14'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_15:Practice {name: 'Visualize class of service using ticket colors, board rows, or ticket decorators.', code: 'VZ3.15'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_16:Practice {name: 'Use Earned Value portfolio kanban board to visualize project progress and schedule or budget risk.', code: 'VZ3.16'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (ML3)<-[:APPLIES_AT]-(VZ3_17:Practice {name: 'Visualize a portfolio as an aggregated program overview board.', code: 'VZ3.17'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_1:Practice {name: 'Visualize local cycle time.', code: 'VZ4.1'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_2:Practice {name: 'Use ticket decorators to indicate risks.', code: 'VZ4.2'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_3:Practice {name: 'Visualize risk classes with different swim lanes', code: 'VZ4.3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_4:Practice {name: 'Visualize split-and-merge workflows.', code: 'VZ4.4'})-[:SPECIALISM_OF]->(Visualization)
+// VZ 4 Consolidation
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_5:Practice {name: 'Visualize WIP limits on dependencies parking lot.', code: 'VZ4.5'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_6:Practice {name: 'Visualize waiting time in dependencies parking lot.', code: 'VZ4.6'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_7:Practice {name: 'Visualize SLA exceeded in dependencies parking lot.', code: 'VZ4.7'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (ML5)<-[:APPLIES_AT]-(VZ5_1:Practice {name: 'Visualize fixed teams and floating workers (shared resources) across aggregated services.', code: 'VZ5.1'})-[:SPECIALISM_OF]->(Visualization)
+
+// ML 0 Consolidation
 CREATE (ML0)<-[:APPLIES_AT]-(LW0_1:Practice {name: 'Establish personal WIP limits.', code: 'LW0.1'})-[:SPECIALISM_OF]->(LimitWIP)
+// ML 1 Transition
 CREATE (ML1)<-[:APPLIES_AT]-(LW1_1:Practice {name: 'Establish per-person WIP limits.', code: 'LW1.1'})-[:SPECIALISM_OF]->(LimitWIP)
+// ML 1 Consolidation
 CREATE (ML1)<-[:APPLIES_AT]-(LW1_2:Practice {name: 'Establish team WIP limits.', code: 'LW1.2'})-[:SPECIALISM_OF]->(LimitWIP)
-CREATE (ML2)<-[:APPLIES_AT]-(LW2_1:Practice {name: 'Establish activity based WIP limits.', code: 'LW2.1'})-[:SPECIALISM_OF]->(LimitWIP)
-CREATE (ML2)<-[:APPLIES_AT]-(LW2_2:Practice {name: 'Establish CONWIP limits on emergent workflow.', code: 'LW2.2'})-[:SPECIALISM_OF]->(LimitWIP)
-CREATE (ML3)<-[:APPLIES_AT]-(LW3_1:Practice {name: 'Use an order point (min limit) for upstream replenishment.', code: 'LW3.1'})-[:SPECIALISM_OF]->(LimitWIP)
-CREATE (ML3)<-[:APPLIES_AT]-(LW3_2:Practice {name: 'Use a max limit to define capacity.', code: 'LW3.2'})-[:SPECIALISM_OF]->(LimitWIP)
-CREATE (ML3)<-[:APPLIES_AT]-(LW3_3:Practice {name: 'Bracket WIP limits for different states.', code: 'LW3.3'})-[:SPECIALISM_OF]->(LimitWIP)
+// ML 2 Consolidation
+CREATE (ML2)<-[:APPLIES_AT]-(LW2_1:Practice {name: 'Establish CONWIP limits on emergent workflow.', code: 'LW2.1'})-[:SPECIALISM_OF]->(LimitWIP)
+CREATE (ML2)<-[:APPLIES_AT]-(LW2_2:Practice {name: 'Establish WIP limit on the aggregated service delivery overview board.', code: 'LW2.2'})-[:SPECIALISM_OF]->(LimitWIP)
+// ML 3 Transition
+CREATE (ML3)<-[:APPLIES_AT]-(LW3_1:Practice {name: 'Establish activity based WIP limits.', code: 'LW3.1'})-[:SPECIALISM_OF]->(LimitWIP)
+// ML 3 Consolidation
+CREATE (ML3)<-[:APPLIES_AT]-(LW3_2:Practice {name: 'Use an order point (min limit) for upstream replenishment.', code: 'LW3.2'})-[:SPECIALISM_OF]->(LimitWIP)
+CREATE (ML3)<-[:APPLIES_AT]-(LW3_3:Practice {name: 'Use a max limit to constrain upstream capacity.', code: 'LW3.3'})-[:SPECIALISM_OF]->(LimitWIP)
+CREATE (ML3)<-[:APPLIES_AT]-(LW3_4:Practice {name: 'Bracket WIP limits for different states.', code: 'LW3.4'})-[:SPECIALISM_OF]->(LimitWIP)
+CREATE (ML3)<-[:APPLIES_AT]-(LW3_5:Practice {name: 'Create an end-to-end pull system, from commitment to delivery', code: 'LW3.5'})-[:SPECIALISM_OF]->(LimitWIP)
+// ML 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(LW4_1:Practice {name: 'Limit WIP on dependency parking lot.', code: 'LW4.1'})-[:SPECIALISM_OF]->(LimitWIP)
 
-CREATE (ML0)<-[:APPLIES_AT]-(MF0_1:Practice {name: 'Define work types based on nature of tasks.', code: 'MF0.1'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 0 Consolidation
+CREATE (ML0)<-[:APPLIES_AT]-(MF0_1:Practice {name: 'Categorize tasks by means of urgency, importance and impact.', code: 'MF0.1'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 2 Transition
 CREATE (ML2)<-[:APPLIES_AT]-(MF2_1:Practice {name: 'Define work types based on customer requests.', code: 'MF2.1'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML2)<-[:APPLIES_AT]-(MF2_2:Practice {name: 'Map upstream and downstream flow.', code: 'MF2.2'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML2)<-[:APPLIES_AT]-(MF2_3:Practice {name: 'Manage blocking issues.', code: 'MF2.3'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML2)<-[:APPLIES_AT]-(MF2_4:Practice {name: 'Manage defects and other rework types.', code: 'MF2.4'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_2:Practice {name: 'Define basic services.', code: 'MF2.2'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_3:Practice {name: 'Map upstream and downstream flow.', code: 'MF2.3'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_4:Practice {name: 'Define and collect blocker metrics.', code: 'MF2.4'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_5:Practice {name: 'Define and collect WIP aging metrics.', code: 'MF2.5'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 2 Consolidation
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_6:Practice {name: 'Manage blocking issues.', code: 'MF2.6'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_7:Practice {name: 'Manage defects and other rework types.', code: 'MF2.7'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML2)<-[:APPLIES_AT]-(MF2_8:Practice {name: 'Manage aging WIP.', code: 'MF2.8'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 3 Transition
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_1:Practice {name: 'Organize around the knowledge discovery process.', code: 'MF3.1'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_2:Practice {name: 'Defer commitment (decide at the “last responsible moment.”)', code: 'MF3.2'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_3:Practice {name: 'Use cumulative flow diagram to monitor queues.', code: 'MF3.3'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_4:Practice {name: 'Use Little’s Law.', code: 'MF3.4'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_5:Practice {name: 'Gradually eliminate infinite buffers.', code: 'MF3.5'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_6:Practice {name: 'Report rudimentary flow efficiency to understand the value of reducing buffers and the leverage of eliminating sources of delay.', code: 'MF3.6'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_7:Practice {name: 'Actively close upstream requests that meet the abandonment', code: 'MF3.7'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_8:Practice {name: 'Develop triage discipline.', code: 'MF3.8'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_9:Practice {name: 'Manage dependencies.', code: 'MF3.9'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_10:Practice {name: 'Analyze and report aborted work items.', code: 'MF3.10'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_11:Practice {name: 'Use classes of service to affect selection.', code: 'MF3.11'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_12:Practice {name: 'Forecast delivery.', code: 'MF3.12'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML3)<-[:APPLIES_AT]-(MF3_13:Practice {name: 'Apply qualitative Real Options Thinking.', code: 'MF3.13'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_2:Practice {name: 'Collect service-related data: demand, capability.”)', code: 'MF3.2'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_3:Practice {name: 'Analyze service fitness-for-purpose.”)', code: 'MF3.3'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (MF3_3)-[:RELATED_TO]->(FitForPurpose:Model {name: 'Fit for Purpose'})-[:DESCRIBED_BY]->(F4PBook:Book {name: 'Fit For Purpose', isbn: '1732821208'})-[:WRITTEN_BY]->(DavidAnderson)
+CREATE (F4PBook)-[:WRITTEN_BY]->(AlexeiZheglov:Person {name: 'Alexei Zheglov'})
+
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_4:Practice {name: 'Defer commitment (decide at the “last responsible moment.”)', code: 'MF3.4'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_5:Practice {name: 'Use cumulative flow diagram to monitor queues.', code: 'MF3.5'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_6:Practice {name: 'Use Little’s Law.', code: 'MF3.6'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_7:Practice {name: 'Report rudimentary flow efficiency', code: 'MF3.7'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_8:Practice {name: 'Gradually eliminate infinite buffers.', code: 'MF3.8'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_9:Practice {name: 'Actively close upstream requests that meet the abandonment criteria', code: 'MF3.9'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_10:Practice {name: 'Report abandoned vs completed commited work.', code: 'MF3.10'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 3 Consolidation
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_11:Practice {name: 'Develop triage discipline.', code: 'MF3.11'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_12:Practice {name: 'Manage dependencies, peer-to-peer or parent-child.', code: 'MF3.12'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_13:Practice {name: 'Analyze and report aborted work items.', code: 'MF3.13'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_14:Practice {name: 'Use classes of service to affect selection.', code: 'MF3.14'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_15:Practice {name: 'Use two-phase commit for delivery commitment.', code: 'MF3.15'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_16:Practice {name: 'Forecast delivery.', code: 'MF3.16'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML3)<-[:APPLIES_AT]-(MF3_17:Practice {name: 'Apply qualitative Real Options Thinking.', code: 'MF3.17'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_1:Practice {name: 'Collect and report detailed flow efficiency analysis.', code: 'MF4.1'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_2:Practice {name: 'Use explicit buffers to smooth flow.', code: 'MF4.2'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_3:Practice {name: 'Use two-phase commit for delivery commitment.', code: 'MF4.3'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_4:Practice {name: 'Analyze to anticipate dependencies.', code: 'MF4.4'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_5:Practice {name: 'Establish refutable versus irrefutable demand.', code: 'MF4.5'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_6:Practice {name: 'Determine reference class data set.', code: 'MF4.6'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_7:Practice {name: 'Forecast using reference classes, Monte Carlo simulations, and other models.', code: 'MF4.7'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_8:Practice {name: 'Allocate capacity across swim lanes.', code: 'MF4.8'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_9:Practice {name: 'Allocate capacity by color of work item.', code: 'MF4.9'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_10:Practice {name: 'Make appropriate use of forecasting.', code: 'MF4.10'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_11:Practice {name: 'Assess forecasting models for robustness.', code: 'MF4.11'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML4)<-[:APPLIES_AT]-(MF4_12:Practice {name: 'Use statistical methods for decision making.', code: 'MF4.12'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML5)<-[:APPLIES_AT]-(MF5_1:Practice {name: 'Utilize hybrid fixed service teams together with a flexible labor pool.', code: 'MF5.1'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (ML0)<-[:APPLIES_AT]-(XP0_1:Practice {name: 'Define personal kanban policies.', code: 'XP0.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML1)<-[:APPLIES_AT]-(XP1_1:Practice {name: 'Define initial policies.', code: 'XP1.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML2)<-[:APPLIES_AT]-(XP2_1:Practice {name: 'Define initial services.', code: 'XP2.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML2)<-[:APPLIES_AT]-(XP2_2:Practice {name: 'Elaborate further policies.', code: 'XP2.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML2)<-[:APPLIES_AT]-(XP2_3:Practice {name: 'Define blocking issue escalation policies.', code: 'XP2.3'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_3:Practice {name: 'Analyze to anticipate dependencies.', code: 'MF4.3'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_4:Practice {name: 'Establish refutable versus irrefutable demand.', code: 'MF4.4'})-[:SPECIALISM_OF]->(ManageFlow)
+// ML 4 Consolidation
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_5:Practice {name: 'Determine reference class data set.', code: 'MF4.5'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_6:Practice {name: 'Forecast using reference classes, Monte Carlo simulations, and other models.', code: 'MF4.6'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_7:Practice {name: 'Allocate capacity across swim lanes.', code: 'MF4.7'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_8:Practice {name: 'Allocate capacity by color of work item.', code: 'MF4.8'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_9:Practice {name: 'Make appropriate use of forecasting.', code: 'MF4.9'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_10:Practice {name: 'Assess forecasting models for robustness.', code: 'MF4.10'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (ML4)<-[:APPLIES_AT]-(MF4_11:Practice {name: 'Use statistical methods for decision making.', code: 'MF4.11'})-[:SPECIALISM_OF]->(ManageFlow)
+
+// ML 0 Consolidation
+CREATE (ML0)<-[:APPLIES_AT]-(XP0_1:Practice {name: 'Make the rules for personal kanban explicit.', code: 'XP0.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 1 Transition
+CREATE (ML1)<-[:APPLIES_AT]-(XP1_1:Practice {name: 'Discover initial policies.', code: 'XP1.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 1 Consolidation
+CREATE (ML1)<-[:APPLIES_AT]-(XP1_2:Practice {name: 'Define basic policies.', code: 'XP1.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 2 Transition
+CREATE (ML2)<-[:APPLIES_AT]-(XP2_1:Practice {name: 'Define basic service policies.', code: 'XP2.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 2 Consolidation
+CREATE (ML2)<-[:APPLIES_AT]-(XP2_2:Practice {name: 'Define policies for managing aging WIP.', code: 'XP2.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML2)<-[:APPLIES_AT]-(XP2_3:Practice {name: 'Define policies for blocking issue escalation.', code: 'XP2.3'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 CREATE (ML2)<-[:APPLIES_AT]-(XP2_4:Practice {name: 'Define policies for managing defects and other rework types.', code: 'XP2.4'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_1:Practice {name: 'Establish explicit purpose of metrics.', code: 'XP3.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_2:Practice {name: 'Establish initial request acceptance policies.', code: 'XP3.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_3:Practice {name: 'Define work request abandonment policies.', code: 'XP3.3'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_4:Practice {name: 'Establish replenishment commitment point.', code: 'XP3.4'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_5:Practice {name: 'Establish pull criteria.', code: 'XP3.5'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_6:Practice {name: 'Establish a delivery commitment point.', code: 'XP3.6'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_7:Practice {name: 'Establish customer acceptance criteria for each work item or a class', code: 'XP3.7'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML3)<-[:APPLIES_AT]-(XP3_8:Practice {name: 'Define classes of service.', code: 'XP3.8'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML4)<-[:APPLIES_AT]-(XP4_1:Practice {name: 'Explicitly define fitness-for-purpose, and manage based on metrics.', code: 'XP4.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML2)<-[:APPLIES_AT]-(XP2_5:Practice {name: 'Define basic policies for coordinating work of different service teams.', code: 'XP2.5'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 3 Transition
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_1:Practice {name: 'Establish F4P-related metrics.', code: 'XP3.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (XP3_1)-[:RELATED_TO]->(FitForPurpose)
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_2:Practice {name: 'Explicitly define pull criteria.', code: 'XP3.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_3:Practice {name: 'Define upstream option abandonment policies.', code: 'XP3.3'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_4:Practice {name: 'Define the meaning of "abandonment" for commited work.', code: 'XP3.4'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 3 Consolidation
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_5:Practice {name: 'Establish a delivery commitment point.', code: 'XP3.5'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_6:Practice {name: 'Establish a replenishment commitment point.', code: 'XP3.6'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_7:Practice {name: 'Define basic classes of service based on qualitative cost of delay.', code: 'XP3.7'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (ML3)<-[:APPLIES_AT]-(XP3_8:Practice {name: 'Establish customer acceptance criteria for each work item or a class of work items', code: 'XP3.8'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 4 Transition
+CREATE (ML4)<-[:APPLIES_AT]-(XP4_1:Practice {name: 'Explicitly define fitness-for-purpose based on metrics.', code: 'XP4.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+// ML 4 Consolidation
 CREATE (ML4)<-[:APPLIES_AT]-(XP4_2:Practice {name: 'Establish demand shaping policies.', code: 'XP4.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 CREATE (ML4)<-[:APPLIES_AT]-(XP4_3:Practice {name: 'Establish SLA on dependent services.', code: 'XP4.3'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (ML5)<-[:APPLIES_AT]-(XP5_1:Practice {name: 'Align strategy and capability.', code: 'XP5.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+
+// ML 0 Consolidation
 CREATE (ML0)<-[:APPLIES_AT]-(FL0_1:Practice {name: 'Engage in personal reflection.', code: 'FL0.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML1)<-[:APPLIES_AT]-(FL1_1:Practice {name: 'Conduct Kanban Meeting.', code: 'FL1.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML2)<-[:APPLIES_AT]-(FL2_1:Practice {name: 'Conduct internal team Replenishment Meeting.', code: 'FL2.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML2)<-[:APPLIES_AT]-(FL2_2:Practice {name: 'Hold a Team Retrospective.', code: 'FL2.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML3)<-[:APPLIES_AT]-(FL3_1:Practice {name: 'Conduct Replenishment Meeting.', code: 'FL3.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML3)<-[:APPLIES_AT]-(FL3_2:Practice {name: 'Conduct Suggestion Box Review.', code: 'FL3.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML3)<-[:APPLIES_AT]-(FL3_3:Practice {name: 'Conduct System Capability Review.', code: 'FL3.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML3)<-[:APPLIES_AT]-(FL3_4:Practice {name: 'Conduct Delivery Planning Meeting.', code: 'FL3.4'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML3)<-[:APPLIES_AT]-(FL3_5:Practice {name: 'Conduct Service Delivery Review.', code: 'FL3.5'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML3)<-[:APPLIES_AT]-(FL3_6:Practice {name: 'Conduct Options Review (upstream).', code: 'FL3.6'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML4)<-[:APPLIES_AT]-(FL4_1:Practice {name: 'Conduct Risk Review.', code: 'FL4.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML4)<-[:APPLIES_AT]-(FL4_2:Practice {name: 'Conduct Portfolio Review.', code: 'FL4.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML4)<-[:APPLIES_AT]-(FL4_3:Practice {name: 'Conduct Operations Review.', code: 'FL4.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
-CREATE (ML5)<-[:APPLIES_AT]-(FL5_1:Practice {name: 'Conduct Strategy Review.', code: 'FL5.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
+// ML 1 Transition
+CREATE (ML1)<-[:APPLIES_AT]-(FL1_1:Practice {name: 'Conduct Team Kanban Meeting.', code: 'FL1.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
+// ML 1 Consolidation
+CREATE (ML1)<-[:APPLIES_AT]-(FL1_2:Practice {name: 'Make team review.', code: 'FL1.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML1)<-[:APPLIES_AT]-(FL1_3:Practice {name: 'Conduct internal team replenishment meeting.', code: 'FL1.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
+// ML 2 Transition
+CREATE (ML2)<-[:APPLIES_AT]-(FL2_1:Practice {name: 'Conduct internal workflow replenishment meeting.', code: 'FL2.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
+// ML 2 Consolidation
+CREATE (ML2)<-[:APPLIES_AT]-(FL2_2:Practice {name: 'Conduct workflow Kanban meeting.', code: 'FL2.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML2)<-[:APPLIES_AT]-(FL2_3:Practice {name: 'Conduct system capability review.', code: 'FL2.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML2)<-[:APPLIES_AT]-(FL2_4:Practice {name: 'Conduct blocker clustering.', code: 'FL2.4'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (FL2_4)-[:RELATED_TO]->(BlockerClustering)
+// ML 3 Transition
+CREATE (ML3)<-[:APPLIES_AT]-(FL3_1:Practice {name: 'Conduct replenishment meeting.', code: 'FL3.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML3)<-[:APPLIES_AT]-(FL3_2:Practice {name: 'Make improvement suggestion review.', code: 'FL3.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
+// ML 3 Consolidation
+CREATE (ML3)<-[:APPLIES_AT]-(FL3_3:Practice {name: 'Conduct delivery planning meeting.', code: 'FL3.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML3)<-[:APPLIES_AT]-(FL3_4:Practice {name: 'Conduct service delivery review.', code: 'FL3.4'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML3)<-[:APPLIES_AT]-(FL3_5:Practice {name: 'Conduct options review.', code: 'FL3.5'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML3)<-[:APPLIES_AT]-(FL3_6:Practice {name: 'Conduct basic portfolio review.', code: 'FL3.6'})-[:SPECIALISM_OF]->(FeedbackLoops)
+// ML 4 Transition
+CREATE (ML4)<-[:APPLIES_AT]-(FL4_1:Practice {name: 'Conduct risk review.', code: 'FL4.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (FL4_1)-[:RELATED_TO]->(RiskReview)
+CREATE (ML4)<-[:APPLIES_AT]-(FL4_2:Practice {name: 'Conduct full portfolio review.', code: 'FL4.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (ML4)<-[:APPLIES_AT]-(FL4_3:Practice {name: 'Conduct operations review.', code: 'FL4.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (FL4_3)-[:RELATED_TO]->(OperationsReview)
+
+// ML 2 Transition
 CREATE (ML2)<-[:APPLIES_AT]-(IE2_1:Practice {name: 'Identify sources of dissatisfaction.', code: 'IE2.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML2)<-[:APPLIES_AT]-(IE2_2:Practice {name: 'Identify problematic policies.', code: 'IE2.2'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML3)<-[:APPLIES_AT]-(IE3_1:Practice {name: 'Suggest improvements using a suggestion box.', code: 'IE3.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML3)<-[:APPLIES_AT]-(IE3_2:Practice {name: 'Identify sources of delay.', code: 'IE3.2'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML3)<-[:APPLIES_AT]-(IE3_3:Practice {name: 'Analyze blocker likelihood and impact.', code: 'IE3.3'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML3)<-[:APPLIES_AT]-(IE3_4:Practice {name: 'Analyze lead time tail risk.', code: 'IE3.4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML3)<-[:APPLIES_AT]-(IE3_5:Practice {name: 'After meetings: discuss a problem spontaneously, and bring it to the Service Delivery Review', code: 'IE3.5'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+// ML 2 Consolidation
+CREATE (ML2)<-[:APPLIES_AT]-(IE2_2:Practice {name: 'Define actions to develop basic understanding of the process and improve flow.', code: 'IE2.2'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (ML2)<-[:APPLIES_AT]-(IE2_3:Practice {name: 'Revise problematic policies.', code: 'IE2.3'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (ML2)<-[:APPLIES_AT]-(IE2_4:Practice {name: 'Identify sources of delay.', code: 'IE2.4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+// ML 3 Transition
+CREATE (ML3)<-[:APPLIES_AT]-(IE3_1:Practice {name: 'Solicit change and improvement suggestions.', code: 'IE3.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+// ML 3 Consolidation
+CREATE (ML3)<-[:APPLIES_AT]-(IE3_2:Practice {name: 'Analyze blocker likelihood and impact.', code: 'IE3.2'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (ML3)<-[:APPLIES_AT]-(IE3_3:Practice {name: 'Analyze lead time tail risk.', code: 'IE3.3'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (ML3)<-[:APPLIES_AT]-(IE3_4:Practice {name: 'After meetings: discuss a problem spontaneously, and bring it to the service delivery review', code: 'IE3.4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+// ML 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_1:Practice {name: 'Develop qualitative understanding of common versus special cause for process performance variation.', code: 'IE4.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_2:Practice {name: 'Identify the impact of shared resources.', code: 'IE4.2'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML4)<-[:APPLIES_AT]-(IE4_3:Practice {name: 'Identify bottleneck and resolve it.', code: 'IE4.3'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (ML4)<-[:APPLIES_AT]-(IE4_3:Practice {name: 'Identify bottlenecks.', code: 'IE4.3'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (IE4_3)-[:RELATED_TO]->(TheoryOfConstraints:Model {name: 'Theory of Constraints'})-[:DESCRIBED_BY]->(TheGoal:Book {name: 'The Goal', isbn: '9780884271956'})-[:WRITTEN_BY]->(EliGoldratt:Person {name: 'Eli Goldratt'})
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_4:Practice {name: 'Identify transaction and coordination costs.', code: 'IE4.4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML4)<-[:APPLIES_AT]-(IE4_5:Practice {name: 'Develop quantitative understanding of common versus chance cause for process performance variation.', code: 'IE4.5'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML5)<-[:APPLIES_AT]-(IE5_1:Practice {name: 'After meetings: Discuss – Suggest – Take actions – Seek forgiveness.', code: 'IE5.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (ML6)<-[:APPLIES_AT]-(IE6_1:Practice {name: 'After meetings: Take congruent actions with confidence.', code: 'IE6.1'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+// ML 4 Consolidation
+CREATE (ML4)<-[:APPLIES_AT]-(IE4_5:Practice {name: 'Exploit, subordinate to and elevate bottlenecks.', code: 'IE4.5'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+CREATE (IE4_5)-[:RELATED_TO]->(TheoryOfConstraints)
+CREATE (ML4)<-[:APPLIES_AT]-(IE4_6:Practice {name: 'Develop quantitative understanding of common versus chance cause for process performance variation.', code: 'IE4.6'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
+
 
 // Kanban Guide
 
@@ -331,6 +416,7 @@ CREATE (TeamExperimentation:Practice {name: 'Team Experimentation'})
 CREATE (LeanProductDevelopment:Practice {name: 'Lean Product Development'})
 CREATE (FlowBook:Book {name: 'The Principles of Product Development Flow'})<-[:WRITTEN_BY]-(DonReinertsen:Person {name: 'Don Reinertsen'})
 CREATE (LeanProductDevelopment)-[:DESCRIBED_BY]->(FlowBook)
+CREATE (CostOfDelay:Measure {name: 'Cost of Delay'})-[:DESCRIBED_BY]->(FlowBook)
 CREATE (LeanProductDevelopment)-[:COMPOSED_OF]->(SmallBatches)
 CREATE (LeanProductDevelopment)-[:COMPOSED_OF]->(MakeWorkVisible)
 CREATE (LeanProductDevelopment)-[:COMPOSED_OF]->(GatherCustomerFeedback)
@@ -376,15 +462,21 @@ CREATE (TransformationalLeadership)-[:IMPACTS]->(GatherCustomerFeedback)
 
 CREATE (Scrum:Framework {name: 'Scrum'})
 
-CREATE (SprintPlanning:Practice {name: 'Sprint Planning'})-[:MEETING_OF]->(Scrum)
-CREATE (SprintRetrospective:Practice {name: 'Sprint Retrospective'})-[:MEETING_OF]->(Scrum)
-CREATE (SprintReview:Practice {name: 'Sprint Review'})-[:MEETING_OF]->(Scrum)
-CREATE (DailyScrum:Practice {name: 'Daily Scrum'})-[:MEETING_OF]->(Scrum)
+CREATE (ProductOwner:Role {name: 'Product Owner'})-[:ROLE_OF]->(Scrum)
+CREATE (ScrumMaster:Role {name: 'Scrum Master'})-[:ROLE_OF]->(Scrum)
+
+CREATE (SprintPlanning:Event {name: 'Sprint Planning'})-[:MEETING_OF]->(Scrum)
+CREATE (SprintRetrospective:Event {name: 'Sprint Retrospective'})-[:MEETING_OF]->(Scrum)
+CREATE (SprintReview:Event {name: 'Sprint Review'})-[:MEETING_OF]->(Scrum)
+CREATE (DailyScrum:Event {name: 'Daily Scrum'})-[:MEETING_OF]->(Scrum)
+CREATE (Sprint:Event {name: 'Sprint'})-[:MEETING_OF]->(Scrum)
+CREATE (Sprint)-[:ALSO_KNOWN_AS]->(Iteration)
 
 CREATE (ProductBacklog:Artefact {name: 'Product Backlog'})-[:ARTEFACT_OF]->(Scrum)
 CREATE (SprintBacklog:Artefact {name: 'Sprint Backlog'})-[:ARTEFACT_OF]->(Scrum)
 
-CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(DailyStandup)
+CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(KanbanDailyStandUp)
+CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(XPDailyStandUp)
 CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(IterationPlanning)
 CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(ReplenishmentMeeting)
 CREATE (SprintRetrospective)-[:ALSO_KNOWN_AS]->(RiskReview)
@@ -395,18 +487,29 @@ CREATE (DefinitionOfDone:Practice {name: 'Definition of Done'})-[:EXTENDS]->(Exp
 // LeSS
 
 CREATE (LeSS:Framework {name: 'LeSS'})-[:SCALES]->(Scrum)
+CREATE (LeSS)-[:DESCRIBED_BY]->(LeSSWebsite:Link {name: 'Large Scale Scrum', url: 'http://less.works/'})
 
-CREATE (SprintPlanningOne:Practice {name: 'Sprint Planning One'})-[:MEETING_OF]->(LeSS)
-CREATE (SprintPlanningTwo:Practice {name: 'Sprint Planning Two'})-[:MEETING_OF]->(LeSS)
-CREATE (OverallRetrospective:Practice {name: 'Overall Retrospective'})-[:MEETING_OF]->(LeSS)
+CREATE (SprintPlanningOne:Event {name: 'Sprint Planning One'})-[:MEETING_OF]->(LeSS)
+CREATE (SprintPlanningTwo:Event {name: 'Sprint Planning Two'})-[:MEETING_OF]->(LeSS)
+CREATE (OverallRetrospective:Event {name: 'Overall Retrospective'})-[:MEETING_OF]->(LeSS)
 
 // Nexus
 
 CREATE (Nexus:Framework {name: 'Nexus'})-[:SCALES]->(Scrum)
-CREATE (NexusSprintPlanning:Practice {name: 'Nexus Sprint Planning'})-[:MEETING_OF]->(Nexus)
-CREATE (NexusSprintRetrospective:Practice {name: 'Nexus Sprint Retrospective'})-[:MEETING_OF]->(Nexus)
-CREATE (NexusDailyScrum:Practice {name: 'Nexus Daily Scrum'})-[:MEETING_OF]->(Nexus)
-CREATE (NexusSprintReview:Practice {name: 'Nexus Sprint Review'})-[:MEETING_OF]->(Nexus)
+CREATE (Nexus)-[:DESCRIBED_BY]->(NexusWebsite:Link {name: 'Scaling Scrum with Nexus', url: 'https://www.scrum.org/resources/scaling-scrum'})
+CREATE (NexusSprintPlanning:Event {name: 'Nexus Sprint Planning'})-[:MEETING_OF]->(Nexus)
+CREATE (NexusSprintRetrospective:Event {name: 'Nexus Sprint Retrospective'})-[:MEETING_OF]->(Nexus)
+CREATE (NexusDailyScrum:Event {name: 'Nexus Daily Scrum'})-[:MEETING_OF]->(Nexus)
+CREATE (NexusSprintReview:Event {name: 'Nexus Sprint Review'})-[:MEETING_OF]->(Nexus)
+
+// SAFe
+
+CREATE (SAFe:Framework {name: 'SAFe'})-[:SCALES]->(Scrum)
+CREATE (SAFe)-[:DESCRIBED_BY]->(SAFeWebsite:Link {name: 'Scaled Agile Framework', url: 'https://www.scaledagileframework.com/'})
+CREATE (ReleaseTrain:Artefact {name: 'Agile Release Train'})-[:ARTEFACT_OF]->(SAFe)
+CREATE (ReleaseTrainEngineer:Role {name: 'Release Train Engineer'})-[:ROLE_OF]->(SAFe)
+CREATE (PIPlanning:Event {name: 'PI Planning'})-[:MEETING_OF]->(SAFe)
+CREATE (PIPlanning)-[:FACILITATED_BY]->(ReleaseTrainEngineer)
 
 // DSDM
 
