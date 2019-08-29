@@ -808,7 +808,7 @@ CREATE (Epic:Artifact {name: 'Epic'})-[:ARTIFACT_OF]->(SAFe)
 // DSDM
 
 CREATE (DSDM:Framework {name: 'DSDM'})
-CREATE (MoSCoW:Practice {name: 'MoSCoW'})-[:CORE_TECHNIQUE]->(DSDM)
+CREATE (MoSCoW:Practice {name: 'MoSCoW'})-[:PRACTICE_OF]->(DSDM)
 
 // User Stories
 
