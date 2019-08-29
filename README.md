@@ -4,5 +4,5 @@ Knowledge graph of DevOps practices and capabilities
 
 ## Getting Started
 
-- Download Neo4J
-- Paste import.cyp into Neo4J Browser
+- Install [Neo4J Desktop](https://neo4j.com/developer/neo4j-desktop/)
+- Paste [import.cyp](/import.cyp) into Neo4J Browser
