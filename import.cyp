@@ -1,3 +1,7 @@
+// Queues
+
+CREATE (Queue:Artifact {name: 'Queue'})
+
 // XP
 
 CREATE (XP:Method {name: 'Extreme Programming'})-[:DESCRIBED_BY]->(XPE:Book {name: 'Extreme Programming Explained', isbn: '9780321278654'})-[:WRITTEN_BY]->(KentBeck:Person {name: 'Kent Beck'})
@@ -17,7 +21,7 @@ CREATE (IterationPlanning:Event {name: 'Iteration Planning'})-[:PRACTICE_OF]->(X
 CREATE (UserStories:Practice {name: 'User Stories'})-[:PRACTICE_OF]->(XP)
 CREATE (SpikeSolution:Practice {name: 'Spike Solution'})-[:PRACTICE_OF]->(XP)
 CREATE (ReleasePlanning:Event {name: 'Release Planning'})-[:MEETING_OF]->(XP)
-CREATE (ReleasePlan:Artefact {name: 'Release Plan'})-[:ARTEFACT_OF]->(XP)
+CREATE (ReleasePlan:Artifact {name: 'Release Plan'})-[:ARTIFACT_OF]->(XP)
 CREATE (Iteration:Event {name: 'Iteration'})-[:MEETING_OF]->(XP)
 CREATE (Velocity:Measure {name: 'Velocity'})-[:MEASUREMENT_OF]->(XP)
 CREATE (XPDailyStandUp:Event {name: 'Daily Stand Up Meeting'})-[:MEETING_OF]->(XP)
@@ -25,6 +29,13 @@ CREATE (Refactoring:Practice {name: 'Refactoring'})-[:PRACTICE_OF]->(XP)
 CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring', isbn: ' 0134757599'})-[:WRITTEN_BY]->(MartinFowler:Person {name: 'Martin Fowler'})
 
 CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
+CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:RELATED_TO]->(UserStories)
+CREATE (StorySlicing)-[:RELATED_TO]->(RightSizing)
+
+// Lean
+
+CREATE (ValueStreamMapping:Practice {name: 'Value Stream Mapping'})-[:CREATES]->(ValueStreamMap:Artifact {name: 'Value Stream Map'})
+CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
 
 // Kanban
 
@@ -38,16 +49,43 @@ CREATE (EssentialKanban)-[:WRITTEN_BY]->(AndyCarmichael:Person {name: 'Andy Carm
 CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
 CREATE (BlockerClustering:Practice {name: 'Blocker Clustering'})-[:DESCRIBED_BY]->(PracticalKanban)
 
+CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
+CREATE (CustomerKanban:Practice {name: 'Customer Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban)
+CREATE (UpstreamKanban)-[:SPECIALISM_OF]->(Kanban)
+CREATE (CustomerKanban)-[:SPECIALISM_OF]->(Kanban)
+CREATE (PortfolioKanban:Practice {name: 'Portfolio Kanban'})-[:SPECIALISM_OF]->(Kanban)
+CREATE (PersonalKanban:Practice {name: 'Personal Kanban'})-[:SPECIALISM_OF]->(Kanban)
+CREATE (PersonalKanban)-[:DESCRIBED_BY]->(PersonalKanbanBook:Book {name: 'Personal Kanban', isbn: '1453802266'})-[:WRITTEN_BY]->(JimBenson:Person {name: 'Jim Benson'})
+CREATE (PersonalKanbanBook)-[:WRITTEN_BY]->(TonianneDeMariaBarry:Person {name: 'Tonianne DeMaria Barry'})
+CREATE (TeamKanban:Practice {name: 'Team Kanban'})-[:SPECIALISM_OF]->(Kanban)
 
 CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
 
 CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
 CREATE (FlightLevels)-[:DESCRIBED_BY]->(PracticalKanban)
+CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStream)
+CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel3:Practice {name: 'Flight Level 3'})-[:ALSO_KNOWN_AS]->(PortfolioKanban)
+CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel1:Practice {name: 'Flight Level 1'})-[:ALSO_KNOWN_AS]->(TeamKanban)
 
-CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
-CREATE (CustomerKanban:Practice {name: 'Customer Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban)
+CREATE (FoldingPaperShips:Activity {name: 'Folding Paper Ships'})-[:DEMONSTRATES]->(Kanban)
+CREATE (FoldingPaperShips)-[:DESCRIBED_BY]->(PracticalKanban)
 
 CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
+CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (CycleTime:Measure {name: 'Cycle Time'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (Throughput:Measure {name: 'Throughput'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (CFD:Practice {name: 'Cumulative Flow Diagram'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (ArrivalRate:Measure {name: 'Arrival Rate'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (CycleTimeScatterplot:Practice {name: 'Cycle Time Scatterplot'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (CycleTimeHistogram:Practice {name: 'Cycle Time Histogram'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (SLA:Practice {name: 'Service Level Agreement'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (RightSizing:Practice {name: 'Right Sizing'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (ClassesOfService:Practice {name: 'Classes of Service'})-[:PRACTICE_OF]->(Kanban)
+CREATE (ClassesOfService)-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (MonteCarlo:Practice {name: 'Monte Carlo Simulation'})-[:DESCRIBED_BY]->(ActionableAgile)
+
+
 CREATE (MakingWorkVisible:Book {name: 'Making Work Visible', isbn: '1942788150'})-[:WRITTEN_BY]->(DomincaDeGrandis:Person {name: 'Dominica DeGrandis'})
 
 
@@ -57,7 +95,9 @@ CREATE (MakingWorkVisible:Book {name: 'Making Work Visible', isbn: '1942788150'}
 CREATE (Visualization:Practice { name: 'Visualization', code: 'VZ' })-[:PRACTICE_OF]->(Kanban)
 CREATE (LimitWIP:Practice {name: 'Limit Work-in-Progress', code: 'LW'})-[:PRACTICE_OF]->(Kanban)
 CREATE (ManageFlow:Practice {name: 'Manage Flow', code: 'MF'})-[:PRACTICE_OF]->(Kanban)
+CREATE (FlowEfficiency:Measure {name: 'Flow Efficiency'})-[:MEASUREMENT_OF]->(ManageFlow)
 CREATE (ExplicitPolicies:Practice {name: 'Explicit Policies', code: 'XP'})-[:PRACTICE_OF]->(Kanban)
+CREATE (PullPolicies:Practice {name: 'Pull Policies'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 CREATE (FeedbackLoops:Practice {name: 'Implement Feedback Loops', code: 'FL'})-[:PRACTICE_OF]->(Kanban)
 CREATE (ImproveCollaboratively:Practice {name: 'Improve Collaboratively, Evolve Experimentally', code: 'IE'})-[:PRACTICE_OF]->(Kanban)
 
@@ -88,6 +128,7 @@ CREATE (ML6:MaturityLevel {name: 'Congruent', code: 'ML6'})-[:LEVEL_OF]->(KMM)
 
 // VZ 0 Consolidation
 CREATE (ML0)<-[:APPLIES_AT]-(VZ0_1:Practice {name: 'Visualize an individual’s work by means of a personal kanban board.', code: 'VZ0.1'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ0_1)-[:RELATED_TO]->(PersonalKanban)
 CREATE (ML0)<-[:APPLIES_AT]-(VZ0_2:Practice {name: 'Visualize basic work item related information on a ticket.', code: 'VZ0.2'})-[:SPECIALISM_OF]->(Visualization)
 // VZ 1 Transition
 CREATE (ML1)<-[:APPLIES_AT]-(VZ1_1:Practice {name: 'Visualize work for several individuals by means of an aggregated personal kanban board.', code: 'VZ1.1'})-[:SPECIALISM_OF]->(Visualization)
@@ -105,7 +146,9 @@ CREATE (ML2)<-[:APPLIES_AT]-(VZ2_5:Practice {name: 'Visualize work requests on a
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_6:Practice {name: 'Visualize work item aging.', code: 'VZ2.6'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ2_7:Practice {name: 'Visualize basic service policies.', code: 'VZ2.7'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_8:Practice {name: 'Visualize development of options by means of a upstream kanban board.', code: 'VZ2.8'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ2_8)-[:RELATED_TO]->(UpstreamKanban)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_9:Practice {name: 'Visualize avatars on an upstream kanban board.', code: 'VZ2.9'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ2_9)-[:RELATED_TO]->(UpstreamKanban)
 // VZ 2 Consolidation
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_10:Practice {name: 'Visualize constant WIP [CONWIP] on an emergent workflow delivery kanban board', code: 'VZ2.10'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_11:Practice {name: 'Visualize concurrent or unordered activities with checkboxes.', code: 'VZ2.11'})-[:SPECIALISM_OF]->(Visualization)
@@ -114,6 +157,7 @@ CREATE (ML2)<-[:APPLIES_AT]-(VZ2_13:Practice {name: 'Visualize sequential activi
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_14:Practice {name: 'Visualize defects and other rework types.', code: 'VZ2.14'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_15:Practice {name: 'Visualize defined workflow using a kanban board.', code: 'VZ2.15'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_16:Practice {name: 'Visualize project progress on a simple portfolio kanban board.', code: 'VZ2.16'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ2_16)-[:RELATED_TO]->(PortfolioKanban)
 CREATE (ML2)<-[:APPLIES_AT]-(VZ2_17:Practice {name: 'Visualize a program as an aggregated service delivery overview.', code: 'VZ2.17'})-[:SPECIALISM_OF]->(Visualization)
 // VZ 3 Transition
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_1:Practice {name: 'Visualize “ready to commit” status, also known as “ready to pull.”', code: 'VZ3.1'})-[:SPECIALISM_OF]->(Visualization)
@@ -121,8 +165,10 @@ CREATE (ML3)<-[:APPLIES_AT]-(VZ3_2:Practice {name: 'Visualize “ready to pull�
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_3:Practice {name: 'Visualize project work items on a two-tiered project kanban board.', code: 'VZ3.3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_4:Practice {name: 'Visualize workflow and teamwork items by means of aggregated team kanban board.', code: 'VZ3.4'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_5:Practice {name: 'Visualize discarded options using a bin on an upstream/discovery kanban board.', code: 'VZ3.5'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ3_5)-[:RELATED_TO]->(UpstreamKanban)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_6:Practice {name: 'Visualize parent–child and peer–peer dependencies.', code: 'VZ3.6'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_7:Practice {name: 'Visualize upstream options by means of an upstream/discovery kanban board.', code: 'VZ3.7'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ3_7)-[:RELATED_TO]->(UpstreamKanban)
 // VZ 3 Consolidation
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_8:Practice {name: 'Visualize replenishment signals.', code: 'VZ3.8'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_9:Practice {name: 'Visualize pull signals.', code: 'VZ3.9'})-[:SPECIALISM_OF]->(Visualization)
@@ -130,10 +176,13 @@ CREATE (ML3)<-[:APPLIES_AT]-(VZ3_10:Practice {name: 'Visualize pull criteria (al
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_11:Practice {name: 'Visualize available capacity.', code: 'VZ3.11'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_12:Practice {name: 'Visualize target date or SLA.', code: 'VZ3.12'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_13:Practice {name: 'Visualize failure demand versus value demand.', code: 'VZ3.13'})-[:SPECIALISM_OF]->(Visualization)
+// TODO: Failure Demand?
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_14:Practice {name: 'Visualize aborted work.', code: 'VZ3.14'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_15:Practice {name: 'Visualize class of service using ticket colors, board rows, or ticket decorators.', code: 'VZ3.15'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_16:Practice {name: 'Use Earned Value portfolio kanban board to visualize project progress and schedule or budget risk.', code: 'VZ3.16'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ3_16)-[:RELATED_TO]->(PortfolioKanban)
 CREATE (ML3)<-[:APPLIES_AT]-(VZ3_17:Practice {name: 'Visualize a portfolio as an aggregated program overview board.', code: 'VZ3.17'})-[:SPECIALISM_OF]->(Visualization)
+CREATE (VZ3_17)-[:RELATED_TO]->(PortfolioKanban)
 // VZ 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_1:Practice {name: 'Visualize local cycle time.', code: 'VZ4.1'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (ML4)<-[:APPLIES_AT]-(VZ4_2:Practice {name: 'Use ticket decorators to indicate risks.', code: 'VZ4.2'})-[:SPECIALISM_OF]->(Visualization)
@@ -186,6 +235,7 @@ CREATE (ML3)<-[:APPLIES_AT]-(MF3_4:Practice {name: 'Defer commitment (decide at 
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_5:Practice {name: 'Use cumulative flow diagram to monitor queues.', code: 'MF3.5'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_6:Practice {name: 'Use Little’s Law.', code: 'MF3.6'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_7:Practice {name: 'Report rudimentary flow efficiency', code: 'MF3.7'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (MF3_7)-[:RELATED_TO]->(FlowEfficiency)
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_8:Practice {name: 'Gradually eliminate infinite buffers.', code: 'MF3.8'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_9:Practice {name: 'Actively close upstream requests that meet the abandonment criteria', code: 'MF3.9'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_10:Practice {name: 'Report abandoned vs completed commited work.', code: 'MF3.10'})-[:SPECIALISM_OF]->(ManageFlow)
@@ -199,12 +249,14 @@ CREATE (ML3)<-[:APPLIES_AT]-(MF3_16:Practice {name: 'Forecast delivery.', code: 
 CREATE (ML3)<-[:APPLIES_AT]-(MF3_17:Practice {name: 'Apply qualitative Real Options Thinking.', code: 'MF3.17'})-[:SPECIALISM_OF]->(ManageFlow)
 // ML 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_1:Practice {name: 'Collect and report detailed flow efficiency analysis.', code: 'MF4.1'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (MF4_1)-[:RELATED_TO]->(FlowEfficiency)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_2:Practice {name: 'Use explicit buffers to smooth flow.', code: 'MF4.2'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_3:Practice {name: 'Analyze to anticipate dependencies.', code: 'MF4.3'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_4:Practice {name: 'Establish refutable versus irrefutable demand.', code: 'MF4.4'})-[:SPECIALISM_OF]->(ManageFlow)
 // ML 4 Consolidation
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_5:Practice {name: 'Determine reference class data set.', code: 'MF4.5'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_6:Practice {name: 'Forecast using reference classes, Monte Carlo simulations, and other models.', code: 'MF4.6'})-[:SPECIALISM_OF]->(ManageFlow)
+CREATE (MF4_6)-[:RELATED_TO]->(MonteCarlo)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_7:Practice {name: 'Allocate capacity across swim lanes.', code: 'MF4.7'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_8:Practice {name: 'Allocate capacity by color of work item.', code: 'MF4.8'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (ML4)<-[:APPLIES_AT]-(MF4_9:Practice {name: 'Make appropriate use of forecasting.', code: 'MF4.9'})-[:SPECIALISM_OF]->(ManageFlow)
@@ -213,6 +265,7 @@ CREATE (ML4)<-[:APPLIES_AT]-(MF4_11:Practice {name: 'Use statistical methods for
 
 // ML 0 Consolidation
 CREATE (ML0)<-[:APPLIES_AT]-(XP0_1:Practice {name: 'Make the rules for personal kanban explicit.', code: 'XP0.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (XP0_1)-[:RELATED_TO]->(PersonalKanban)
 // ML 1 Transition
 CREATE (ML1)<-[:APPLIES_AT]-(XP1_1:Practice {name: 'Discover initial policies.', code: 'XP1.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 // ML 1 Consolidation
@@ -237,6 +290,7 @@ CREATE (ML3)<-[:APPLIES_AT]-(XP3_7:Practice {name: 'Define basic classes of serv
 CREATE (ML3)<-[:APPLIES_AT]-(XP3_8:Practice {name: 'Establish customer acceptance criteria for each work item or a class of work items', code: 'XP3.8'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 // ML 4 Transition
 CREATE (ML4)<-[:APPLIES_AT]-(XP4_1:Practice {name: 'Explicitly define fitness-for-purpose based on metrics.', code: 'XP4.1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (XP4_1)-[:RELATED_TO]->(FitForPurpose)
 // ML 4 Consolidation
 CREATE (ML4)<-[:APPLIES_AT]-(XP4_2:Practice {name: 'Establish demand shaping policies.', code: 'XP4.2'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 CREATE (ML4)<-[:APPLIES_AT]-(XP4_3:Practice {name: 'Establish SLA on dependent services.', code: 'XP4.3'})-[:SPECIALISM_OF]->(ExplicitPolicies)
@@ -261,6 +315,7 @@ CREATE (ML3)<-[:APPLIES_AT]-(FL3_2:Practice {name: 'Make improvement suggestion 
 // ML 3 Consolidation
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_3:Practice {name: 'Conduct delivery planning meeting.', code: 'FL3.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_4:Practice {name: 'Conduct service delivery review.', code: 'FL3.4'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (FL3_4)-[:RELATED_TO]->(ServiceDeliveryReview)
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_5:Practice {name: 'Conduct options review.', code: 'FL3.5'})-[:SPECIALISM_OF]->(FeedbackLoops)
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_6:Practice {name: 'Conduct basic portfolio review.', code: 'FL3.6'})-[:SPECIALISM_OF]->(FeedbackLoops)
 // ML 4 Transition
@@ -287,6 +342,8 @@ CREATE (ML4)<-[:APPLIES_AT]-(IE4_1:Practice {name: 'Develop qualitative understa
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_2:Practice {name: 'Identify the impact of shared resources.', code: 'IE4.2'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_3:Practice {name: 'Identify bottlenecks.', code: 'IE4.3'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 CREATE (IE4_3)-[:RELATED_TO]->(TheoryOfConstraints:Model {name: 'Theory of Constraints'})-[:DESCRIBED_BY]->(TheGoal:Book {name: 'The Goal', isbn: '9780884271956'})-[:WRITTEN_BY]->(EliGoldratt:Person {name: 'Eli Goldratt'})
+CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(RollingRocksDownhill:Book {name: 'Rolling Rocks Downhill', isbn: '1505446511'})-[:WRITTEN_BY]->(ClarkeChing:Person {name: 'Clark Ching'})
+CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(TheBottleneckRules:Book {name: 'The Bottleneck Rules', isbn: '1983022691'})-[:WRITTEN_BY]->(ClarkeChing)
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_4:Practice {name: 'Identify transaction and coordination costs.', code: 'IE4.4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 // ML 4 Consolidation
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_5:Practice {name: 'Exploit, subordinate to and elevate bottlenecks.', code: 'IE4.5'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
@@ -314,7 +371,6 @@ CREATE (ML4)<-[:APPLIES_AT]-(IE4_6:Practice {name: 'Develop quantitative underst
 // CREATE (AllocatedCapacity:Practice {name: 'Allocated Capacity (Lane WIP Limits)'})-[:SPECIALISM_OF]->(LimitWIP)
 // CREATE (BoardLevelLimits:Practice {name: 'Board Level WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
 
-// CREATE (CFD:Practice {name: 'Cumulative Flow Diagram'})-[:SPECIALISM_OF]->(ManageFlow)
 // CREATE (QueueReplenishment:Practice {name: 'Queue Replenishment (Cadence and Policy)'})-[:SPECIALISM_OF]->(ManageFlow)
 // CREATE (LeadTimeDistribution:Practice {name: 'Lead Time Distribution (Average, Sized, Weighted)'})-[:SPECIALISM_OF]->(ManageFlow)
 // CREATE (FlowEfficiency:Measure {name: 'Flow Efficiency'})-[:MEASUREMENT_OF]->(ManageFlow)
@@ -460,11 +516,14 @@ CREATE (TransformationalLeadership)-[:IMPACTS]->(GatherCustomerFeedback)
 
 // Scrum
 
-CREATE (Scrum:Framework {name: 'Scrum'})
+CREATE (Scrum:Framework {name: 'Scrum'})-[:DESCRIBED_BY]->(ScrumGuide:Link {name: 'Scrum Guide', url: 'https://www.scrumguides.org/scrum-guide.html'})
 
+// Roles
 CREATE (ProductOwner:Role {name: 'Product Owner'})-[:ROLE_OF]->(Scrum)
 CREATE (ScrumMaster:Role {name: 'Scrum Master'})-[:ROLE_OF]->(Scrum)
+CREATE (DevelopmentTeam:Role {name: 'Development Team'})-[:ROLE_OF]->(Scrum)
 
+// Events
 CREATE (SprintPlanning:Event {name: 'Sprint Planning'})-[:MEETING_OF]->(Scrum)
 CREATE (SprintRetrospective:Event {name: 'Sprint Retrospective'})-[:MEETING_OF]->(Scrum)
 CREATE (SprintReview:Event {name: 'Sprint Review'})-[:MEETING_OF]->(Scrum)
@@ -472,8 +531,12 @@ CREATE (DailyScrum:Event {name: 'Daily Scrum'})-[:MEETING_OF]->(Scrum)
 CREATE (Sprint:Event {name: 'Sprint'})-[:MEETING_OF]->(Scrum)
 CREATE (Sprint)-[:ALSO_KNOWN_AS]->(Iteration)
 
-CREATE (ProductBacklog:Artefact {name: 'Product Backlog'})-[:ARTEFACT_OF]->(Scrum)
-CREATE (SprintBacklog:Artefact {name: 'Sprint Backlog'})-[:ARTEFACT_OF]->(Scrum)
+// Artifacts
+CREATE (Increment:Artifact {name: 'Increment'})-[:ARTIFACT_OF]->(Scrum)
+CREATE (ProductBacklog:Artifact {name: 'Product Backlog'})-[:ARTIFACT_OF]->(Scrum)
+CREATE (ProductBacklog)-[:SPECIALISM_OF]->(Queue)
+CREATE (SprintBacklog:Artifact {name: 'Sprint Backlog'})-[:Artifact_OF]->(Scrum)
+CREATE (SprintBacklog)-[:SPECIALISM_OF]->(Queue)
 
 CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(KanbanDailyStandUp)
 CREATE (DailyScrum)-[:ALSO_KNOWN_AS]->(XPDailyStandUp)
@@ -481,8 +544,9 @@ CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(IterationPlanning)
 CREATE (SprintPlanning)-[:ALSO_KNOWN_AS]->(ReplenishmentMeeting)
 CREATE (SprintRetrospective)-[:ALSO_KNOWN_AS]->(RiskReview)
 
+CREATE (DefinitionOfDone:Practice {name: 'Definition of Done'})-[:SPECIALISM_OF]->(ExplicitPolicies)
+CREATE (DefinitionOfDone)-[:PRACTICE_OF]->(Scrum)
 CREATE (DefinitionOfReady:Practice {name: 'Definition of Ready'})-[:EXTENDS]->(ExplicitPolicies)
-CREATE (DefinitionOfDone:Practice {name: 'Definition of Done'})-[:EXTENDS]->(ExplicitPolicies)
 
 // LeSS
 
@@ -497,19 +561,34 @@ CREATE (OverallRetrospective:Event {name: 'Overall Retrospective'})-[:MEETING_OF
 
 CREATE (Nexus:Framework {name: 'Nexus'})-[:SCALES]->(Scrum)
 CREATE (Nexus)-[:DESCRIBED_BY]->(NexusWebsite:Link {name: 'Scaling Scrum with Nexus', url: 'https://www.scrum.org/resources/scaling-scrum'})
+
+// Nexus Roles
+
+CREATE (NexusIntegrationTeam:Role {name: 'Nexus Integration Team'})-[:ROLE_OF]->(Nexus)
+
+// Nexus Events
 CREATE (NexusSprintPlanning:Event {name: 'Nexus Sprint Planning'})-[:MEETING_OF]->(Nexus)
 CREATE (NexusSprintRetrospective:Event {name: 'Nexus Sprint Retrospective'})-[:MEETING_OF]->(Nexus)
 CREATE (NexusDailyScrum:Event {name: 'Nexus Daily Scrum'})-[:MEETING_OF]->(Nexus)
 CREATE (NexusSprintReview:Event {name: 'Nexus Sprint Review'})-[:MEETING_OF]->(Nexus)
 
+// Nexus Artifacts
+CREATE (ProductBacklog)-[:ARTIFACT_OF]->(Nexus)
+CREATE (NexusSprintBacklog:Artifact {name: 'Nexus Sprint Backlog'})-[:ARTIFACT_OF]->(Nexus)
+CREATE (IntegratedIncrement:Artifact {name: 'Integrated Increment'})-[:ARTIFACT_OF]->(Nexus)
+CREATE (IntegratedIncrement)-[:SPECIALISM_OF]->(Increment)
+
+CREATE (DefinitionOfDone)-[:PRACTICE_OF]->(Nexus)
+
 // SAFe
 
 CREATE (SAFe:Framework {name: 'SAFe'})-[:SCALES]->(Scrum)
 CREATE (SAFe)-[:DESCRIBED_BY]->(SAFeWebsite:Link {name: 'Scaled Agile Framework', url: 'https://www.scaledagileframework.com/'})
-CREATE (ReleaseTrain:Artefact {name: 'Agile Release Train'})-[:ARTEFACT_OF]->(SAFe)
+CREATE (ReleaseTrain:Artifact {name: 'Agile Release Train'})-[:ARTIFACT_OF]->(SAFe)
 CREATE (ReleaseTrainEngineer:Role {name: 'Release Train Engineer'})-[:ROLE_OF]->(SAFe)
 CREATE (PIPlanning:Event {name: 'PI Planning'})-[:MEETING_OF]->(SAFe)
 CREATE (PIPlanning)-[:FACILITATED_BY]->(ReleaseTrainEngineer)
+CREATE (PortfolioKanban)-[:PRACTICE_OF]->(SAFe)
 
 // DSDM
 
@@ -527,7 +606,33 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 
 CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ThreeAmigos:Practice {name: '3 Amigos'})
 CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
 
 CREATE (COP:Practice {name: 'Communities of Practice'})
+CREATE (PageObject:Practice {name: 'Page Objects'})
+CREATE (ContractTesting:Practice {name: 'Contract Testing'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(UnitTesting)
+
+// Arch
+
+CREATE (DDD:Practice {name: 'Domain-Driven Design'})
+CREATE (Microservices:Practice {name: 'Microservices'})
+
+CREATE (CloudComputing:Model {name: 'Cloud Computing'})
+CREATE (IaaS:Model {name: 'Infrastructure as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
+CREATE (PaaS:Model {name: 'Platform as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
+CREATE (SaaS:Model {name: 'Software as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
+CREATE (FaaS:Model {name: 'Function as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
+
+// DevOps
+
+CREATE (DevOps:Model {name: 'DevOps'})-[:DESCRIBED_BY]->(DevOpsHandbook:Book {name: 'DevOps Handbook', isbn: '1942788002'})-[:WRITTEN_BY]->(JezHumble)
+CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(GeneKim)
+CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(PatrickDubois:Person {name: 'Patrick Dubois'})
+CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(JohnWillis:Person {name: 'John Willis'})
+
+CREATE (DevOps)-[:DESCRIBED_BY]->(PhoenixProject:Book {name: 'The Phoenix Project', isbn: '1942788290'})-[:WRITTEN_BY]->(GeneKim)
+CREATE (PhoenixProject)-[:WRITTEN_BY]->(KevinBehr:Person {name: 'Kevin Behr'})
+CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spafford'})
