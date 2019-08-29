@@ -1,6 +1,15 @@
-// Queues
+// Lean
 
 CREATE (Queue:Artifact {name: 'Queue'})
+CREATE (LeanSoftwareDevelopment:Model {name: 'Lean Software Development'})-[:DESCRIBED_BY]->(LSDToolkit:Book {name: 'Lean Software Development: An Agile Toolkit', isbn: '9780133812954'})-[:WRITTEN_BY]->(MaryPoppendieck:Person {name: 'Mary Poppendieck'})
+CREATE (LSDToolkit)-[:WRITTEN_BY]->(TomPoppendieck:Person {name: 'Tom Poppendieck'})
+CREATE (PartiallyDoneWork:Measure {name: 'Partially Done Work'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
+CREATE (ExtraFeatures:Measure {name: 'Extra Features'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
+CREATE (Relearning:Measure {name: 'Relearning'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
+CREATE (Handoffs:Measure {name: 'Handoffs'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
+CREATE (Delays:Measure {name: 'Delays'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
+CREATE (TaskSwitching:Measure {name: 'Task Switching'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
+CREATE (Defects:Measure {name: 'Defects'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
 
 // XP
 
@@ -30,7 +39,6 @@ CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring'
 
 CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
 CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:RELATED_TO]->(UserStories)
-CREATE (StorySlicing)-[:RELATED_TO]->(RightSizing)
 
 // Lean
 
@@ -72,7 +80,6 @@ CREATE (FoldingPaperShips)-[:DESCRIBED_BY]->(PracticalKanban)
 
 CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
 CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
-CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (CycleTime:Measure {name: 'Cycle Time'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (Throughput:Measure {name: 'Throughput'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (CFD:Practice {name: 'Cumulative Flow Diagram'})-[:DESCRIBED_BY]->(ActionableAgile)
@@ -81,6 +88,7 @@ CREATE (CycleTimeScatterplot:Practice {name: 'Cycle Time Scatterplot'})-[:DESCRI
 CREATE (CycleTimeHistogram:Practice {name: 'Cycle Time Histogram'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (SLA:Practice {name: 'Service Level Agreement'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (RightSizing:Practice {name: 'Right Sizing'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (StorySlicing)-[:ALSO_KNOWN_AS]->(RightSizing)
 CREATE (ClassesOfService:Practice {name: 'Classes of Service'})-[:PRACTICE_OF]->(Kanban)
 CREATE (ClassesOfService)-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (MonteCarlo:Practice {name: 'Monte Carlo Simulation'})-[:DESCRIBED_BY]->(ActionableAgile)
@@ -311,9 +319,11 @@ CREATE (ML2)<-[:APPLIES_AT]-(FL2_4:Practice {name: 'Conduct blocker clustering.'
 CREATE (FL2_4)-[:RELATED_TO]->(BlockerClustering)
 // ML 3 Transition
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_1:Practice {name: 'Conduct replenishment meeting.', code: 'FL3.1'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (FL3_1)-[:RELATED_TO]->(ReplenishmentMeeting)
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_2:Practice {name: 'Make improvement suggestion review.', code: 'FL3.2'})-[:SPECIALISM_OF]->(FeedbackLoops)
 // ML 3 Consolidation
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_3:Practice {name: 'Conduct delivery planning meeting.', code: 'FL3.3'})-[:SPECIALISM_OF]->(FeedbackLoops)
+CREATE (FL3_3)-[:RELATED_TO]->(DeliveryPlanning)
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_4:Practice {name: 'Conduct service delivery review.', code: 'FL3.4'})-[:SPECIALISM_OF]->(FeedbackLoops)
 CREATE (FL3_4)-[:RELATED_TO]->(ServiceDeliveryReview)
 CREATE (ML3)<-[:APPLIES_AT]-(FL3_5:Practice {name: 'Conduct options review.', code: 'FL3.5'})-[:SPECIALISM_OF]->(FeedbackLoops)
@@ -344,6 +354,9 @@ CREATE (ML4)<-[:APPLIES_AT]-(IE4_3:Practice {name: 'Identify bottlenecks.', code
 CREATE (IE4_3)-[:RELATED_TO]->(TheoryOfConstraints:Model {name: 'Theory of Constraints'})-[:DESCRIBED_BY]->(TheGoal:Book {name: 'The Goal', isbn: '9780884271956'})-[:WRITTEN_BY]->(EliGoldratt:Person {name: 'Eli Goldratt'})
 CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(RollingRocksDownhill:Book {name: 'Rolling Rocks Downhill', isbn: '1505446511'})-[:WRITTEN_BY]->(ClarkeChing:Person {name: 'Clark Ching'})
 CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(TheBottleneckRules:Book {name: 'The Bottleneck Rules', isbn: '1983022691'})-[:WRITTEN_BY]->(ClarkeChing)
+CREATE (FiveFocusingSteps:Practice {name: 'Five Focusing Steps'})-[:PRACTICE_OF]->(TheoryOfConstraints)
+CREATE (ThinkingProcesses:Practice {name: 'Thinking Processes'})-[:PRACTICE_OF]->(TheoryOfConstraints)
+CREATE (ThroughputAccounting:Practice {name: 'Throughput Accounting'})-[:PRACTICE_OF]->(TheoryOfConstraints)
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_4:Practice {name: 'Identify transaction and coordination costs.', code: 'IE4.4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 // ML 4 Consolidation
 CREATE (ML4)<-[:APPLIES_AT]-(IE4_5:Practice {name: 'Exploit, subordinate to and elevate bottlenecks.', code: 'IE4.5'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
@@ -412,7 +425,7 @@ CREATE (NicoleForsgren:Person {name: 'Nicole Forsgren'})<-[:WRITTEN_BY]-(Acceler
 CREATE (JezHumble)<-[:WRITTEN_BY]-(Accelerate)
 CREATE (GeneKim:Person {name: 'Gene Kim'})<-[:WRITTEN_BY]-(Accelerate)
 CREATE (DeploymentFrequency:Measure {name: 'Deployment Frequency'})
-CREATE (LeadTime:Measure {name: 'Lead Time for Change'})
+CREATE (LeadTime:Measure {name: 'Lead Time for Change'})-[:ALSO_KNOWN_AS]->(CycleTime)
 CREATE (MTTR:Measure {name: 'Mean Time to Restore'})
 CREATE (ChangeFailureRate:Measure {name: 'Change Failure Rate'})
 
