@@ -49,6 +49,8 @@ CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamM
 
 CREATE (Kanban:Method {name: 'Kanban'})
 
+CREATE (STATIK:Activity {name: 'STATIK'})
+
 CREATE (Kanban)-[:DESCRIBED_BY]->(BlueBook:Book {name: 'Kanban', isbn: '0984521402'})-[:WRITTEN_BY]->(DavidAnderson:Person {name: 'David J. Anderson'})
 CREATE (Kanban)-[:DESCRIBED_BY]->(EssentialKanban:Book {name: 'Essential Kanban Condensed', isbn: '0984521429'})-[:WRITTEN_BY]->(DavidAnderson)
 CREATE (Kanban)-[:DESCRIBED_BY]->(KanbanInside:Book {name: 'Kanban From the Inside', isbn: '0985305193'})-[:WRITTEN_BY]->(MikeBurrows:Person {name: 'Mike Burrows'})
@@ -77,6 +79,10 @@ CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel1:Practice {name: 'Flight Le
 
 CREATE (FoldingPaperShips:Activity {name: 'Folding Paper Ships'})-[:DEMONSTRATES]->(Kanban)
 CREATE (FoldingPaperShips)-[:DESCRIBED_BY]->(PracticalKanban)
+CREATE (Featureban:Activity {name: 'Featureban'})-[:DEMONSTRATES]->(Kanban)
+CREATE (Featureban)-[:DESCRIBED_BY]->(FeaturebanLink:Link {name: 'Featureban', url: 'https://www.agendashift.com/featureban'})
+CREATE (GetKanban:Activity {name: 'getKanban Board Game'})-[:DEMONSTRATES]->(Kanban)
+CREATE (GetKanban)-[:DESCRIBED_BY]->(GetKanbanLink:Link {name: 'getKanban', url: 'https://getkanban.com/'})
 
 CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
 CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
@@ -597,11 +603,14 @@ CREATE (DefinitionOfDone)-[:PRACTICE_OF]->(Nexus)
 
 CREATE (SAFe:Framework {name: 'SAFe'})-[:SCALES]->(Scrum)
 CREATE (SAFe)-[:DESCRIBED_BY]->(SAFeWebsite:Link {name: 'Scaled Agile Framework', url: 'https://www.scaledagileframework.com/'})
-CREATE (ReleaseTrain:Artifact {name: 'Agile Release Train'})-[:ARTIFACT_OF]->(SAFe)
+CREATE (AgileReleaseTrain:Artifact {name: 'Agile Release Train'})-[:ARTIFACT_OF]->(SAFe)
 CREATE (ReleaseTrainEngineer:Role {name: 'Release Train Engineer'})-[:ROLE_OF]->(SAFe)
 CREATE (PIPlanning:Event {name: 'PI Planning'})-[:MEETING_OF]->(SAFe)
 CREATE (PIPlanning)-[:FACILITATED_BY]->(ReleaseTrainEngineer)
 CREATE (PortfolioKanban)-[:PRACTICE_OF]->(SAFe)
+CREATE (AgileTeam:Role {name: 'Agile Team'})-[:ROLE_OF]->(SAFe)
+CREATE (AgileTeam)-[:ALSO_KNOWN_AS]->(DevelopmentTeam)
+CREATE (Epic:Artifact {name: 'Epic'})-[:ARTIFACT_OF]->(SAFe)
 
 // DSDM
 
