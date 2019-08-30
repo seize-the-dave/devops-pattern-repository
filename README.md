@@ -94,3 +94,4 @@ Most of the work needed revolves around the questions we want to answer.  For ex
 - What practices can I use to improve a particular metric?
 - What activities can I use to demonstrate a particular principle or set of principles?
 - What resources are available to learn more about a particular practice, method or framework?
+- Get rid of `:RELATES_TO` relationships, which are non-descript
