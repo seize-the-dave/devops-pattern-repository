@@ -1,6 +1,6 @@
 # devops-knowledge-graph
 
-Knowledge graph of DevOps practices and capabilities
+This project is a knowledge graph of Agile and DevOps practices and capabilities
 
 ## Getting Started
 
@@ -79,8 +79,6 @@ The graph contains a bunch of `Measure`s:
 MATCH (n:Measure) RETURN (n)
 ```
 
-It's quite useful to _start_ with a `Measure`, and try to find a practice that moves it.
-
 ### A Note on Complexity
 
 The above gives a reasonable introduction to the top tier of the graph, but the graph is fractal.  As an example, the graph contains a `Method` (Kanban), the adoption of which is measured by a `Model` (the Kanban Maturity model).  It's currently the only relationship of this type in the graph:
@@ -88,3 +86,11 @@ The above gives a reasonable introduction to the top tier of the graph, but the 
 ```cypher
 MATCH (m)<-[:MEASUREMENT_OF]-(n) WHERE (m:Model OR m:Framework OR m:Method) AND (n:Model OR n:Framework OR n:Method) RETURN (m), (n)
 ```
+
+## To Do
+
+Most of the work needed revolves around the questions we want to answer.  For example:
+
+- What practices can I use to improve a particular metric?
+- What activities can I use to demonstrate a particular principle or set of principles?
+- What resources are available to learn more about a particular practice, method or framework?
