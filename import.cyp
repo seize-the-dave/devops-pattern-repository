@@ -860,7 +860,9 @@ CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(
 CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Book {name: 'Domain-Driven Design', isbn: '0321125215'})-[:WRITTEN_BY]->(EricEvans:Person {name: 'Eric Evans'})
 CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PRACTICE_OF]->(DDD)
 CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PRACTICE_OF]->(DDD)
-CREATE (Microservices:Practice {name: 'Microservices'})
+CREATE (ModelDrivenDesign:Pattern {name: 'Model-Driven Design'})-[:PRACTICE_OF]->(DDD)
+
+CREATE (Microservices:Practice {name: 'Microservices'})-[:SPECIALISM_OF]->(LooselyCoupledArch)
 
 CREATE (CloudComputing:Model {name: 'Cloud Computing'})
 CREATE (IaaS:Model {name: 'Infrastructure as a Service'})-[:SPECIALISM_OF]->(CloudComputing)

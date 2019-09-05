@@ -1,4 +1,4 @@
-#! /bin/sh -x
+#! /bin/sh
 
 export CYPHER_LINT_PACKAGE="cleishm/neo4j/cypher-lint"
 
