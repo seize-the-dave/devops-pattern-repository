@@ -1,6 +1,6 @@
 # Agile & DevOps Pattern Repository
 
-This project is a pattern repository and knowledge graph of Agile and DevOps practices and capabilities
+This project is a pattern repository and knowledge graph of Agile and DevOps practices and capabilities.  The fundamental goal of this project is to be able to look up "smells" or metrics in the repository and find suggested practice patterns to overcome the smells or improve the metrics.
 
 ## Other Pattern Repositories
 
