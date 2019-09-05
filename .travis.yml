@@ -5,6 +5,7 @@ os:
 addons:
   homebrew:
     brewfile: true
+    update: true
   apt:
     sources:
       - sourceline: ppa:cleishm/neo4j
