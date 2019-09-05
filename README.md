@@ -12,6 +12,10 @@ This project is a pattern repository and knowledge graph of Agile and DevOps pra
 - Install [Neo4J Desktop](https://neo4j.com/developer/neo4j-desktop/)
 - Paste [import.cyp](/import.cyp) into Neo4J Browser
 
+## Building
+
+- On MacOS, run `build-macos.sh` to lint the cypher file (`import.cyp`)
+
 ## Navigating the Graph
 
 Most root nodes in our graph are of paradigms of type `Model`, `Framework` or `Method`.  The distinction between these node types is based on the level of rigor or practical advice: a `Model` is more abstract than a `Framework`, which is in turn more abstract than a `Method`.  This is best illustrated as the difference between Agile (a `Model`), Scrum (a `Framework`) and Extreme Programming (a `Method`).
