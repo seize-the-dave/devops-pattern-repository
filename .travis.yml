@@ -7,7 +7,7 @@ addons:
     brewfile: Brewfile.travis
   apt:
     sources:
-      - ppa:cleishm/neo4j
+      - sourceline: ppa:cleishm/neo4j
     packages:
       - cypher-lint
       - libcypher-parser-dev
