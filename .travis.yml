@@ -1,11 +1,21 @@
-# addons:
-#   homebrew:
-#     brewfile: Brewfile.travis
+os:
+  - linux
+  - osx
 
-before_install:
-  - sudo add-apt-repository ppa:cleishm/neo4j -y
-  - sudo apt-get update -q
-  - sudo apt-get install cypher-lint libcypher-parser-dev -y
+addons:
+  homebrew:
+    brewfile: Brewfile.travis
+  apt:
+    sources:
+      - ppa:cleishm/neo4j
+    packages:
+      - cypher-lint
+      - libcypher-parser-dev
+
+# before_install:
+#   - sudo add-apt-repository ppa:cleishm/neo4j -y
+#   - sudo apt-get update -q
+#   - sudo apt-get install cypher-lint libcypher-parser-dev -y
 
 script:
   - cypher-lint < import.cyp
