@@ -1,4 +1,4 @@
-# devops-knowledge-graph
+# Agile & DevOps Pattern Repository
 
 This project is a pattern repository and knowledge graph of Agile and DevOps practices and capabilities
 
