@@ -18,8 +18,8 @@ CREATE (Agile)-[:GUIDED_BY]->(ReflectRegularly:Principle {name: 'At regular inte
 
 CREATE (Queue:Artifact {name: 'Queue'})
 CREATE (LeanSoftwareDevelopment:Framework {name: 'Lean Software Development'})-[:DESCRIBED_BY]->(LSDToolkit:Book {name: 'Lean Software Development: An Agile Toolkit', isbn: '9780133812954'})-[:WRITTEN_BY]->(MaryPoppendieck:Person {name: 'Mary Poppendieck'})
-CREATE (Agile)-[:IMPLEMENTED_BY]->(LeanSoftwareDevelopment)
 CREATE (LSDToolkit)-[:WRITTEN_BY]->(TomPoppendieck:Person {name: 'Tom Poppendieck'})
+CREATE (Agile)-[:IMPLEMENTED_BY]->(LeanSoftwareDevelopment)
 
 // 7 Wastes
 CREATE (PartiallyDoneWork:Measure {name: 'Partially Done Work'})-[:MEASUREMENT_OF]->(LeanSoftwareDevelopment)
@@ -48,8 +48,8 @@ CREATE (CollectiveCodeOwnership:Practice {name: 'Collective Code Ownership'})-[:
 CREATE (OnsiteCustomer:Practice {name: 'Onsite Customer'})-[:PRACTICE_OF]->(XP)
 CREATE (IterationPlanning:Event {name: 'Iteration Planning'})-[:PRACTICE_OF]->(XP)
 CREATE (UserStories:Practice {name: 'User Stories'})-[:PRACTICE_OF]->(XP)
-CREATE (ThreeCs:Practice {name: '3 Cs: Card, Confirmation, Conversation'})-[:RELATED_TO]->(UserStories)
-CREATE (AcceptanceCritera:Practice {name: 'Acceptance Criteria'})-[:RELATED_TO]->(UserStories)
+CREATE (ThreeCs:Practice {name: '3 Cs: Card, Confirmation, Conversation'})-[:IMPROVES]->(UserStories)
+CREATE (AcceptanceCritera:Practice {name: 'Acceptance Criteria'})-[:IMPROVES]->(UserStories)
 CREATE (SpikeSolution:Practice {name: 'Spike Solution'})-[:PRACTICE_OF]->(XP)
 CREATE (ReleasePlanning:Event {name: 'Release Planning'})-[:MEETING_OF]->(XP)
 CREATE (ReleasePlan:Artifact {name: 'Release Plan'})-[:ARTIFACT_OF]->(XP)
@@ -60,7 +60,7 @@ CREATE (Refactoring:Practice {name: 'Refactoring'})-[:PRACTICE_OF]->(XP)
 CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring', isbn: ' 0134757599'})-[:WRITTEN_BY]->(MartinFowler:Person {name: 'Martin Fowler'})
 
 CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
-CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:RELATED_TO]->(UserStories)
+CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:IMPROVES]->(UserStories)
 
 // Lean
 
@@ -114,6 +114,7 @@ CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability
 CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (CycleTime:Measure {name: 'Cycle Time'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (Throughput:Measure {name: 'Throughput'})-[:DESCRIBED_BY]->(ActionableAgile)
+CREATE (WorkInProgress)-[:IMPACTS]->(CycleTime)-[:IMPACTS]->(Throughput)-[:IMPACTS]->(WorkInProgress)
 CREATE (Throughput)-[:ALSO_KNOWN_AS]->(Velocity)
 CREATE (CFD:Practice {name: 'Cumulative Flow Diagram'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (ArrivalRate:Measure {name: 'Arrival Rate'})-[:DESCRIBED_BY]->(ActionableAgile)
@@ -182,9 +183,9 @@ CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_5:Practice {name: 'Visualize work requests on 
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_6:Practice {name: 'Visualize work item aging.', code: 'VZ2.6', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_7:Practice {name: 'Visualize basic service policies.', code: 'VZ2.7', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_8:Practice {name: 'Visualize development of options by means of a upstream kanban board.', code: 'VZ2.8', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ2_8)-[:RELATED_TO]->(UpstreamKanban)
+CREATE (VZ2_8)-[:SPECIALISM_OF]->(UpstreamKanban)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_9:Practice {name: 'Visualize avatars on an upstream kanban board.', code: 'VZ2.9', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ2_9)-[:RELATED_TO]->(UpstreamKanban)
+CREATE (VZ2_9)-[:SPECIALISM_OF]->(UpstreamKanban)
 // VZ 2 Consolidation
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_10:Practice {name: 'Visualize constant WIP [CONWIP] on an emergent workflow delivery kanban board', code: 'VZ2.10', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_11:Practice {name: 'Visualize concurrent or unordered activities with checkboxes.', code: 'VZ2.11', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
@@ -193,7 +194,7 @@ CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_13:Practice {name: 'Visualize sequential activ
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_14:Practice {name: 'Visualize defects and other rework types.', code: 'VZ2.14', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_15:Practice {name: 'Visualize defined workflow using a kanban board.', code: 'VZ2.15', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_16:Practice {name: 'Visualize project progress on a simple portfolio kanban board.', code: 'VZ2.16', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ2_16)-[:RELATED_TO]->(PortfolioKanban)
+CREATE (VZ2_16)-[:SPECIALISM_OF]->(PortfolioKanban)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ2_17:Practice {name: 'Visualize a program as an aggregated service delivery overview.', code: 'VZ2.17', level: 'ML2'})-[:SPECIALISM_OF]->(Visualization)
 // VZ 3 Transition
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_1:Practice {name: 'Visualize “ready to commit” status, also known as “ready to pull.”', code: 'VZ3.1', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
@@ -201,10 +202,10 @@ CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_2:Practice {name: 'Visualize “ready to pull�
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_3:Practice {name: 'Visualize project work items on a two-tiered project kanban board.', code: 'VZ3.3', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_4:Practice {name: 'Visualize workflow and teamwork items by means of aggregated team kanban board.', code: 'VZ3.4', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_5:Practice {name: 'Visualize discarded options using a bin on an upstream/discovery kanban board.', code: 'VZ3.5', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ3_5)-[:RELATED_TO]->(UpstreamKanban)
+CREATE (VZ3_5)-[:SPECIALISM_OF]->(UpstreamKanban)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_6:Practice {name: 'Visualize parent–child and peer–peer dependencies.', code: 'VZ3.6', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_7:Practice {name: 'Visualize upstream options by means of an upstream/discovery kanban board.', code: 'VZ3.7', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ3_7)-[:RELATED_TO]->(UpstreamKanban)
+CREATE (VZ3_7)-[:SPECIALISM_OF]->(UpstreamKanban)
 // VZ 3 Consolidation
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_8:Practice {name: 'Visualize replenishment signals.', code: 'VZ3.8', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_9:Practice {name: 'Visualize pull signals.', code: 'VZ3.9', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
@@ -216,9 +217,9 @@ CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_13:Practice {name: 'Visualize failure demand v
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_14:Practice {name: 'Visualize aborted work.', code: 'VZ3.14', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_15:Practice {name: 'Visualize class of service using ticket colors, board rows, or ticket decorators.', code: 'VZ3.15', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_16:Practice {name: 'Use Earned Value portfolio kanban board to visualize project progress and schedule or budget risk.', code: 'VZ3.16', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ3_16)-[:RELATED_TO]->(PortfolioKanban)
+CREATE (VZ3_16)-[:SPECIALISM_OF]->(PortfolioKanban)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ3_17:Practice {name: 'Visualize a portfolio as an aggregated program overview board.', code: 'VZ3.17', level: 'ML3'})-[:SPECIALISM_OF]->(Visualization)
-CREATE (VZ3_17)-[:RELATED_TO]->(PortfolioKanban)
+CREATE (VZ3_17)-[:SPECIALISM_OF]->(PortfolioKanban)
 // VZ 4 Transition
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ4_1:Practice {name: 'Visualize local cycle time.', code: 'VZ4.1', level: 'ML4'})-[:SPECIALISM_OF]->(Visualization)
 CREATE (KMM)<-[:PRACTICE_OF]-(VZ4_2:Practice {name: 'Use ticket decorators to indicate risks.', code: 'VZ4.2', level: 'ML4'})-[:SPECIALISM_OF]->(Visualization)
@@ -301,7 +302,7 @@ CREATE (KMM)<-[:PRACTICE_OF]-(MF4_11:Practice {name: 'Use statistical methods fo
 
 // ML 0 Consolidation
 CREATE (KMM)<-[:PRACTICE_OF]-(XP0_1:Practice {name: 'Make the rules for personal kanban explicit.', code: 'XP0.1', level: 'ML0'})-[:SPECIALISM_OF]->(ExplicitPolicies)
-CREATE (XP0_1)-[:RELATED_TO]->(PersonalKanban)
+CREATE (XP0_1)-[:SPECIALISM_OF]->(PersonalKanban)
 // ML 1 Transition
 CREATE (KMM)<-[:PRACTICE_OF]-(XP1_1:Practice {name: 'Discover initial policies.', code: 'XP1.1', level: 'ML1'})-[:SPECIALISM_OF]->(ExplicitPolicies)
 // ML 1 Consolidation
@@ -438,7 +439,7 @@ CREATE (KMM)<-[:PRACTICE_OF]-(IE4_6:Practice {name: 'Develop quantitative unders
 CREATE (ContinuousDeliveryBook:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
 CREATE (JezHumble:Person {name: 'Jez Humble'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (DavidFarley:Person {name: 'David Farley'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
-CREATE (ContinuousDelivery:Method {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
+CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
 
 CREATE (ContinuousDelivery)-[:GUIDED_BY]->(BuildQualityIn:Principle {name: 'Build Quality In'})
 CREATE (ContinuousDelivery)-[:GUIDED_BY]->(WorkInSmallBatches:Principle {name: 'Work in Small Batches'})
@@ -474,7 +475,7 @@ CREATE (SoftwareDeliveryPerformance)-[:DESCRIBED_BY]->(Accelerate)
 CREATE (WestrumOrganizationalCulture)-[:IMPACTS]->(SoftwareDeliveryPerformance)
 CREATE (WestrumOrganizationalCulture)-[:IMPACTS]->(OrganizationalPerformance)
 
-CREATE (Burnout:Measure {name: 'Burnout'})-[:DESCRIBED_BY]->(MaslachBurnoutIndex:Measure {name: 'Maslach Burnout Index'})
+CREATE (Burnout:Measure {name: 'Burnout'})-[:ALSO_KNOWN_AS]->(MaslachBurnoutIndex:Measure {name: 'Maslach Burnout Index'})
 
 CREATE (LeanManagement:Practice {name: 'Lean Management'})
 CREATE (LeanManagement)-[:COMPOSED_OF]->(LimitWIP)
@@ -487,7 +488,7 @@ CREATE (LeanManagement)-[:IMPACTS]->(WestrumOrganizationalCulture)
 CREATE (LeanManagement)-[:IMPACTS]->(SoftwareDeliveryPerformance)
 CREATE (LeanManagement)-[:IMPACTS]->(Burnout)
 CREATE (Rework:Measure {name: 'Rework'})-[:ALSO_KNOWN_AS]->(Defects)
-CREATE (JobSatisfaction:Measure {name: 'Job Satisfaction'})
+CREATE (JobSatisfaction:Measure {name: 'Job Satisfaction'})-[:ALSO_KNOWN_AS]->(eNPS:Measure {name: 'eNPS'})
 
 CREATE (ContinuousDelivery)-[:IMPACTS]->(WestrumOrganizationalCulture)
 CREATE (ContinuousDelivery)-[:IMPACTS]->(SoftwareDeliveryPerformance)
@@ -727,7 +728,7 @@ CREATE (ShiftLeft:Practice {name: 'Shift Left on Security'})-[:IMPACTS]->(Contin
 CREATE (LooselyCoupledArch:Practice {name: 'Loosely Coupled Architecture'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (EmpoweredTeams:Practice {name: 'Empowered Teams'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (Monitoring:Practice {name: 'Monitoring'})-[:IMPACTS]->(ContinuousDelivery)
-CREATE (ProacticeNotification:Practice {name: 'Proactive Notification'})-[:IMPACTS]->(ContinuousDelivery)
+CREATE (ProactiveNotification:Practice {name: 'Proactive Notification'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (ContinuousIntegration)-[:IMPACTS]->(ContinuousDelivery) // From XP
 
 CREATE (TransformationalLeadership)-[:IMPACTS]->(TestAutomation)
@@ -854,11 +855,11 @@ CREATE (PageObject:Practice {name: 'Page Objects'})
 CREATE (ContractTesting:Practice {name: 'Contract Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(UnitTesting)
 
-CREATE (eNPS:Measure {name: 'eNPS'})
-
 // Arch
 
-CREATE (DDD:Practice {name: 'Domain-Driven Design'})
+CREATE (DDD:Method {name: 'Domain-Driven Design'})
+CREATE (UbiquitousLanguage:Pattern {name 'Ubiquitous Language'})-[:PRACTICE_OF]->(DDD)
+CREATE (BoundedContext:Pattern {name 'Bounded Context'})-[:PRACTICE_OF]->(DDD)
 CREATE (Microservices:Practice {name: 'Microservices'})
 
 CREATE (CloudComputing:Model {name: 'Cloud Computing'})
@@ -877,3 +878,7 @@ CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(JohnWillis:Person {name: 'John Willis'})
 CREATE (DevOps)-[:DESCRIBED_BY]->(PhoenixProject:Book {name: 'The Phoenix Project', isbn: '1942788290'})-[:WRITTEN_BY]->(GeneKim)
 CREATE (PhoenixProject)-[:WRITTEN_BY]->(KevinBehr:Person {name: 'Kevin Behr'})
 CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spafford'})
+
+// SRE
+
+CREATE (SRE:Method {name: 'Site Reliability Engineering'})<-[:PRACTICE_OF]-(ErrorBudgets:Practice {name: 'Error Budgets'})

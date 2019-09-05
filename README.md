@@ -1,6 +1,11 @@
 # devops-knowledge-graph
 
-This project is a knowledge graph of Agile and DevOps practices and capabilities
+This project is a pattern repository and knowledge graph of Agile and DevOps practices and capabilities
+
+## Other Pattern Repositories
+
+- [WikiWikiWeb](http://wiki.c2.com/?WelcomeVisitors)
+- [Scrum PLoP](https://sites.google.com/a/scrumplop.org/published-patterns/home)
 
 ## Getting Started
 
@@ -94,4 +99,4 @@ Most of the work needed revolves around the questions we want to answer.  For ex
 - What practices can I use to improve a particular metric?
 - What activities can I use to demonstrate a particular principle or set of principles?
 - What resources are available to learn more about a particular practice, method or framework?
-- Get rid of `:RELATES_TO` relationships, which are non-descript
+- Get rid of `:RELATES_TO` relationships, which are not descriptive
