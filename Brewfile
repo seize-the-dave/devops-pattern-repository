@@ -1,0 +1,1 @@
+brew "cleishm/neo4j/cypher-lint"
