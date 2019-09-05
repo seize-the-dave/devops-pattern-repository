@@ -4,7 +4,7 @@ os:
 
 addons:
   homebrew:
-    brewfile: Brewfile.travis
+    brewfile: true
   apt:
     sources:
       - sourceline: ppa:cleishm/neo4j
