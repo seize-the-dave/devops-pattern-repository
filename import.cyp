@@ -857,10 +857,21 @@ CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(
 
 // Arch
 
+// Both DDD and BDD close the gap between business and development, in slightly different ways.
+
+CREATE (Design:Practice {name: 'Software Design'})
 CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Book {name: 'Domain-Driven Design', isbn: '0321125215'})-[:WRITTEN_BY]->(EricEvans:Person {name: 'Eric Evans'})
+CREATE (DDD)-[:SPECIALISM_OF]->(Design)
+CREATE (BDD)-[:SPECIALISM_OF]->(Design)
+CREATE (TDD)-[:SPECIALISM_OF]->(Design)
 CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PRACTICE_OF]->(DDD)
 CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PRACTICE_OF]->(DDD)
+CREATE (HandsOnModellers:Pattern {name: 'Hands-On Modellers'})-[:PRACTICE_OF]->(DDD)
 CREATE (ModelDrivenDesign:Pattern {name: 'Model-Driven Design'})-[:PRACTICE_OF]->(DDD)
+CREATE (ContextMaps:Pattern {name: 'Context Maps'})-[:PRACTICE_OF]->(DDD)
+CREATE (LayeredArchitectures:Pattern {name: 'Layered Architectures'})-[:PRACTICE_OF]->(DDD)
+CREATE (AntiCorruptionLayer:Pattern {name: 'Anti-Corruption Layer'})-[:PRACTICE_OF]->(DDD)
+CREATE (SmartUI:AntiPattern {name: 'Smart UI'})-[:PRACTICE_OF]->(DDD)
 
 CREATE (Microservices:Practice {name: 'Microservices'})-[:SPECIALISM_OF]->(LooselyCoupledArch)
 
@@ -869,6 +880,14 @@ CREATE (IaaS:Model {name: 'Infrastructure as a Service'})-[:SPECIALISM_OF]->(Clo
 CREATE (PaaS:Model {name: 'Platform as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
 CREATE (SaaS:Model {name: 'Software as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
 CREATE (FaaS:Model {name: 'Function as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
+
+CREATE (PortsAndAdapters:Pattern {name: 'Ports and Adapters'})
+
+// Design Patterns
+
+// ... From DDD
+CREATE (ValueObject:Pattern {name: 'Value Object'})
+CREATE (Entity:Pattern {name: 'Entity'})
 
 // DevOps
 

@@ -16,6 +16,16 @@ This project is a pattern repository and knowledge graph of Agile and DevOps pra
 
 - On MacOS, run `build-macos.sh` to lint the cypher file (`import.cyp`)
 
+## Domain Model
+
+This needs some work...
+
+- `Model`, `Framework` and `Method`, e.g. Scrum, XP and Kanban have `Role`s and `Artifact`s and (`Pattern` OR `Practices`)
+- `Pattern` has a `Problem`/`Context`/`Smell` and a `Solution` (which might be a `Practice`)
+- `Measure`
+
+It's likely we'll want to traverse from `Measure` and `Model`, not from `Practice` (i.e. "what problem does `TDD` fix?" is a unlikely question)
+
 ## Navigating the Graph
 
 Most root nodes in our graph are of paradigms of type `Model`, `Framework` or `Method`.  The distinction between these node types is based on the level of rigor or practical advice: a `Model` is more abstract than a `Framework`, which is in turn more abstract than a `Method`.  This is best illustrated as the difference between Agile (a `Model`), Scrum (a `Framework`) and Extreme Programming (a `Method`).
