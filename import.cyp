@@ -844,7 +844,7 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 
 CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
-CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation) // from http://wiki.c2.com/?UnitTest
 CREATE (StaticCodeAnalysis:Practice {name: 'Static Code Analysis'})
 CREATE (CodeCoverage:Measure {name: 'Code Coverage'})-[:MEASUREMENT_OF]->(UnitTesting)
 CREATE (ThreeAmigos:Practice {name: '3 Amigos'})
@@ -855,6 +855,8 @@ CREATE (PageObject:Practice {name: 'Page Objects'})
 CREATE (ContractTesting:Practice {name: 'Contract Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(UnitTesting)
 
+CREATE (CodeReview:Practice {name: 'Code Review'}) // See https://google.github.io/eng-practices/review/reviewer/
+
 // Arch
 
 // Both DDD and BDD close the gap between business and development, in slightly different ways.
@@ -864,16 +866,17 @@ CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Boo
 CREATE (DDD)-[:SPECIALISM_OF]->(Design)
 CREATE (BDD)-[:SPECIALISM_OF]->(Design)
 CREATE (TDD)-[:SPECIALISM_OF]->(Design)
-CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PRACTICE_OF]->(DDD)
-CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PRACTICE_OF]->(DDD)
-CREATE (HandsOnModellers:Pattern {name: 'Hands-On Modellers'})-[:PRACTICE_OF]->(DDD)
-CREATE (ModelDrivenDesign:Pattern {name: 'Model-Driven Design'})-[:PRACTICE_OF]->(DDD)
-CREATE (ContextMaps:Pattern {name: 'Context Maps'})-[:PRACTICE_OF]->(DDD)
-CREATE (LayeredArchitectures:Pattern {name: 'Layered Architectures'})-[:PRACTICE_OF]->(DDD)
-CREATE (AntiCorruptionLayer:Pattern {name: 'Anti-Corruption Layer'})-[:PRACTICE_OF]->(DDD)
-CREATE (SmartUI:AntiPattern {name: 'Smart UI'})-[:PRACTICE_OF]->(DDD)
+CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PATTERN_OF]->(DDD)
+CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PATTERN_OF]->(DDD)
+CREATE (HandsOnModellers:Pattern {name: 'Hands-On Modellers'})-[:PATTERN_OF]->(DDD)
+CREATE (ModelDrivenDesign:Pattern {name: 'Model-Driven Design'})-[:PATTERN_OF]->(DDD)
+CREATE (ContextMaps:Pattern {name: 'Context Maps'})-[:PATTERN_OF]->(DDD)
+CREATE (LayeredArchitectures:Pattern {name: 'Layered Architectures'})-[:PATTERN_OF]->(DDD)
+CREATE (AntiCorruptionLayer:Pattern {name: 'Anti-Corruption Layer'})-[:PATTERN_OF]->(DDD)
+CREATE (SmartUI:AntiPattern {name: 'Smart UI'})-[:PATTERN_OF]->(DDD)
 
 CREATE (Microservices:Practice {name: 'Microservices'})-[:SPECIALISM_OF]->(LooselyCoupledArch)
+CREATE (EventSourcing:Pattern {name: 'Event Sourcing'}) // from https://martinfowler.com/eaaDev/EventSourcing.html
 
 CREATE (CloudComputing:Model {name: 'Cloud Computing'})
 CREATE (IaaS:Model {name: 'Infrastructure as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
@@ -885,9 +888,23 @@ CREATE (PortsAndAdapters:Pattern {name: 'Ports and Adapters'})
 
 // Design Patterns
 
-// ... From DDD
-CREATE (ValueObject:Pattern {name: 'Value Object'})
-CREATE (Entity:Pattern {name: 'Entity'})
+// ... from XP
+CREATE (ArrangeActAssert:Pattern {name: 'Arrange, Act, Assert'}) // from http://wiki.c2.com/?ArrangeActAssert
+
+// ... from DDD
+CREATE (ValueObject:Pattern {name: 'Value Object'})-[:PATTERN_OF]->(DDD)
+CREATE (Entity:Pattern {name: 'Entity'})-[:PATTERN_OF]->(DDD)
+CREATE (Service:Pattern {name: 'Service'})-[:PATTERN_OF]->(DDD)
+CREATE (Aggregate:Pattern {name: 'Aggregate'})-[:PATTERN_OF]->(DDD)
+CREATE (Repository:Pattern {name: 'Repository'})-[:PATTERN_OF]->(DDD)
+CREATE (Factory:Pattern {name: 'Factory'})-[:PATTERN_OF]->(DDD)
+
+// ... from GOF
+CREATE (Flyweight:Pattern {name: 'Flyweight'})-[:DESCRIBED_BY]->(GoF:Book {name: 'Design Patterns'})
+CREATE (Singleton:Pattern {name: 'Singleton'})-[:DESCRIBED_BY]->(GoF)
+// ...
+
+// ... TODO: PoEAA
 
 // DevOps
 
@@ -903,3 +920,5 @@ CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spa
 // SRE
 
 CREATE (SRE:Method {name: 'Site Reliability Engineering'})<-[:PRACTICE_OF]-(ErrorBudgets:Practice {name: 'Error Budgets'})
+
+CREATE (Mobbing:Practice {name: 'Mob Programming'})
