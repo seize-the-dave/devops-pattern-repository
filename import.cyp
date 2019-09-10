@@ -905,6 +905,7 @@ CREATE (Singleton:Pattern {name: 'Singleton'})-[:DESCRIBED_BY]->(GoF)
 // ...
 
 // ... TODO: PoEAA
+CREATE (MetadataMappingLayers:Pattern {name: 'Metadata Mapping Layers'})-[:DESCRIBED_BY]->(GoF) // https://www.martinfowler.com/eaaCatalog/metadataMapping.html 
 
 // DevOps
 
