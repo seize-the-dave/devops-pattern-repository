@@ -1,3 +1,5 @@
+language: java
+
 os:
   - linux
   - osx
@@ -15,3 +17,4 @@ addons:
 
 script:
   - cypher-lint < import.cyp
+  - mvn package
