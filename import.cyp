@@ -3,11 +3,14 @@ CREATE (SoftwareDevelopment:Process {name: 'Software Development'})
 CREATE (SoftwareDelivery:Process {name: 'Software Delivery'})-[:FOLLOWS]->(SoftwareDevelopment)
 CREATE (Operations:Process {name: 'IT Operations'})-[:FOLLOWS]->(SoftwareDelivery)
 CREATE (SoftwareEngineering:Process {name: 'Software Engineering'})-[:APPLICATION_OF]->(SoftwareDevelopment)
-CREATE (SoftwareConstruction:Process {name: 'Software Construction'})-[:PART_OF]->(SoftwareEngineering)
-CREATE (SoftwareTesting:Process {name: 'Software Testing'})-[:PART_OF]->(SoftwareEngineering)
-CREATE (SoftwareTesting)-[:FOLLOWS]->(SoftwareConstruction)
+
 CREATE (SoftwareRequirements:Process {name: 'Software Requirements'})-[:PART_OF]->(SoftwareEngineering)
 CREATE (SoftwareDesign:Process {name: 'Software Design'})-[:PART_OF]->(SoftwareEngineering)
+CREATE (SoftwareDesign)-[:FOLLOWS]->(SoftwareRequirements)
+CREATE (SoftwareConstruction:Process {name: 'Software Construction'})-[:PART_OF]->(SoftwareEngineering)
+CREATE (SoftwareConstruction)-[:FOLLOWS]->(SoftwareDesign)
+CREATE (SoftwareTesting:Process {name: 'Software Testing'})-[:PART_OF]->(SoftwareEngineering)
+CREATE (SoftwareTesting)-[:FOLLOWS]->(SoftwareConstruction)
 
 // Lean
 
