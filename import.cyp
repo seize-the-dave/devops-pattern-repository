@@ -1,7 +1,21 @@
+// This is the root of our model
+CREATE (SoftwareDevelopment:Process {name: 'Software Development'})
+CREATE (SoftwareDelivery:Process {name: 'Software Delivery'})-[:FOLLOWS]->(SoftwareDevelopment)
+CREATE (Operations:Process {name: 'IT Operations'})-[:FOLLOWS]->(SoftwareDelivery)
+CREATE (SoftwareEngineering:Process {name: 'Software Engineering'})-[:APPLICATION_OF]->(SoftwareDevelopment)
+CREATE (SoftwareConstruction:Process {name: 'Software Construction'})-[:PART_OF]->(SoftwareEngineering)
+CREATE (SoftwareTesting:Process {name: 'Software Testing'})-[:PART_OF]->(SoftwareEngineering)
+CREATE (SoftwareTesting)-[:FOLLOWS]->(SoftwareConstruction)
+
+// Lean
+
+CREATE (ValueStreamMapping:Practice {name: 'Value Stream Mapping'})-[:CREATES]->(ValueStreamMap:Artifact {name: 'Value Stream Map'})
+CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
 
 // Agile
 
-CREATE (Agile:Model {name: 'Agile Software Development'})
+CREATE (Agile:Model {name: 'Agile Software Development'})<-[:IMPLEMENTED_BY]-(Agile)
+CREATE (SoftwareDevelopment)-[:IMPLEMENTED_BY]->(Agile)
 CREATE (Agile)-[:GUIDED_BY]->(SatisfyCustomer:Principle {name: 'Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.'})
 CREATE (Agile)-[:GUIDED_BY]->(LateChangingRequirements:Principle {name: 'Welcome changing requirements, even late in development. Agile processes harness change for the customer\'s competitive advantage'})
 CREATE (Agile)-[:GUIDED_BY]->(DeliverFrequently:Principle {name: 'Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.'})
@@ -61,11 +75,6 @@ CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring'
 
 CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
 CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:IMPROVES]->(UserStories)
-
-// Lean
-
-CREATE (ValueStreamMapping:Practice {name: 'Value Stream Mapping'})-[:CREATES]->(ValueStreamMap:Artifact {name: 'Value Stream Map'})
-CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
 
 // Kanban
 
@@ -842,9 +851,11 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 
 // Test Automation
 
+CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation) // from http://wiki.c2.com/?UnitTest
+CREATE (UnitTesting)-[:SPECIALISM_OF]->(DeveloperTesting)
 CREATE (StaticCodeAnalysis:Practice {name: 'Static Code Analysis'})
 CREATE (CodeCoverage:Measure {name: 'Code Coverage'})-[:MEASUREMENT_OF]->(UnitTesting)
 CREATE (ThreeAmigos:Practice {name: '3 Amigos'})
@@ -886,6 +897,9 @@ CREATE (FaaS:Model {name: 'Function as a Service'})-[:SPECIALISM_OF]->(CloudComp
 
 CREATE (PortsAndAdapters:Pattern {name: 'Ports and Adapters'})
 
+CREATE (InfrastructureAsCode:Practice {name: 'Infrastructure as Code'});
+CREATE (ConfigurationAsCode:Practice {name: 'Configuration as Code'});
+
 // Design Patterns
 
 // ... from XP
@@ -905,7 +919,8 @@ CREATE (Singleton:Pattern {name: 'Singleton'})-[:DESCRIBED_BY]->(GoF)
 // ...
 
 // ... TODO: PoEAA
-CREATE (MetadataMappingLayers:Pattern {name: 'Metadata Mapping Layers'})-[:DESCRIBED_BY]->(GoF) // https://www.martinfowler.com/eaaCatalog/metadataMapping.html 
+CREATE (PoEAA:Book {name: 'Patterns of Enterprise Application Architecture'})-[:WRITTEN_BY]->(MartinFowler)
+CREATE (MetadataMappingLayers:Pattern {name: 'Metadata Mapping Layers'})-[:DESCRIBED_BY]->(PoEAA) // https://www.martinfowler.com/eaaCatalog/metadataMapping.html 
 
 // DevOps
 
