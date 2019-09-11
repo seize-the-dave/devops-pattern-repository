@@ -1,4 +1,4 @@
-// This is the root of our model
+// This is the root of our model.  We care about software development, delivery and operations
 CREATE (SoftwareDevelopment:Process {name: 'Software Development'})
 CREATE (SoftwareDelivery:Process {name: 'Software Delivery'})-[:FOLLOWS]->(SoftwareDevelopment)
 CREATE (Operations:Process {name: 'IT Operations'})-[:FOLLOWS]->(SoftwareDelivery)
@@ -6,6 +6,8 @@ CREATE (SoftwareEngineering:Process {name: 'Software Engineering'})-[:APPLICATIO
 CREATE (SoftwareConstruction:Process {name: 'Software Construction'})-[:PART_OF]->(SoftwareEngineering)
 CREATE (SoftwareTesting:Process {name: 'Software Testing'})-[:PART_OF]->(SoftwareEngineering)
 CREATE (SoftwareTesting)-[:FOLLOWS]->(SoftwareConstruction)
+CREATE (SoftwareRequirements:Process {name: 'Software Requirements'})-[:PART_OF]->(SoftwareEngineering)
+CREATE (SoftwareDesign:Process {name: 'Software Design'})-[:PART_OF]->(SoftwareEngineering)
 
 // Lean
 
@@ -62,9 +64,11 @@ CREATE (CollectiveCodeOwnership:Practice {name: 'Collective Code Ownership'})-[:
 CREATE (OnsiteCustomer:Practice {name: 'Onsite Customer'})-[:PRACTICE_OF]->(XP)
 CREATE (IterationPlanning:Event {name: 'Iteration Planning'})-[:PRACTICE_OF]->(XP)
 CREATE (UserStories:Practice {name: 'User Stories'})-[:PRACTICE_OF]->(XP)
+CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(UserStories)
 CREATE (ThreeCs:Practice {name: '3 Cs: Card, Confirmation, Conversation'})-[:IMPROVES]->(UserStories)
 CREATE (AcceptanceCritera:Practice {name: 'Acceptance Criteria'})-[:IMPROVES]->(UserStories)
 CREATE (SpikeSolution:Practice {name: 'Spike Solution'})-[:PRACTICE_OF]->(XP)
+CREATE (SoftwareDesign)-[:IMPLEMENTED_BY]->(SpikeSolution)
 CREATE (ReleasePlanning:Event {name: 'Release Planning'})-[:MEETING_OF]->(XP)
 CREATE (ReleasePlan:Artifact {name: 'Release Plan'})-[:ARTIFACT_OF]->(XP)
 CREATE (Iteration:Event {name: 'Iteration'})-[:MEETING_OF]->(XP)
@@ -78,6 +82,7 @@ CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:IMPROVES]->(UserStories
 
 // Kanban
 
+// Kanban is more for system management.  Not sure how to weave it in.
 CREATE (Kanban:Method {name: 'Kanban'})
 CREATE (Kanban)-[:GUIDED_BY]->(FP1:Principle {name: 'Start with what you do now'})
 CREATE (Kanban)-[:GUIDED_BY]->(FP2:Principle {name: 'Agree to pursue evolutionary change'})
@@ -936,5 +941,6 @@ CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spa
 // SRE
 
 CREATE (SRE:Method {name: 'Site Reliability Engineering'})<-[:PRACTICE_OF]-(ErrorBudgets:Practice {name: 'Error Budgets'})
+CREATE (DevOps)-[:IMPLEMENTED_BY]->(SRE)
 
 CREATE (Mobbing:Practice {name: 'Mob Programming'})
