@@ -62,6 +62,7 @@ CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(TDDByExample:Book {name: 'Test-
 CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(GOOS:Book {name: 'Growing Object-Oriented Software, Guided by Tests'})-[:WRITTEN_BY]->(SteveFreeman:Person {name: 'Steve Freeman'})
 CREATE (GOOS)-[:WRITTEN_BY]->(NatPryce:Person {name: 'Nat Pryce'})
 CREATE (PairProgramming:Practice {name: 'Pair Programming'})-[:PRACTICE_OF]->(XP)
+CREATE (PairProgramming)-[:IMPROVES]->(SoftwareConstruction)
 CREATE (ContinuousIntegration:Practice {name: 'Continuous Integration'})-[:PRACTICE_OF]->(XP)
 CREATE (ContinuousIntegrationBook:Book {name: 'Continuous Integration', isbn: '9780321336385'})<-[:DESCRIBED_BY]-(ContinuousIntegration)
 CREATE (PaulDuvall:Person {name: 'Paul Duvall'})<-[:WRITTEN_BY]-(ContinuousIntegrationBook)
@@ -81,6 +82,7 @@ CREATE (Iteration:Event {name: 'Iteration'})-[:MEETING_OF]->(XP)
 CREATE (Velocity:Measure {name: 'Velocity'})-[:MEASUREMENT_OF]->(XP)
 CREATE (XPDailyStandUp:Event {name: 'Daily Stand Up Meeting'})-[:MEETING_OF]->(XP)
 CREATE (Refactoring:Practice {name: 'Refactoring'})-[:PRACTICE_OF]->(XP)
+CREATE (Refactoring)-[:IMPROVES]->(SoftwareDesign)
 CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring', isbn: ' 0134757599'})-[:WRITTEN_BY]->(MartinFowler:Person {name: 'Martin Fowler'})
 
 CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
@@ -412,48 +414,6 @@ CREATE (KMM)<-[:PRACTICE_OF]-(IE4_5:Practice {name: 'Exploit, subordinate to and
 CREATE (IE4_5)-[:RELATED_TO]->(TheoryOfConstraints)
 CREATE (KMM)<-[:PRACTICE_OF]-(IE4_6:Practice {name: 'Develop quantitative understanding of common versus chance cause for process performance variation.', code: 'IE4.6', level: 'ML4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 
-
-// Kanban Guide
-
-// There's significant overlap between KMM and KG.  These need to be rationalised.
-
-// CREATE (DemandAnalysis:Practice {name: 'Demand Analysis / Work Item Types'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (WorkflowVisualization:Practice {name: 'Workflow Visualization / Kanban Board'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (CommitmentDeliveryPoints:Practice {name: 'Commitment and Delivery Points'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (WorkItemTicketDesign:Practice {name: 'Work Item Ticket Design'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (Avatars:Practice {name: 'Avatars'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (Swimlanes:Practice {name: 'Swimlanes'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (BacklogVisualization:Practice {name: 'Backlog Visualization'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (ElectronicTracking:Practice {name: 'Electronic Tracking'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (ModellingConcurrentActivity:Practice {name: 'Modelling Concurrent Activity'})-[:SPECIALISM_OF]->(Visualization)
-// CREATE (StickyBuddies:Practice {name: 'Sticky Buddies'})-[:SPECIALISM_OF]->(Visualization)
-
-// CREATE (ColumnWipLimits:Practice {name: 'Column / State WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
-// CREATE (PersonWipLimits:Practice {name: 'Person WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
-// CREATE (AllocatedCapacity:Practice {name: 'Allocated Capacity (Lane WIP Limits)'})-[:SPECIALISM_OF]->(LimitWIP)
-// CREATE (BoardLevelLimits:Practice {name: 'Board Level WIP Limits'})-[:SPECIALISM_OF]->(LimitWIP)
-
-// CREATE (QueueReplenishment:Practice {name: 'Queue Replenishment (Cadence and Policy)'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (LeadTimeDistribution:Practice {name: 'Lead Time Distribution (Average, Sized, Weighted)'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (FlowEfficiency:Measure {name: 'Flow Efficiency'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (InputQueuePrioritisationMethod:Practice {name: 'Input Queue Prioritisation Method'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (InputQueueSizing:Practice {name: 'Input Queue Sizing'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (Throughput:Measure {name: 'Input Queue Sizing'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (ClassesOfService:Practice {name: 'Classes of Service'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (SLE:Practice {name: 'Clarifying and Displayed Service Level Expectations'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (DueDatePerformance:Measure {name: 'Input Queue Sizing'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (SetServiceDeliveryTargets:Practice {name: 'Set Service Delivery Targets'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (InitialQuality:Measure {name: 'Initial Quality (Defects per Work Item'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (ReleasePlanning:Practice {name: 'Release Planning'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (Triage:Practice {name: 'Triage (In or Out)'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (FailureLoad:Measure {name: 'Failure Load (Production Defect Rate)'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (HandlingExternalDependencies:Practice {name: 'Handling External Dependencies'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (BacklogPrioritisationMethod:Practice {name: 'Backlog Prioritisation Method'})-[:SPECIALISM_OF]->(ManageFlow)
-// CREATE (DefectPercentageRate:Measure {name: 'Defect Percentage Rate'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (NetFlowPerWeek:Measure {name: 'Net Flow per Week'})-[:MEASUREMENT_OF]->(ManageFlow)
-// CREATE (ValueBasedWorkItem:Practice {name: 'Value Based Work Item Granularity (MMF)'})-[:SPECIALISM_OF]->(ManageFlow)
-
-
 // Continuous Delivery
 
 CREATE (ContinuousDeliveryBook:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
@@ -461,6 +421,7 @@ CREATE (JezHumble:Person {name: 'Jez Humble'})<-[:WRITTEN_BY]-(ContinuousDeliver
 CREATE (DavidFarley:Person {name: 'David Farley'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
 
+CREATE (ContinuousDelivery)-[:IMPLEMENTS]->(SoftwareDelivery)
 CREATE (ContinuousDelivery)-[:GUIDED_BY]->(BuildQualityIn:Principle {name: 'Build Quality In'})
 CREATE (ContinuousDelivery)-[:GUIDED_BY]->(WorkInSmallBatches:Principle {name: 'Work in Small Batches'})
 CREATE (ContinuousDelivery)-[:GUIDED_BY]->(ComputersDoRepetition:Principle {name: 'Computers Perform Repetitive Tasks, People Solve Problems'})
@@ -865,7 +826,7 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 CREATE (TestQuadrants:Model {name: 'Test Quadrants'})-[:MODELS]->(SoftwareTesting) // http://www.exampler.com/old-blog/2003/08/22/#agile-testing-project-2 by Brian Marick
 CREATE (TestPyramid:Model {name: 'Test Pyramid'})-[:MODELS]->(TestAutomation) // https://martinfowler.com/articles/practical-test-pyramid.html
 CREATE (SoftwareTesting)-[:IMPLEMENTED_BY]->(DeveloperTesting)
-CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:ALSO_KNOWN_AS]->(TestAutomation)
+CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation) // from http://wiki.c2.com/?UnitTest
@@ -875,12 +836,14 @@ CREATE (CodeCoverage:Measure {name: 'Code Coverage'})-[:MEASUREMENT_OF]->(UnitTe
 CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ThreeAmigos:Practice {name: '3 Amigos'})
 CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
 
+CREATE (UITesting:Practice {name: 'UI Testing'})-[:SPECIALISM_OF]->(SoftwareTesting)
 CREATE (COP:Practice {name: 'Communities of Practice'})
-CREATE (PageObject:Practice {name: 'Page Objects'})
+CREATE (ProductTeams:Pattern {name: 'Product Teams'})-[SPECIALISM_OF]->(ValueStream)
+CREATE (PageObject:Pattern {name: 'Page Objects'})-[:IMPROVES]->(UITesting)
 CREATE (ContractTesting:Practice {name: 'Contract Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(UnitTesting)
 
-CREATE (CodeReview:Practice {name: 'Code Review'}) // See https://google.github.io/eng-practices/review/reviewer/
+CREATE (CodeReview:Practice {name: 'Code Review'})-[:PRACTICE_OF]->(SoftwareConstruction) // See https://google.github.io/eng-practices/review/reviewer/
 
 // Arch
 
