@@ -19,7 +19,7 @@ CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamM
 
 // Agile
 
-CREATE (Agile:Model {name: 'Agile Software Development'})<-[:IMPLEMENTED_BY]-(Agile)
+CREATE (Agile:Model {name: 'Agile Software Development'})<-[:IMPLEMENTED_BY]-(SoftwareDevelopment)
 CREATE (SoftwareDevelopment)-[:IMPLEMENTED_BY]->(Agile)
 CREATE (Agile)-[:GUIDED_BY]->(SatisfyCustomer:Principle {name: 'Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.'})
 CREATE (Agile)-[:GUIDED_BY]->(LateChangingRequirements:Principle {name: 'Welcome changing requirements, even late in development. Agile processes harness change for the customer\'s competitive advantage'})
@@ -742,6 +742,12 @@ CREATE (Sprint:Event {name: 'Sprint'})-[:MEETING_OF]->(Scrum)
 CREATE (Sprint)-[:ALSO_KNOWN_AS]->(Iteration)
 CREATE (SprintBurndown:Measure {name: 'Sprint Burndown'})-[:MEASUREMENT_OF]->(Sprint)
 CREATE (ReleaseBurnup:Measure {name: 'Release Burnup'})
+CREATE (SprintPlanning)-[:BEFORE]->Sprint)-[:BEFORE]->(SprintReview)-[:BEFORE]->(SprintRetrospective)
+
+CREATE (DailyScrum)-[:FACILITATED_BY]->(ScrumMaster)
+CREATE (SprintPlanning)-[:FACILITATED_BY]->(ScrumMaster)
+CREATE (SprintRetrospective)-[:FACILITATED_BY]->(ScrumMaster)
+CREATE (SprintReview)-[:FACILITATED_BY]->(ScrumMaster)
 
 // Artifacts
 CREATE (Increment:Artifact {name: 'Increment'})-[:ARTIFACT_OF]->(Scrum)
@@ -919,3 +925,5 @@ CREATE (SoftwareConstruction)-[:IMPLEMENTED_BY]->(Mobbing:Practice {name: 'Mob P
 CREATE (CanaryTesting:Pattern {name: 'Canary Testing'})-[:PRACTICE_OF]->(SoftwareTesting)
 CREATE (DarkLaunching:Pattern {name: 'Dark Launching'})-[:PRACTICE_OF]->(SoftwareDelivery)
 CREATE (BlueGreenDeployment:Pattern {name: 'Blue Green Deployment'})-[:PRACTICE_OF]->(SoftwareDelivery)
+
+CREATE (System:Paradigm {name: 'System'})
