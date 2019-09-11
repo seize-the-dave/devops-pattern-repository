@@ -30,6 +30,9 @@ CREATE (Agile)-[:GUIDED_BY]->(TechnicalExcellence:Principle {name: 'Continuous a
 CREATE (Agile)-[:GUIDED_BY]->(Simplicity:Principle {name: 'Simplicity -- the art of maximizing the amount of work not done -- is essential.'})
 CREATE (Agile)-[:GUIDED_BY]->(SelfOrganizingTeams:Principle {name: 'The best architectures, requirements, and designs emerge from self-organizing teams.'})
 CREATE (Agile)-[:GUIDED_BY]->(ReflectRegularly:Principle {name: 'At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.'})
+CREATE (SoftwareTesting)-[:DESCRIBED_BY]->(AgileTesting:Book {name: 'Agile Testing', isbn: '9780321534460'})-[:WRITTEN_BY]->(LisaCrispin:Person {name: 'Lisa Crispin'})
+CREATE (AgileTesting)-[:WRITTEN_BY]->(JanetGregory:Person {name: 'Janet Gregory'})
+
 // Lean
 
 CREATE (Queue:Artifact {name: 'Queue'})
@@ -849,21 +852,24 @@ CREATE (MoSCoW:Practice {name: 'MoSCoW'})-[:PRACTICE_OF]->(DSDM)
 
 // User Stories
 
-CREATE (INVEST:Practice {name: 'INVEST'})
+CREATE (INVEST:Practice {name: 'INVEST'})-[:IMPROVES]->(UserStories)
 CREATE (StoryMapping:Practice {name: 'Story Mapping'})-[:DESCRIBED_BY]->(StoryMappingBook:Book {name: 'Story Mapping', isbn: '1491904909'})-[:WRITTEN_BY]->(JeffPatton:Person {name: 'Jeff Patton'})
-CREATE (ImpactMapping:Practice {name: 'Impact Mapping'})
+CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ImpactMapping:Practice {name: 'Impact Mapping'})
 CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBook:Book {name: 'Impact Mapping', isbn: '0955683645'})<-[:DESCRIBED_BY]-(ImpactMapping)
 
 // Test Automation
 
-CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (TestQuadrants:Model {name: 'Test Quadrants'})-[:MODELS]->(SoftwareTesting) // http://www.exampler.com/old-blog/2003/08/22/#agile-testing-project-2 by Brian Marick
+CREATE (TestPyramid:Model {name: 'Test Pyramid'})-[:MODELS]->(TestAutomation) // https://martinfowler.com/articles/practical-test-pyramid.html
+CREATE (SoftwareTesting)-[:IMPLEMENTED_BY]->(DeveloperTesting)
+CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:ALSO_KNOWN_AS]->(TestAutomation)
 CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation) // from http://wiki.c2.com/?UnitTest
 CREATE (UnitTesting)-[:SPECIALISM_OF]->(DeveloperTesting)
-CREATE (StaticCodeAnalysis:Practice {name: 'Static Code Analysis'})
+CREATE (StaticCodeAnalysis:Practice {name: 'Static Code Analysis'})-[:PRACTICE_OF]->(SoftwareDelivery)
 CREATE (CodeCoverage:Measure {name: 'Code Coverage'})-[:MEASUREMENT_OF]->(UnitTesting)
-CREATE (ThreeAmigos:Practice {name: '3 Amigos'})
+CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ThreeAmigos:Practice {name: '3 Amigos'})
 CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
 
 CREATE (COP:Practice {name: 'Communities of Practice'})
@@ -877,11 +883,10 @@ CREATE (CodeReview:Practice {name: 'Code Review'}) // See https://google.github.
 
 // Both DDD and BDD close the gap between business and development, in slightly different ways.
 
-CREATE (Design:Practice {name: 'Software Design'})
 CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Book {name: 'Domain-Driven Design', isbn: '0321125215'})-[:WRITTEN_BY]->(EricEvans:Person {name: 'Eric Evans'})
-CREATE (DDD)-[:SPECIALISM_OF]->(Design)
-CREATE (BDD)-[:SPECIALISM_OF]->(Design)
-CREATE (TDD)-[:SPECIALISM_OF]->(Design)
+CREATE (SoftwareDesign)-[:IMPLEMENTED_BY]->(DDD)
+CREATE (BDD)-[:SPECIALISM_OF]->(SoftwareDesign)
+CREATE (TDD)-[:SPECIALISM_OF]->(SoftwareDesign)
 CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PATTERN_OF]->(DDD)
 CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PATTERN_OF]->(DDD)
 CREATE (HandsOnModellers:Pattern {name: 'Hands-On Modellers'})-[:PATTERN_OF]->(DDD)
@@ -900,7 +905,7 @@ CREATE (PaaS:Model {name: 'Platform as a Service'})-[:SPECIALISM_OF]->(CloudComp
 CREATE (SaaS:Model {name: 'Software as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
 CREATE (FaaS:Model {name: 'Function as a Service'})-[:SPECIALISM_OF]->(CloudComputing)
 
-CREATE (PortsAndAdapters:Pattern {name: 'Ports and Adapters'})
+CREATE (SoftwareDesign)-[:IMPLEMENTED_BY]->(PortsAndAdapters:Pattern {name: 'Ports and Adapters'})
 
 CREATE (InfrastructureAsCode:Practice {name: 'Infrastructure as Code'});
 CREATE (ConfigurationAsCode:Practice {name: 'Configuration as Code'});
@@ -943,4 +948,8 @@ CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spa
 CREATE (SRE:Method {name: 'Site Reliability Engineering'})<-[:PRACTICE_OF]-(ErrorBudgets:Practice {name: 'Error Budgets'})
 CREATE (DevOps)-[:IMPLEMENTED_BY]->(SRE)
 
-CREATE (Mobbing:Practice {name: 'Mob Programming'})
+CREATE (SoftwareConstruction)-[:IMPLEMENTED_BY]->(Mobbing:Practice {name: 'Mob Programming'})
+
+CREATE (CanaryTesting:Pattern {name: 'Canary Testing'})-[:PRACTICE_OF]->(SoftwareTesting)
+CREATE (DarkLaunching:Pattern {name: 'Dark Launching'})-[:PRACTICE_OF]->(SoftwareDelivery)
+CREATE (BlueGreenDeployment:Pattern {name: 'Blue Green Deployment'})-[:PRACTICE_OF]->(SoftwareDelivery)
