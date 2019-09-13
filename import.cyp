@@ -4,6 +4,7 @@ CREATE (SoftwareDelivery:Process {name: 'Software Delivery'})-[:FOLLOWS]->(Softw
 CREATE (Operations:Process {name: 'IT Operations'})-[:FOLLOWS]->(SoftwareDelivery)
 CREATE (SoftwareEngineering:Process {name: 'Software Engineering'})-[:APPLICATION_OF]->(SoftwareDevelopment)
 
+// Processes have inputs and outputs
 CREATE (SoftwareRequirements:Process {name: 'Software Requirements'})-[:PART_OF]->(SoftwareEngineering)
 CREATE (SoftwareDesign:Process {name: 'Software Design'})-[:PART_OF]->(SoftwareEngineering)
 CREATE (SoftwareDesign)-[:FOLLOWS]->(SoftwareRequirements)
@@ -58,8 +59,8 @@ CREATE (XP:Method {name: 'Extreme Programming'})-[:DESCRIBED_BY]->(XPE:Book {nam
 CREATE (Agile)-[:IMPLEMENTED_BY]->(XP)
 
 CREATE (TestDrivenDevelopment:Practice {name: 'Test-Driven Development'})-[:PRACTICE_OF]->(XP)
-CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(TDDByExample:Book {name: 'Test-Driven Development'})-[:WRITTEN_BY]->(KentBeck)
-CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(GOOS:Book {name: 'Growing Object-Oriented Software, Guided by Tests'})-[:WRITTEN_BY]->(SteveFreeman:Person {name: 'Steve Freeman'})
+CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(TDDByExample:Book {name: 'Test-Driven Development', isbn: '9780321146533'})-[:WRITTEN_BY]->(KentBeck)
+CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(GOOS:Book {name: 'Growing Object-Oriented Software, Guided by Tests', isbn: '0321503627'})-[:WRITTEN_BY]->(SteveFreeman:Person {name: 'Steve Freeman'})
 CREATE (GOOS)-[:WRITTEN_BY]->(NatPryce:Person {name: 'Nat Pryce'})
 CREATE (PairProgramming:Practice {name: 'Pair Programming'})-[:PRACTICE_OF]->(XP)
 CREATE (PairProgramming)-[:IMPROVES]->(SoftwareConstruction)
@@ -742,7 +743,7 @@ CREATE (Sprint:Event {name: 'Sprint'})-[:MEETING_OF]->(Scrum)
 CREATE (Sprint)-[:ALSO_KNOWN_AS]->(Iteration)
 CREATE (SprintBurndown:Measure {name: 'Sprint Burndown'})-[:MEASUREMENT_OF]->(Sprint)
 CREATE (ReleaseBurnup:Measure {name: 'Release Burnup'})
-CREATE (SprintPlanning)-[:BEFORE]->Sprint)-[:BEFORE]->(SprintReview)-[:BEFORE]->(SprintRetrospective)
+CREATE (SprintPlanning)-[:BEFORE]->(Sprint)-[:BEFORE]->(SprintReview)-[:BEFORE]->(SprintRetrospective)
 
 CREATE (DailyScrum)-[:FACILITATED_BY]->(ScrumMaster)
 CREATE (SprintPlanning)-[:FACILITATED_BY]->(ScrumMaster)
@@ -831,8 +832,8 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 
 CREATE (TestQuadrants:Model {name: 'Test Quadrants'})-[:MODELS]->(SoftwareTesting) // http://www.exampler.com/old-blog/2003/08/22/#agile-testing-project-2 by Brian Marick
 CREATE (TestPyramid:Model {name: 'Test Pyramid'})-[:MODELS]->(TestAutomation) // https://martinfowler.com/articles/practical-test-pyramid.html
-CREATE (SoftwareTesting)-[:IMPLEMENTED_BY]->(DeveloperTesting)
 CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (SoftwareTesting)-[:IMPLEMENTED_BY]->(DeveloperTesting)
 CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation) // from http://wiki.c2.com/?UnitTest
@@ -844,7 +845,7 @@ CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBo
 
 CREATE (UITesting:Practice {name: 'UI Testing'})-[:SPECIALISM_OF]->(SoftwareTesting)
 CREATE (COP:Practice {name: 'Communities of Practice'})
-CREATE (ProductTeams:Pattern {name: 'Product Teams'})-[SPECIALISM_OF]->(ValueStream)
+CREATE (ProductTeams:Pattern {name: 'Product Teams'})-[:SPECIALISM_OF]->(ValueStream)
 CREATE (PageObject:Pattern {name: 'Page Objects'})-[:IMPROVES]->(UITesting)
 CREATE (ContractTesting:Practice {name: 'Contract Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(UnitTesting)
@@ -879,8 +880,8 @@ CREATE (FaaS:Model {name: 'Function as a Service'})-[:SPECIALISM_OF]->(CloudComp
 
 CREATE (SoftwareDesign)-[:IMPLEMENTED_BY]->(PortsAndAdapters:Pattern {name: 'Ports and Adapters'})
 
-CREATE (InfrastructureAsCode:Practice {name: 'Infrastructure as Code'});
-CREATE (ConfigurationAsCode:Practice {name: 'Configuration as Code'});
+CREATE (InfrastructureAsCode:Practice {name: 'Infrastructure as Code'})
+CREATE (ConfigurationAsCode:Practice {name: 'Configuration as Code'})
 
 // Design Patterns
 
