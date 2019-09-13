@@ -18,24 +18,7 @@ public class Book {
     private String isbn;
     @Relationship(type = "WRITTEN_BY", direction = Relationship.UNDIRECTED)
     private List<Person> authors  = new ArrayList<>();
-//
-//    public Book(String name, String isbn, List<Person> authors) {
-//        this.name = name;
-//        this.isbn = isbn;
-//        this.authors = authors;
-//    }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public List<Person> getAuthors() {
-        return authors;
-    }
 
     @Override
     public String toString() {
