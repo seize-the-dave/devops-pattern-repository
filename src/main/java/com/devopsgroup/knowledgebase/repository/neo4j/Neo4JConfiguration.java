@@ -1,4 +1,4 @@
-package com.devopsgroup.knowledgebase.repository;
+package com.devopsgroup.knowledgebase.repository.neo4j;
 
 import org.neo4j.ogm.config.ClasspathConfigurationSource;
 import org.neo4j.ogm.config.ConfigurationSource;
@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableNeo4jRepositories(basePackages = "com.devopsgroup.knowledgebase.repository")
+@EnableNeo4jRepositories(basePackages = "com.devopsgroup.knowledgebase.repository.neo4j")
 @EnableTransactionManagement
 public class Neo4JConfiguration {
     @Bean

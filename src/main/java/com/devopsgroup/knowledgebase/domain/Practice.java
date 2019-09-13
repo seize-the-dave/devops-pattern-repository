@@ -15,11 +15,29 @@ public class Practice {
     @GeneratedValue
     private Long id;
     @Relationship(type = "DESCRIBED_BY", direction = Relationship.UNDIRECTED)
-    private List<Book> books = new ArrayList<>();
+    private List<Resource> resources = new ArrayList<>();
     private String name;
+
+    public Practice(Long id, String name, List<Resource> resources) {
+        this.id = id;
+        this.name = name;
+        this.resources = resources;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).addValue(name).addValue(books).toString();
+        return MoreObjects.toStringHelper(this).addValue(name).addValue(resources).toString();
     }
 }

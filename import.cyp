@@ -34,13 +34,13 @@ CREATE (Agile)-[:GUIDED_BY]->(TechnicalExcellence:Principle {name: 'Continuous a
 CREATE (Agile)-[:GUIDED_BY]->(Simplicity:Principle {name: 'Simplicity -- the art of maximizing the amount of work not done -- is essential.'})
 CREATE (Agile)-[:GUIDED_BY]->(SelfOrganizingTeams:Principle {name: 'The best architectures, requirements, and designs emerge from self-organizing teams.'})
 CREATE (Agile)-[:GUIDED_BY]->(ReflectRegularly:Principle {name: 'At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.'})
-CREATE (SoftwareTesting)-[:DESCRIBED_BY]->(AgileTesting:Book {name: 'Agile Testing', isbn: '9780321534460'})-[:WRITTEN_BY]->(LisaCrispin:Person {name: 'Lisa Crispin'})
+CREATE (SoftwareTesting)-[:DESCRIBED_BY]->(AgileTesting:Resource:Book {name: 'Agile Testing', isbn: '9780321534460'})-[:WRITTEN_BY]->(LisaCrispin:Person {name: 'Lisa Crispin'})
 CREATE (AgileTesting)-[:WRITTEN_BY]->(JanetGregory:Person {name: 'Janet Gregory'})
 
 // Lean
 
 CREATE (Queue:Artifact {name: 'Queue'})
-CREATE (LeanSoftwareDevelopment:Framework {name: 'Lean Software Development'})-[:DESCRIBED_BY]->(LSDToolkit:Book {name: 'Lean Software Development: An Agile Toolkit', isbn: '9780133812954'})-[:WRITTEN_BY]->(MaryPoppendieck:Person {name: 'Mary Poppendieck'})
+CREATE (LeanSoftwareDevelopment:Framework {name: 'Lean Software Development'})-[:DESCRIBED_BY]->(LSDToolkit:Resource:Book {name: 'Lean Software Development: An Agile Toolkit', isbn: '9780133812954'})-[:WRITTEN_BY]->(MaryPoppendieck:Person {name: 'Mary Poppendieck'})
 CREATE (LSDToolkit)-[:WRITTEN_BY]->(TomPoppendieck:Person {name: 'Tom Poppendieck'})
 CREATE (Agile)-[:IMPLEMENTED_BY]->(LeanSoftwareDevelopment)
 
@@ -55,17 +55,17 @@ CREATE (Defects:Measure {name: 'Defects'})-[:MEASUREMENT_OF]->(LeanSoftwareDevel
 
 // XP
 
-CREATE (XP:Method {name: 'Extreme Programming'})-[:DESCRIBED_BY]->(XPE:Book {name: 'Extreme Programming Explained', isbn: '9780321278654'})-[:WRITTEN_BY]->(KentBeck:Person {name: 'Kent Beck'})
+CREATE (XP:Method {name: 'Extreme Programming'})-[:DESCRIBED_BY]->(XPE:Resource:Book {name: 'Extreme Programming Explained', isbn: '9780321278654'})-[:WRITTEN_BY]->(KentBeck:Person {name: 'Kent Beck'})
 CREATE (Agile)-[:IMPLEMENTED_BY]->(XP)
 
-CREATE (TestDrivenDevelopment:Practice {name: 'Test-Driven Development'})-[:PRACTICE_OF]->(XP)
-CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(TDDByExample:Book {name: 'Test-Driven Development', isbn: '9780321146533'})-[:WRITTEN_BY]->(KentBeck)
-CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(GOOS:Book {name: 'Growing Object-Oriented Software, Guided by Tests', isbn: '0321503627'})-[:WRITTEN_BY]->(SteveFreeman:Person {name: 'Steve Freeman'})
+CREATE (TestDrivenDevelopment:Practice {name: 'Test-Driven Development (TDD)'})-[:PRACTICE_OF]->(XP)
+CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(TDDByExample:Resource:Book {name: 'Test-Driven Development', isbn: '9780321146533'})-[:WRITTEN_BY]->(KentBeck)
+CREATE (TestDrivenDevelopment)-[:DESCRIBED_BY]->(GOOS:Resource:Book {name: 'Growing Object-Oriented Software, Guided by Tests', isbn: '0321503627'})-[:WRITTEN_BY]->(SteveFreeman:Person {name: 'Steve Freeman'})
 CREATE (GOOS)-[:WRITTEN_BY]->(NatPryce:Person {name: 'Nat Pryce'})
 CREATE (PairProgramming:Practice {name: 'Pair Programming'})-[:PRACTICE_OF]->(XP)
 CREATE (PairProgramming)-[:IMPROVES]->(SoftwareConstruction)
 CREATE (ContinuousIntegration:Practice {name: 'Continuous Integration'})-[:PRACTICE_OF]->(XP)
-CREATE (ContinuousIntegrationBook:Book {name: 'Continuous Integration', isbn: '9780321336385'})<-[:DESCRIBED_BY]-(ContinuousIntegration)
+CREATE (ContinuousIntegrationBook:Resource:Book {name: 'Continuous Integration', isbn: '9780321336385'})<-[:DESCRIBED_BY]-(ContinuousIntegration)
 CREATE (PaulDuvall:Person {name: 'Paul Duvall'})<-[:WRITTEN_BY]-(ContinuousIntegrationBook)
 CREATE (CodingStandards:Practice {name: 'Coding Standards'})-[:PRACTICE_OF]->(XP)
 CREATE (CollectiveCodeOwnership:Practice {name: 'Collective Code Ownership'})-[:PRACTICE_OF]->(XP)
@@ -84,9 +84,9 @@ CREATE (Velocity:Measure {name: 'Velocity'})-[:MEASUREMENT_OF]->(XP)
 CREATE (XPDailyStandUp:Event {name: 'Daily Stand Up Meeting'})-[:MEETING_OF]->(XP)
 CREATE (Refactoring:Practice {name: 'Refactoring'})-[:PRACTICE_OF]->(XP)
 CREATE (Refactoring)-[:IMPROVES]->(SoftwareDesign)
-CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Book {name: 'Refactoring', isbn: ' 0134757599'})-[:WRITTEN_BY]->(MartinFowler:Person {name: 'Martin Fowler'})
+CREATE (Refactoring)-[:DESCRIBED_BY]->(RefactoringBook:Resource:Book {name: 'Refactoring', isbn: ' 0134757599'})-[:WRITTEN_BY]->(MartinFowler:Person {name: 'Martin Fowler'})
 
-CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
+CREATE (UserStories)-[:DESCRIBED_BY]->(UserStoriesApplied:Resource:Book {name: 'User Stories Applied', isbn: '0321205685'})-[:WRITTEN_BY]->(MikeCohn:Person {name: 'Mike Cohn'})
 CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:IMPROVES]->(UserStories)
 
 // Kanban
@@ -100,40 +100,40 @@ CREATE (Kanban)-[:GUIDED_BY]->(FP4:Principle {name: 'Encourage acts of leadershi
 
 CREATE (STATIK:Activity {name: 'STATIK'})
 
-CREATE (Kanban)-[:DESCRIBED_BY]->(BlueBook:Book {name: 'Kanban', isbn: '0984521402'})-[:WRITTEN_BY]->(DavidAnderson:Person {name: 'David J. Anderson'})
-CREATE (Kanban)-[:DESCRIBED_BY]->(EssentialKanban:Book {name: 'Essential Kanban Condensed', isbn: '0984521429'})-[:WRITTEN_BY]->(DavidAnderson)
-CREATE (Kanban)-[:DESCRIBED_BY]->(KanbanInside:Book {name: 'Kanban From the Inside', isbn: '0985305193'})-[:WRITTEN_BY]->(MikeBurrows:Person {name: 'Mike Burrows'})
+CREATE (Kanban)-[:DESCRIBED_BY]->(BlueBook:Resource:Book {name: 'Kanban', isbn: '0984521402'})-[:WRITTEN_BY]->(DavidAnderson:Person {name: 'David J. Anderson'})
+CREATE (Kanban)-[:DESCRIBED_BY]->(EssentialKanban:Resource:Book {name: 'Essential Kanban Condensed', isbn: '0984521429'})-[:WRITTEN_BY]->(DavidAnderson)
+CREATE (Kanban)-[:DESCRIBED_BY]->(KanbanInside:Resource:Book {name: 'Kanban From the Inside', isbn: '0985305193'})-[:WRITTEN_BY]->(MikeBurrows:Person {name: 'Mike Burrows'})
 CREATE (EssentialKanban)-[:WRITTEN_BY]->(AndyCarmichael:Person {name: 'Andy Carmichael'})
 
-CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
+CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Resource:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
 CREATE (BlockerClustering:Practice {name: 'Blocker Clustering'})-[:DESCRIBED_BY]->(PracticalKanban)
 
-CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
+CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Resource:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
 CREATE (CustomerKanban:Practice {name: 'Customer Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban)
 CREATE (UpstreamKanban)-[:SPECIALISM_OF]->(Kanban)
 CREATE (CustomerKanban)-[:SPECIALISM_OF]->(Kanban)
 CREATE (PortfolioKanban:Practice {name: 'Portfolio Kanban'})-[:SPECIALISM_OF]->(Kanban)
 CREATE (PersonalKanban:Practice {name: 'Personal Kanban'})-[:SPECIALISM_OF]->(Kanban)
-CREATE (PersonalKanban)-[:DESCRIBED_BY]->(PersonalKanbanBook:Book {name: 'Personal Kanban', isbn: '1453802266'})-[:WRITTEN_BY]->(JimBenson:Person {name: 'Jim Benson'})
+CREATE (PersonalKanban)-[:DESCRIBED_BY]->(PersonalKanbanBook:Resource:Book {name: 'Personal Kanban', isbn: '1453802266'})-[:WRITTEN_BY]->(JimBenson:Person {name: 'Jim Benson'})
 CREATE (PersonalKanbanBook)-[:WRITTEN_BY]->(TonianneDeMariaBarry:Person {name: 'Tonianne DeMaria Barry'})
 CREATE (TeamKanban:Practice {name: 'Team Kanban'})-[:SPECIALISM_OF]->(Kanban)
 
-CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
+CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Resource:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
 
-CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
+CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Resource:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
 CREATE (FlightLevels)-[:DESCRIBED_BY]->(PracticalKanban)
-CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStream)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel3:Practice {name: 'Flight Level 3'})-[:ALSO_KNOWN_AS]->(PortfolioKanban)
+CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStream)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel1:Practice {name: 'Flight Level 1'})-[:ALSO_KNOWN_AS]->(TeamKanban)
 
 CREATE (FoldingPaperShips:Activity {name: 'Folding Paper Ships'})-[:DEMONSTRATES]->(Kanban)
 CREATE (FoldingPaperShips)-[:DESCRIBED_BY]->(PracticalKanban)
 CREATE (Featureban:Activity {name: 'Featureban'})-[:DEMONSTRATES]->(Kanban)
-CREATE (Featureban)-[:DESCRIBED_BY]->(FeaturebanLink:Link {name: 'Featureban', url: 'https://www.agendashift.com/featureban'})
+CREATE (Featureban)-[:DESCRIBED_BY]->(FeaturebanLink:Resource:Link {name: 'Featureban', url: 'https://www.agendashift.com/featureban'})
 CREATE (GetKanban:Activity {name: 'getKanban Board Game'})-[:DEMONSTRATES]->(Kanban)
-CREATE (GetKanban)-[:DESCRIBED_BY]->(GetKanbanLink:Link {name: 'getKanban', url: 'https://getkanban.com/'})
+CREATE (GetKanban)-[:DESCRIBED_BY]->(GetKanbanLink:Resource:Link {name: 'getKanban', url: 'https://getkanban.com/'})
 
-CREATE (ActionableAgile:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
+CREATE (ActionableAgile:Resource:Book {name: 'Actionable Agile Metrics for Predictability', isbn: '098643633X'})-[:WRITTEN_BY]->(DanVacanti:Person {name: 'Dan Vacanti'})
 CREATE (WorkInProgress:Measure {name: 'WIP'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (CycleTime:Measure {name: 'Cycle Time'})-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (Throughput:Measure {name: 'Throughput'})-[:DESCRIBED_BY]->(ActionableAgile)
@@ -151,7 +151,7 @@ CREATE (ClassesOfService)-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (MonteCarlo:Practice {name: 'Monte Carlo Simulation'})-[:DESCRIBED_BY]->(ActionableAgile)
 
 
-CREATE (MakingWorkVisible:Book {name: 'Making Work Visible', isbn: '1942788150'})-[:WRITTEN_BY]->(DomincaDeGrandis:Person {name: 'Dominica DeGrandis'})
+CREATE (MakingWorkVisible:Resource:Book {name: 'Making Work Visible', isbn: '1942788150'})-[:WRITTEN_BY]->(DomincaDeGrandis:Person {name: 'Dominica DeGrandis'})
 
 
 
@@ -183,7 +183,7 @@ CREATE (DeliveryPlanning:Event {name: 'Delivery Planning Meeting'})-[:MEETING_OF
 
 CREATE (KMM:Model {name: 'Kanban Maturity Model'})
 CREATE (KMM)-[:MEASUREMENT_OF]->(Kanban)
-CREATE (KMM)-[:DESCRIBED_BY]->(KMMBook:Book {name: 'Kanban Maturity Model', isbn: '0985305150'})-[:WRITTEN_BY]->(DavidAnderson)
+CREATE (KMM)-[:DESCRIBED_BY]->(KMMBook:Resource:Book {name: 'Kanban Maturity Model', isbn: '0985305150'})-[:WRITTEN_BY]->(DavidAnderson)
 CREATE (KMMBook)-[:WRITTEN_BY]->(TeodoraBozheva:Person {name: 'Teodora Bozheva'})
 
 // VZ 0 Consolidation
@@ -288,7 +288,7 @@ CREATE (KMM)<-[:PRACTICE_OF]-(MF2_8:Practice {name: 'Manage aging WIP.', code: '
 CREATE (KMM)<-[:PRACTICE_OF]-(MF3_1:Practice {name: 'Organize around the knowledge discovery process.', code: 'MF3.1', level: 'ML3'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (KMM)<-[:PRACTICE_OF]-(MF3_2:Practice {name: 'Collect service-related data: demand, capability.”)', code: 'MF3.2', level: 'ML3'})-[:SPECIALISM_OF]->(ManageFlow)
 CREATE (KMM)<-[:PRACTICE_OF]-(MF3_3:Practice {name: 'Analyze service fitness-for-purpose.”)', code: 'MF3.3', level: 'ML3'})-[:SPECIALISM_OF]->(ManageFlow)
-CREATE (MF3_3)-[:RELATED_TO]->(FitForPurpose:Model {name: 'Fit for Purpose'})-[:DESCRIBED_BY]->(F4PBook:Book {name: 'Fit For Purpose', isbn: '1732821208'})-[:WRITTEN_BY]->(DavidAnderson)
+CREATE (MF3_3)-[:RELATED_TO]->(FitForPurpose:Model {name: 'Fit for Purpose'})-[:DESCRIBED_BY]->(F4PBook:Resource:Book {name: 'Fit For Purpose', isbn: '1732821208'})-[:WRITTEN_BY]->(DavidAnderson)
 CREATE (F4PBook)-[:WRITTEN_BY]->(AlexeiZheglov:Person {name: 'Alexei Zheglov'})
 
 CREATE (KMM)<-[:PRACTICE_OF]-(MF3_4:Practice {name: 'Defer commitment (decide at the “last responsible moment.”)', code: 'MF3.4', level: 'ML3'})-[:SPECIALISM_OF]->(ManageFlow)
@@ -403,9 +403,9 @@ CREATE (KMM)<-[:PRACTICE_OF]-(IE3_4:Practice {name: 'After meetings: discuss a p
 CREATE (KMM)<-[:PRACTICE_OF]-(IE4_1:Practice {name: 'Develop qualitative understanding of common versus special cause for process performance variation.', code: 'IE4.1', level: 'ML4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 CREATE (KMM)<-[:PRACTICE_OF]-(IE4_2:Practice {name: 'Identify the impact of shared resources.', code: 'IE4.2', level: 'ML4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 CREATE (KMM)<-[:PRACTICE_OF]-(IE4_3:Practice {name: 'Identify bottlenecks.', code: 'IE4.3', level: 'ML4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
-CREATE (IE4_3)-[:RELATED_TO]->(TheoryOfConstraints:Method {name: 'Theory of Constraints'})-[:DESCRIBED_BY]->(TheGoal:Book {name: 'The Goal', isbn: '9780884271956'})-[:WRITTEN_BY]->(EliGoldratt:Person {name: 'Eli Goldratt'})
-CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(RollingRocksDownhill:Book {name: 'Rolling Rocks Downhill', isbn: '1505446511'})-[:WRITTEN_BY]->(ClarkeChing:Person {name: 'Clark Ching'})
-CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(TheBottleneckRules:Book {name: 'The Bottleneck Rules', isbn: '1983022691'})-[:WRITTEN_BY]->(ClarkeChing)
+CREATE (IE4_3)-[:RELATED_TO]->(TheoryOfConstraints:Method {name: 'Theory of Constraints'})-[:DESCRIBED_BY]->(TheGoal:Resource:Book {name: 'The Goal', isbn: '9780884271956'})-[:WRITTEN_BY]->(EliGoldratt:Person {name: 'Eli Goldratt'})
+CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(RollingRocksDownhill:Resource:Book {name: 'Rolling Rocks Downhill', isbn: '1505446511'})-[:WRITTEN_BY]->(ClarkeChing:Person {name: 'Clark Ching'})
+CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(TheBottleneckRules:Resource:Book {name: 'The Bottleneck Rules', isbn: '1983022691'})-[:WRITTEN_BY]->(ClarkeChing)
 CREATE (FiveFocusingSteps:Practice {name: 'Five Focusing Steps'})-[:PRACTICE_OF]->(TheoryOfConstraints)
 CREATE (ThinkingProcesses:Practice {name: 'Thinking Processes'})-[:PRACTICE_OF]->(TheoryOfConstraints)
 CREATE (ThroughputAccounting:Practice {name: 'Throughput Accounting'})-[:PRACTICE_OF]->(TheoryOfConstraints)
@@ -417,7 +417,7 @@ CREATE (KMM)<-[:PRACTICE_OF]-(IE4_6:Practice {name: 'Develop quantitative unders
 
 // Continuous Delivery
 
-CREATE (ContinuousDeliveryBook:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
+CREATE (ContinuousDeliveryBook:Resource:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
 CREATE (JezHumble:Person {name: 'Jez Humble'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (DavidFarley:Person {name: 'David Farley'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
@@ -431,7 +431,7 @@ CREATE (ContinuousDelivery)-[:GUIDED_BY]->(EveryoneIsResponsible:Principle {name
 
 // Measures from Accelerate
 
-CREATE (Accelerate:Book {name: 'Accelerate', isbn: '1942788339'})
+CREATE (Accelerate:Resource:Book {name: 'Accelerate', isbn: '1942788339'})
 CREATE (NicoleForsgren:Person {name: 'Nicole Forsgren'})<-[:WRITTEN_BY]-(Accelerate)
 CREATE (JezHumble)<-[:WRITTEN_BY]-(Accelerate)
 CREATE (GeneKim:Person {name: 'Gene Kim'})<-[:WRITTEN_BY]-(Accelerate)
@@ -494,7 +494,7 @@ CREATE (GatherCustomerFeedback:Practice {name: 'Gather & Implement Customer Feed
 CREATE (TeamExperimentation:Practice {name: 'Team Experimentation'})
 
 CREATE (LeanProductDevelopment:Model {name: 'Lean Product Development'})
-CREATE (FlowBook:Book {name: 'The Principles of Product Development Flow'})<-[:WRITTEN_BY]-(DonReinertsen:Person {name: 'Don Reinertsen'})
+CREATE (FlowBook:Resource:Book {name: 'The Principles of Product Development Flow'})<-[:WRITTEN_BY]-(DonReinertsen:Person {name: 'Don Reinertsen'})
 CREATE (LeanProductDevelopment)-[:DESCRIBED_BY]->(FlowBook)
 
 CREATE (LeanProductDevelopment)-[:GUIDED_BY]->(E1:Principle {name: 'Select actions based on quantified overall economic impact', code: 'E1'})
@@ -726,7 +726,7 @@ CREATE (TransformationalLeadership)-[:IMPACTS]->(GatherCustomerFeedback)
 
 // Scrum
 
-CREATE (Scrum:Framework {name: 'Scrum'})-[:DESCRIBED_BY]->(ScrumGuide:Link {name: 'Scrum Guide', url: 'https://www.scrumguides.org/scrum-guide.html'})
+CREATE (Scrum:Framework {name: 'Scrum'})-[:DESCRIBED_BY]->(ScrumGuide:Resource:Link {name: 'Scrum Guide', url: 'https://www.scrumguides.org/scrum-guide.html'})
 CREATE (Agile)-[:IMPLEMENTED_BY]->(Scrum)
 
 // Roles
@@ -770,7 +770,7 @@ CREATE (DefinitionOfReady:Practice {name: 'Definition of Ready'})-[:SPECIALISM_O
 // LeSS
 
 CREATE (LeSS:Framework {name: 'LeSS'})-[:SCALES]->(Scrum)
-CREATE (LeSS)-[:DESCRIBED_BY]->(LeSSWebsite:Link {name: 'Large Scale Scrum', url: 'http://less.works/'})
+CREATE (LeSS)-[:DESCRIBED_BY]->(LeSSWebsite:Resource:Link {name: 'Large Scale Scrum', url: 'http://less.works/'})
 CREATE (Agile)-[:IMPLEMENTED_BY]->(LeSS)
 
 CREATE (SprintPlanningOne:Event {name: 'Sprint Planning One'})-[:MEETING_OF]->(LeSS)
@@ -780,7 +780,7 @@ CREATE (OverallRetrospective:Event {name: 'Overall Retrospective'})-[:MEETING_OF
 // Nexus
 
 CREATE (Nexus:Framework {name: 'Nexus'})-[:SCALES]->(Scrum)
-CREATE (Nexus)-[:DESCRIBED_BY]->(NexusWebsite:Link {name: 'Scaling Scrum with Nexus', url: 'https://www.scrum.org/resources/scaling-scrum'})
+CREATE (Nexus)-[:DESCRIBED_BY]->(NexusWebsite:Resource:Link {name: 'Scaling Scrum with Nexus', url: 'https://www.scrum.org/resources/scaling-scrum'})
 CREATE (Agile)-[:IMPLEMENTED_BY]->(Nexus)
 
 // Nexus Roles
@@ -805,7 +805,7 @@ CREATE (DefinitionOfDone)-[:PRACTICE_OF]->(Nexus)
 
 CREATE (SAFe:Framework {name: 'SAFe'})-[:SCALES]->(Scrum)
 CREATE (Agile)-[:IMPLEMENTED_BY]->(SAFe)
-CREATE (SAFe)-[:DESCRIBED_BY]->(SAFeWebsite:Link {name: 'Scaled Agile Framework', url: 'https://www.scaledagileframework.com/'})
+CREATE (SAFe)-[:DESCRIBED_BY]->(SAFeWebsite:Resource:Link {name: 'Scaled Agile Framework', url: 'https://www.scaledagileframework.com/'})
 CREATE (AgileReleaseTrain:Artifact {name: 'Agile Release Train'})-[:ARTIFACT_OF]->(SAFe)
 CREATE (ReleaseTrainEngineer:Role {name: 'Release Train Engineer'})-[:ROLE_OF]->(SAFe)
 CREATE (PIPlanning:Event {name: 'PI Planning'})-[:MEETING_OF]->(SAFe)
@@ -824,9 +824,9 @@ CREATE (MoSCoW:Practice {name: 'MoSCoW'})-[:PRACTICE_OF]->(DSDM)
 // User Stories
 
 CREATE (INVEST:Practice {name: 'INVEST'})-[:IMPROVES]->(UserStories)
-CREATE (StoryMapping:Practice {name: 'Story Mapping'})-[:DESCRIBED_BY]->(StoryMappingBook:Book {name: 'Story Mapping', isbn: '1491904909'})-[:WRITTEN_BY]->(JeffPatton:Person {name: 'Jeff Patton'})
+CREATE (StoryMapping:Practice {name: 'Story Mapping'})-[:DESCRIBED_BY]->(StoryMappingBook:Resource:Book {name: 'Story Mapping', isbn: '1491904909'})-[:WRITTEN_BY]->(JeffPatton:Person {name: 'Jeff Patton'})
 CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ImpactMapping:Practice {name: 'Impact Mapping'})
-CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBook:Book {name: 'Impact Mapping', isbn: '0955683645'})<-[:DESCRIBED_BY]-(ImpactMapping)
+CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingResource:Resource:Book {name: 'Impact Mapping', isbn: '0955683645'})<-[:DESCRIBED_BY]-(ImpactMapping)
 
 // Test Automation
 
@@ -834,14 +834,15 @@ CREATE (TestQuadrants:Model {name: 'Test Quadrants'})-[:MODELS]->(SoftwareTestin
 CREATE (TestPyramid:Model {name: 'Test Pyramid'})-[:MODELS]->(TestAutomation) // https://martinfowler.com/articles/practical-test-pyramid.html
 CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (SoftwareTesting)-[:IMPLEMENTED_BY]->(DeveloperTesting)
-CREATE (BDD:Practice {name: 'BDD'})-[:SPECIALISM_OF]->(TestAutomation)
-CREATE (ATDD:Practice {name: 'ATDD'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (BDD:Practice {name: 'Behaviour-Driven Development (BDD)'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (BDD)-[:DESCRIBED_BY]->(IntroducingBDD:Resource:Link {name: 'Introducing BDD', url: 'https://dannorth.net/introducing-bdd/'})
+CREATE (ATDD:Practice {name: 'Acceptance Test-Driven Development (ATDD)'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAutomation) // from http://wiki.c2.com/?UnitTest
 CREATE (UnitTesting)-[:SPECIALISM_OF]->(DeveloperTesting)
 CREATE (StaticCodeAnalysis:Practice {name: 'Static Code Analysis'})-[:PRACTICE_OF]->(SoftwareDelivery)
 CREATE (CodeCoverage:Measure {name: 'Code Coverage'})-[:MEASUREMENT_OF]->(UnitTesting)
 CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ThreeAmigos:Practice {name: '3 Amigos'})
-CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
+CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Resource:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
 
 CREATE (UITesting:Practice {name: 'UI Testing'})-[:SPECIALISM_OF]->(SoftwareTesting)
 CREATE (COP:Practice {name: 'Communities of Practice'})
@@ -856,10 +857,10 @@ CREATE (CodeReview:Practice {name: 'Code Review'})-[:PRACTICE_OF]->(SoftwareCons
 
 // Both DDD and BDD close the gap between business and development, in slightly different ways.
 
-CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Book {name: 'Domain-Driven Design', isbn: '0321125215'})-[:WRITTEN_BY]->(EricEvans:Person {name: 'Eric Evans'})
+CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Resource:Book {name: 'Domain-Driven Design', isbn: '0321125215'})-[:WRITTEN_BY]->(EricEvans:Person {name: 'Eric Evans'})
 CREATE (SoftwareDesign)-[:IMPLEMENTED_BY]->(DDD)
 CREATE (BDD)-[:SPECIALISM_OF]->(SoftwareDesign)
-CREATE (TDD)-[:SPECIALISM_OF]->(SoftwareDesign)
+CREATE (TestDrivenDevelopment)-[:SPECIALISM_OF]->(SoftwareDesign)
 CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PATTERN_OF]->(DDD)
 CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PATTERN_OF]->(DDD)
 CREATE (HandsOnModellers:Pattern {name: 'Hands-On Modellers'})-[:PATTERN_OF]->(DDD)
@@ -897,22 +898,22 @@ CREATE (Repository:Pattern {name: 'Repository'})-[:PATTERN_OF]->(DDD)
 CREATE (Factory:Pattern {name: 'Factory'})-[:PATTERN_OF]->(DDD)
 
 // ... from GOF
-CREATE (Flyweight:Pattern {name: 'Flyweight'})-[:DESCRIBED_BY]->(GoF:Book {name: 'Design Patterns'})
+CREATE (Flyweight:Pattern {name: 'Flyweight'})-[:DESCRIBED_BY]->(GoF:Resource:Book {name: 'Design Patterns'})
 CREATE (Singleton:Pattern {name: 'Singleton'})-[:DESCRIBED_BY]->(GoF)
 // ...
 
 // ... TODO: PoEAA
-CREATE (PoEAA:Book {name: 'Patterns of Enterprise Application Architecture'})-[:WRITTEN_BY]->(MartinFowler)
+CREATE (PoEAA:Resource:Book {name: 'Patterns of Enterprise Application Architecture'})-[:WRITTEN_BY]->(MartinFowler)
 CREATE (MetadataMappingLayers:Pattern {name: 'Metadata Mapping Layers'})-[:DESCRIBED_BY]->(PoEAA) // https://www.martinfowler.com/eaaCatalog/metadataMapping.html 
 
 // DevOps
 
-CREATE (DevOps:Model {name: 'DevOps'})-[:DESCRIBED_BY]->(DevOpsHandbook:Book {name: 'DevOps Handbook', isbn: '1942788002'})-[:WRITTEN_BY]->(JezHumble)
+CREATE (DevOps:Model {name: 'DevOps'})-[:DESCRIBED_BY]->(DevOpsHandbook:Resource:Book {name: 'DevOps Handbook', isbn: '1942788002'})-[:WRITTEN_BY]->(JezHumble)
 CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(GeneKim)
 CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(PatrickDubois:Person {name: 'Patrick Dubois'})
 CREATE (DevOpsHandbook)-[:WRITTEN_BY]->(JohnWillis:Person {name: 'John Willis'})
 
-CREATE (DevOps)-[:DESCRIBED_BY]->(PhoenixProject:Book {name: 'The Phoenix Project', isbn: '1942788290'})-[:WRITTEN_BY]->(GeneKim)
+CREATE (DevOps)-[:DESCRIBED_BY]->(PhoenixProject:Resource:Book {name: 'The Phoenix Project', isbn: '1942788290'})-[:WRITTEN_BY]->(GeneKim)
 CREATE (PhoenixProject)-[:WRITTEN_BY]->(KevinBehr:Person {name: 'Kevin Behr'})
 CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spafford'})
 
