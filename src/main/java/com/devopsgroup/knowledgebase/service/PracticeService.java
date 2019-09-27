@@ -16,6 +16,6 @@ public class PracticeService {
 
     @Transactional(readOnly = true)
     public List<Practice> findByNameLike(String name) {
-        return practiceRepository.findByNameLike(name, 2);
+        return practiceRepository.findByNameLike(name);
     }
 }

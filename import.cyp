@@ -16,7 +16,7 @@ CREATE (SoftwareTesting)-[:FOLLOWS]->(SoftwareConstruction)
 // Lean
 
 CREATE (ValueStreamMapping:Practice {name: 'Value Stream Mapping'})-[:CREATES]->(ValueStreamMap:Artifact {name: 'Value Stream Map'})
-CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
+CREATE (ValueStream:Metaphor {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
 
 // Agile
 
@@ -37,7 +37,7 @@ CREATE (Agile)-[:GUIDED_BY]->(ReflectRegularly:Principle {name: 'At regular inte
 CREATE (SoftwareTesting)-[:DESCRIBED_BY]->(AgileTesting:Resource:Book {name: 'Agile Testing', isbn: '9780321534460'})-[:WRITTEN_BY]->(LisaCrispin:Person {name: 'Lisa Crispin'})
 CREATE (AgileTesting)-[:WRITTEN_BY]->(JanetGregory:Person {name: 'Janet Gregory'})
 
-// Lean
+// Lean Software Development
 
 CREATE (Queue:Artifact {name: 'Queue'})
 CREATE (LeanSoftwareDevelopment:Framework {name: 'Lean Software Development'})-[:DESCRIBED_BY]->(LSDToolkit:Resource:Book {name: 'Lean Software Development: An Agile Toolkit', isbn: '9780133812954'})-[:WRITTEN_BY]->(MaryPoppendieck:Person {name: 'Mary Poppendieck'})
@@ -92,13 +92,14 @@ CREATE (StorySlicing:Practice {name: 'Story Slicing'})-[:IMPROVES]->(UserStories
 // Kanban
 
 // Kanban is more for system management.  Not sure how to weave it in.
+
 CREATE (Kanban:Method {name: 'Kanban'})
 CREATE (Kanban)-[:GUIDED_BY]->(FP1:Principle {name: 'Start with what you do now'})
 CREATE (Kanban)-[:GUIDED_BY]->(FP2:Principle {name: 'Agree to pursue evolutionary change'})
 CREATE (Kanban)-[:GUIDED_BY]->(FP3:Principle {name: 'Initially, respect current processes, roles, responsibilities and job titles'})
 CREATE (Kanban)-[:GUIDED_BY]->(FP4:Principle {name: 'Encourage acts of leadership at every level in your organization -- from individual contributor to senior management'})
 
-CREATE (STATIK:Activity {name: 'STATIK'})
+CREATE (STATIK:Workshop {name: 'Systems Thinking Approach To Introducing Kanban (STATIK)'})
 
 CREATE (Kanban)-[:DESCRIBED_BY]->(BlueBook:Resource:Book {name: 'Kanban', isbn: '0984521402'})-[:WRITTEN_BY]->(DavidAnderson:Person {name: 'David J. Anderson'})
 CREATE (Kanban)-[:DESCRIBED_BY]->(EssentialKanban:Resource:Book {name: 'Essential Kanban Condensed', isbn: '0984521429'})-[:WRITTEN_BY]->(DavidAnderson)
@@ -107,11 +108,15 @@ CREATE (EssentialKanban)-[:WRITTEN_BY]->(AndyCarmichael:Person {name: 'Andy Carm
 
 CREATE (Kanban)-[:DESCRIBED_BY]->(PracticalKanban:Resource:Book {name: 'Practical Kanban', isbn: '3903205001'})-[:WRITTEN_BY]->(KlausLeopold:Person {name: 'Klaus Leopold'})
 CREATE (BlockerClustering:Practice {name: 'Blocker Clustering'})-[:DESCRIBED_BY]->(PracticalKanban)
+CREATE (KanbanLens:Paradigm {name: 'Kanban Lens'})-[:DESCRIBED_BY]->(KanbanLensArticle:Link {name: 'The Kanban Lens', url: 'https://xprocess.blogspot.com/2018/02/the-kanban-lens-way-to-see.html'})-[:WRITTEN_BY]->(AndyCarmichael)
 
 CREATE (UpstreamKanban:Practice {name: 'Upstream Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban:Resource:Book {name: 'Essential Upstream Kanban', isbn: '098452147X'})-[:WRITTEN_BY]->(PatrickSteyart:Person {name: 'Patrick Steyeart'})
 CREATE (CustomerKanban:Practice {name: 'Customer Kanban'})-[:DESCRIBED_BY]->(EssentialUpstreamKanban)
+// FL2
 CREATE (UpstreamKanban)-[:SPECIALISM_OF]->(Kanban)
 CREATE (CustomerKanban)-[:SPECIALISM_OF]->(Kanban)
+CREATE (ValueStreamKanban:Practice {name: 'Value Stream Kanban'})-[:SPECIALISM_OF]->(Kanban)
+// FL3
 CREATE (PortfolioKanban:Practice {name: 'Portfolio Kanban'})-[:SPECIALISM_OF]->(Kanban)
 CREATE (PersonalKanban:Practice {name: 'Personal Kanban'})-[:SPECIALISM_OF]->(Kanban)
 CREATE (PersonalKanban)-[:DESCRIBED_BY]->(PersonalKanbanBook:Resource:Book {name: 'Personal Kanban', isbn: '1453802266'})-[:WRITTEN_BY]->(JimBenson:Person {name: 'Jim Benson'})
@@ -120,10 +125,11 @@ CREATE (TeamKanban:Practice {name: 'Team Kanban'})-[:SPECIALISM_OF]->(Kanban)
 
 CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Resource:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
 
-CREATE (FlightLevels:Practice {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Resource:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
+// Flight Levels
+CREATE (FlightLevels:Model {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Resource:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
 CREATE (FlightLevels)-[:DESCRIBED_BY]->(PracticalKanban)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel3:Practice {name: 'Flight Level 3'})-[:ALSO_KNOWN_AS]->(PortfolioKanban)
-CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStream)
+CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStreamKanban)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel1:Practice {name: 'Flight Level 1'})-[:ALSO_KNOWN_AS]->(TeamKanban)
 
 CREATE (FoldingPaperShips:Activity {name: 'Folding Paper Ships'})-[:DEMONSTRATES]->(Kanban)
@@ -149,11 +155,7 @@ CREATE (StorySlicing)-[:ALSO_KNOWN_AS]->(RightSizing)
 CREATE (ClassesOfService:Practice {name: 'Classes of Service'})
 CREATE (ClassesOfService)-[:DESCRIBED_BY]->(ActionableAgile)
 CREATE (MonteCarlo:Practice {name: 'Monte Carlo Simulation'})-[:DESCRIBED_BY]->(ActionableAgile)
-
-
 CREATE (MakingWorkVisible:Resource:Book {name: 'Making Work Visible', isbn: '1942788150'})-[:WRITTEN_BY]->(DomincaDeGrandis:Person {name: 'Dominica DeGrandis'})
-
-
 
 // Kanban Core Practices
 
@@ -166,18 +168,24 @@ CREATE (PullPolicies:Practice {name: 'Pull Policies'})-[:SPECIALISM_OF]->(Explic
 CREATE (FeedbackLoops:Practice {name: 'Implement Feedback Loops', code: 'FL'})-[:PRACTICE_OF]->(Kanban)
 CREATE (ImproveCollaboratively:Practice {name: 'Improve Collaboratively, Evolve Experimentally', code: 'IE'})-[:PRACTICE_OF]->(Kanban)
 
-// Kanban Cadences
+// 7 Kanban Cadences
 
+// FL3
 CREATE (StrategyReview:Event {name: 'Strategy Review'})-[:MEETING_OF]->(Kanban)
+
+// FL2
 CREATE (OperationsReview:Event {name: 'Operations Review'})-[:MEETING_OF]->(Kanban)
-CREATE (OperationsReview)-[:RELATED_TO]->(ValueStream)
+
+// FL1
 CREATE (RiskReview:Event {name: 'Risk Review'})-[:MEETING_OF]->(Kanban)
 CREATE (ServiceDeliveryReview:Event {name: 'Service Delivery Review'})-[:MEETING_OF]->(Kanban)
 CREATE (ReplenishmentMeeting:Event {name: 'Replenishment/Commitment Meeting'})-[:MEETING_OF]->(Kanban)
 CREATE (KanbanDailyStandUp:Event {name: 'Daily Standup'})-[:MEETING_OF]->(Kanban)
-CREATE (KanbanDailyStandUp)-[:ALSO_KNOWN_AS]->(XPDailyStandUp)
-CREATE (WalkingTheBoard:Practice {name: 'Walking the Board'})-[:PRACTICE_OF]->(KanbanDailyStandUp)
 CREATE (DeliveryPlanning:Event {name: 'Delivery Planning Meeting'})-[:MEETING_OF]->(Kanban)
+
+CREATE (WalkingTheBoard:Practice {name: 'Walking the Board'})-[:PRACTICE_OF]->(KanbanDailyStandUp)
+CREATE (KanbanDailyStandUp)-[:ALSO_KNOWN_AS]->(XPDailyStandUp)
+CREATE (OperationsReview)-[:RELATED_TO]->(ValueStream)
 
 // Kanban Maturity Model
 
@@ -826,7 +834,7 @@ CREATE (MoSCoW:Practice {name: 'MoSCoW'})-[:PRACTICE_OF]->(DSDM)
 CREATE (INVEST:Practice {name: 'INVEST'})-[:IMPROVES]->(UserStories)
 CREATE (StoryMapping:Practice {name: 'Story Mapping'})-[:DESCRIBED_BY]->(StoryMappingBook:Resource:Book {name: 'Story Mapping', isbn: '1491904909'})-[:WRITTEN_BY]->(JeffPatton:Person {name: 'Jeff Patton'})
 CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ImpactMapping:Practice {name: 'Impact Mapping'})
-CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingResource:Resource:Book {name: 'Impact Mapping', isbn: '0955683645'})<-[:DESCRIBED_BY]-(ImpactMapping)
+CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBook:Resource:Book {name: 'Impact Mapping', isbn: '0955683645'})<-[:DESCRIBED_BY]-(ImpactMapping)
 
 // Test Automation
 
@@ -846,7 +854,6 @@ CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBo
 
 CREATE (UITesting:Practice {name: 'UI Testing'})-[:SPECIALISM_OF]->(SoftwareTesting)
 CREATE (COP:Practice {name: 'Communities of Practice'})
-CREATE (ProductTeams:Pattern {name: 'Product Teams'})-[:SPECIALISM_OF]->(ValueStream)
 CREATE (PageObject:Pattern {name: 'Page Objects'})-[:IMPROVES]->(UITesting)
 CREATE (ContractTesting:Practice {name: 'Contract Testing'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (MutationTesting:Practice {name: 'Mutation Testing'})-[:SPECIALISM_OF]->(UnitTesting)
@@ -917,15 +924,33 @@ CREATE (DevOps)-[:DESCRIBED_BY]->(PhoenixProject:Resource:Book {name: 'The Phoen
 CREATE (PhoenixProject)-[:WRITTEN_BY]->(KevinBehr:Person {name: 'Kevin Behr'})
 CREATE (PhoenixProject)-[:WRITTEN_BY]->(GeorgeSpafford:Person {name: 'George Spafford'})
 
-// SRE
+// SRE is an opinionated implementation of DevOps
 
 CREATE (SRE:Method {name: 'Site Reliability Engineering'})<-[:PRACTICE_OF]-(ErrorBudgets:Practice {name: 'Error Budgets'})
 CREATE (DevOps)-[:IMPLEMENTED_BY]->(SRE)
-
 CREATE (SoftwareConstruction)-[:IMPLEMENTED_BY]->(Mobbing:Practice {name: 'Mob Programming'})
+
 
 CREATE (CanaryTesting:Pattern {name: 'Canary Testing'})-[:PRACTICE_OF]->(SoftwareTesting)
 CREATE (DarkLaunching:Pattern {name: 'Dark Launching'})-[:PRACTICE_OF]->(SoftwareDelivery)
 CREATE (BlueGreenDeployment:Pattern {name: 'Blue Green Deployment'})-[:PRACTICE_OF]->(SoftwareDelivery)
 
 CREATE (System:Paradigm {name: 'System'})
+
+CREATE (StrategyDeployment:Practice {name: 'Strategy Deployment'})-[:ALSO_KNOWN_AS]->(HoshinKanri:Practice {name: 'Hoshin Kanri'})
+CREATE (ImpactMapping)-[:USEFUL_TO]->(StrategyDeployment)
+CREATE (A3Thinking:Practice {name: 'A3 Thinking'})
+CREATE (OKRs:Practice {name: 'Objectives and Key Results'})
+
+CREATE (TShaped:Model {name: 'T-Shaped People'})-[:ALSO_KNOWN_AS]->(GeneralisingSpecialists:Model {name: 'Generalising Specialists'})
+CREATE (SkillsLiquidity:Concept {name: 'Skills Liquidity'})
+
+CREATE (ProductTeams:Model {name: 'Product Teams'})-[:SPECIALISM_OF]->(ValueStream)
+CREATE (CrossFunctionalTeams:Model {name: 'Cross-Functional Teams'})
+CREATE (ComponentTeams:Model {name: 'Component Teams'})
+
+CREATE (KnowledgeDiscoveryProcess:Metaphor {name: 'Knowledge Discovery Process'}) // Alexei Zheglov
+CREATE (WardleyMaps:Model {name: 'Wardley Maps'})
+CREATE (Cynefin:Framework {name: 'Cynefin'})
+
+CREATE (KanoModel:Model {name: 'Kano Model'})
