@@ -1,6 +1,7 @@
 package com.devopsgroup.knowledgebase;
 
 import com.devopsgroup.knowledgebase.domain.Practice;
+import com.devopsgroup.knowledgebase.repository.InMemoryPracticeRepository;
 import com.devopsgroup.knowledgebase.service.PracticeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = {InMemoryPracticeRepository.class, PracticeService.class})
 public class KnowledgeBaseApplicationTests {
 	@Autowired
 	private PracticeService practiceService;

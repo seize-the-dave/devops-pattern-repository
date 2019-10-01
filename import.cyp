@@ -128,6 +128,8 @@ CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBo
 // Flight Levels
 CREATE (FlightLevels:Model {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Resource:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
 CREATE (FlightLevels)-[:DESCRIBED_BY]->(PracticalKanban)
+CREATE (FlightLevels)-[:CREATED_BY]->(ValueStreamMapping)
+CREATE (FlightLevels)-[:CREATED_BY]->(STATIK)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel3:Practice {name: 'Flight Level 3'})-[:ALSO_KNOWN_AS]->(PortfolioKanban)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStreamKanban)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel1:Practice {name: 'Flight Level 1'})-[:ALSO_KNOWN_AS]->(TeamKanban)
@@ -954,3 +956,6 @@ CREATE (WardleyMaps:Model {name: 'Wardley Maps'})
 CREATE (Cynefin:Framework {name: 'Cynefin'})
 
 CREATE (KanoModel:Model {name: 'Kano Model'})
+
+CREATE (Workflow:Concept {name: 'Workflow'})
+CREATE (EventStorming:Practice {name: 'Event Storm'})-[:CREATES]->(Workflow)
