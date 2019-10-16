@@ -1,27 +1,43 @@
+// This model describes processes, models and practices.  Processes are usually abstract and depending on size, will be modelled.  Models often contain practices.
+// Complex processes are composed of subprocesses (Process)<-[:PART_OF]-(Process)
+
+// Everything is a workflow
+CREATE (Workflow:Process {name: 'Workflow'})
+
+// We're really looking at new product development to start with...
+CREATE (ProductDevelopment:Process {name: 'Product Development'})-[:SPECIALISM_OF]->(Workflow)
+
 // This is the root of our model.  We care about software development, delivery and operations
-CREATE (SoftwareDevelopment:Process {name: 'Software Development'})
-CREATE (SoftwareDelivery:Process {name: 'Software Delivery'})-[:FOLLOWS]->(SoftwareDevelopment)
-CREATE (Operations:Process {name: 'IT Operations'})-[:FOLLOWS]->(SoftwareDelivery)
-CREATE (SoftwareEngineering:Process {name: 'Software Engineering'})-[:APPLICATION_OF]->(SoftwareDevelopment)
+CREATE (SoftwareDevelopment:Process {name: 'Software Development'})-[:SPECIALISM_OF]->(ProductDevelopment)
 
 // Processes have inputs and outputs
-CREATE (SoftwareRequirements:Process {name: 'Software Requirements'})-[:PART_OF]->(SoftwareEngineering)
-CREATE (SoftwareDesign:Process {name: 'Software Design'})-[:PART_OF]->(SoftwareEngineering)
-CREATE (SoftwareDesign)-[:FOLLOWS]->(SoftwareRequirements)
-CREATE (SoftwareConstruction:Process {name: 'Software Construction'})-[:PART_OF]->(SoftwareEngineering)
-CREATE (SoftwareConstruction)-[:FOLLOWS]->(SoftwareDesign)
-CREATE (SoftwareTesting:Process {name: 'Software Testing'})-[:PART_OF]->(SoftwareEngineering)
-CREATE (SoftwareTesting)-[:FOLLOWS]->(SoftwareConstruction)
+CREATE (SoftwareRequirementsAnalysis:Process {name: 'Software Requirements'})-[:PART_OF]->(SoftwareDevelopment)
+CREATE (SoftwareDesign:Process {name: 'Software Design'})-[:PART_OF]->(SoftwareDevelopment)
+CREATE (SoftwareConstruction:Process {name: 'Software Construction'})-[:PART_OF]->(SoftwareDevelopment)
+CREATE (SoftwareTesting:Process {name: 'Software Testing'})-[:PART_OF]->(SoftwareDevelopment)
 
-// Lean
+// Subprocesses are linked together through artifacts
+CREATE (SoftwareRequirementsAnalysis)-[:PRODUCES]->(SoftwareRequirements:Artifact {name: 'Software Requirements'})
+CREATE (SoftwareRequirements)<-[:CONSUMES]-(SoftwareDesign)-[:PRODUCES]->(Specification:Artifact {name: 'Specification'})
+CREATE (Specification)<-[:CONSUMES]-(SoftwareConstruction)-[:PRODUCES]->(Software:Artifact {name: 'Software'})
+CREATE (Software)<-[:CONSUMES]-(SoftwareTesting) // Produces confidence in the artifact
 
-CREATE (ValueStreamMapping:Practice {name: 'Value Stream Mapping'})-[:CREATES]->(ValueStreamMap:Artifact {name: 'Value Stream Map'})
-CREATE (ValueStream:Metaphor {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
+
+CREATE (SoftwareDelivery:Process {name: 'Software Delivery'})-[:FOLLOWS]->(SoftwareDevelopment)
+CREATE (Operations:Process {name: 'IT Operations'})-[:FOLLOWS]->(SoftwareDelivery)
+// CREATE (SoftwareEngineering:Process {name: 'Software Engineering'})-[:APPLICATION_OF]->(SoftwareDevelopment)
+
+// A value stream is a way of describing a workflow, but completely end-to-end (concept to cash)
+// Wikipedia disagrees here...
+CREATE (ValueStreamMapping:Process {name: 'Value Stream Mapping'})-[:PRODUCES]->(ValueStreamMap:Artifact {name: 'Value Stream Map'})
+CREATE (ValueStream:Model {name: 'Value Stream'})-[:DESCRIBED_BY]->(ValueStreamMap)
+CREATE (ValueStream)-[:MODELS]->(Workflow)
 
 // Agile
 
-CREATE (Agile:Model {name: 'Agile Software Development'})<-[:IMPLEMENTED_BY]-(SoftwareDevelopment)
-CREATE (SoftwareDevelopment)-[:IMPLEMENTED_BY]->(Agile)
+CREATE (Agile:Model {name: 'Agile Software Development'})<-[:MODELS]-(SoftwareDevelopment)
+// OK, so Agile models Software Development, how are the subprocesses of software development modelled _within_ agile?
+
 CREATE (Agile)-[:GUIDED_BY]->(SatisfyCustomer:Principle {name: 'Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.'})
 CREATE (Agile)-[:GUIDED_BY]->(LateChangingRequirements:Principle {name: 'Welcome changing requirements, even late in development. Agile processes harness change for the customer\'s competitive advantage'})
 CREATE (Agile)-[:GUIDED_BY]->(DeliverFrequently:Principle {name: 'Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.'})
@@ -39,7 +55,7 @@ CREATE (AgileTesting)-[:WRITTEN_BY]->(JanetGregory:Person {name: 'Janet Gregory'
 
 // Lean Software Development
 
-CREATE (Queue:Artifact {name: 'Queue'})
+CREATE (Queue:Model {name: 'Queue'})
 CREATE (LeanSoftwareDevelopment:Framework {name: 'Lean Software Development'})-[:DESCRIBED_BY]->(LSDToolkit:Resource:Book {name: 'Lean Software Development: An Agile Toolkit', isbn: '9780133812954'})-[:WRITTEN_BY]->(MaryPoppendieck:Person {name: 'Mary Poppendieck'})
 CREATE (LSDToolkit)-[:WRITTEN_BY]->(TomPoppendieck:Person {name: 'Tom Poppendieck'})
 CREATE (Agile)-[:IMPLEMENTED_BY]->(LeanSoftwareDevelopment)
@@ -124,12 +140,14 @@ CREATE (PersonalKanbanBook)-[:WRITTEN_BY]->(TonianneDeMariaBarry:Person {name: '
 CREATE (TeamKanban:Practice {name: 'Team Kanban'})-[:SPECIALISM_OF]->(Kanban)
 
 CREATE (Agendashift:Model {name: 'Agendashift'})-[:DESCRIBED_BY]->(AgendashiftBook:Resource:Book {name: 'Agendashift'})-[:WRITTEN_BY]->(MikeBurrows)
+CREATE (Agendashift)-[:MODELS]->(Change)
 
-// Flight Levels
-CREATE (FlightLevels:Model {name: 'Kanban Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Resource:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
+// Flight Levels describes how work cascades through an organisation
+CREATE (FlightLevels:Model {name: 'Flight Levels'})-[:DESCRIBED_BY]->(RethinkingAgile:Resource:Book {name: 'Rethinking Agile'})-[:WRITTEN_BY]->(KlausLeopold)
 CREATE (FlightLevels)-[:DESCRIBED_BY]->(PracticalKanban)
 CREATE (FlightLevels)-[:CREATED_BY]->(ValueStreamMapping)
 CREATE (FlightLevels)-[:CREATED_BY]->(STATIK)
+CREATE (FlightLevels)-[:MODELS]->(Workflow)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel3:Practice {name: 'Flight Level 3'})-[:ALSO_KNOWN_AS]->(PortfolioKanban)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel2:Practice {name: 'Flight Level 2'})-[:ALSO_KNOWN_AS]->(ValueStreamKanban)
 CREATE (FlightLevels)<-[:SPECIALISM_OF]-(FlightLevel1:Practice {name: 'Flight Level 1'})-[:ALSO_KNOWN_AS]->(TeamKanban)
@@ -191,7 +209,7 @@ CREATE (OperationsReview)-[:RELATED_TO]->(ValueStream)
 
 // Kanban Maturity Model
 
-CREATE (KMM:Model {name: 'Kanban Maturity Model'})
+CREATE (KMM:Model {name: 'Kanban Maturity Model'})-[:MODELS]->(Kanban)
 CREATE (KMM)-[:MEASUREMENT_OF]->(Kanban)
 CREATE (KMM)-[:DESCRIBED_BY]->(KMMBook:Resource:Book {name: 'Kanban Maturity Model', isbn: '0985305150'})-[:WRITTEN_BY]->(DavidAnderson)
 CREATE (KMMBook)-[:WRITTEN_BY]->(TeodoraBozheva:Person {name: 'Teodora Bozheva'})
@@ -416,9 +434,9 @@ CREATE (KMM)<-[:PRACTICE_OF]-(IE4_3:Practice {name: 'Identify bottlenecks.', cod
 CREATE (IE4_3)-[:RELATED_TO]->(TheoryOfConstraints:Method {name: 'Theory of Constraints'})-[:DESCRIBED_BY]->(TheGoal:Resource:Book {name: 'The Goal', isbn: '9780884271956'})-[:WRITTEN_BY]->(EliGoldratt:Person {name: 'Eli Goldratt'})
 CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(RollingRocksDownhill:Resource:Book {name: 'Rolling Rocks Downhill', isbn: '1505446511'})-[:WRITTEN_BY]->(ClarkeChing:Person {name: 'Clark Ching'})
 CREATE (TheoryOfConstraints)-[:DESCRIBED_BY]->(TheBottleneckRules:Resource:Book {name: 'The Bottleneck Rules', isbn: '1983022691'})-[:WRITTEN_BY]->(ClarkeChing)
-CREATE (FiveFocusingSteps:Practice {name: 'Five Focusing Steps'})-[:PRACTICE_OF]->(TheoryOfConstraints)
-CREATE (ThinkingProcesses:Practice {name: 'Thinking Processes'})-[:PRACTICE_OF]->(TheoryOfConstraints)
-CREATE (ThroughputAccounting:Practice {name: 'Throughput Accounting'})-[:PRACTICE_OF]->(TheoryOfConstraints)
+CREATE (FiveFocusingSteps:Process {name: 'Five Focusing Steps'})-[:PRACTICE_OF]->(TheoryOfConstraints)
+CREATE (ThinkingProcesses:Process {name: 'Thinking Processes'})-[:PRACTICE_OF]->(TheoryOfConstraints)
+CREATE (ThroughputAccounting:Process {name: 'Throughput Accounting'})-[:PRACTICE_OF]->(TheoryOfConstraints)
 CREATE (KMM)<-[:PRACTICE_OF]-(IE4_4:Practice {name: 'Identify transaction and coordination costs.', code: 'IE4.4', level: 'ML4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
 // ML 4 Consolidation
 CREATE (KMM)<-[:PRACTICE_OF]-(IE4_5:Practice {name: 'Exploit, subordinate to and elevate bottlenecks.', code: 'IE4.5', level: 'ML4'})-[:SPECIALISM_OF]->(ImproveCollaboratively)
@@ -430,7 +448,7 @@ CREATE (KMM)<-[:PRACTICE_OF]-(IE4_6:Practice {name: 'Develop quantitative unders
 CREATE (ContinuousDeliveryBook:Resource:Book {name: 'Continuous Delivery', isbn: '9780321601919'})
 CREATE (JezHumble:Person {name: 'Jez Humble'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
 CREATE (DavidFarley:Person {name: 'David Farley'})<-[:WRITTEN_BY]-(ContinuousDeliveryBook)
-CREATE (ContinuousDelivery:Practice {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
+CREATE (ContinuousDelivery:Process {name: 'Continuous Delivery'})-[:DESCRIBED_BY]->(ContinuousDeliveryBook)
 
 CREATE (ContinuousDelivery)-[:IMPLEMENTS]->(SoftwareDelivery)
 CREATE (ContinuousDelivery)-[:GUIDED_BY]->(BuildQualityIn:Principle {name: 'Build Quality In'})
@@ -503,7 +521,7 @@ CREATE (MakeWorkVisible:Practice {name: 'Make Flow of Work Visible'})
 CREATE (GatherCustomerFeedback:Practice {name: 'Gather & Implement Customer Feedback'})
 CREATE (TeamExperimentation:Practice {name: 'Team Experimentation'})
 
-CREATE (LeanProductDevelopment:Model {name: 'Lean Product Development'})
+CREATE (LeanProductDevelopment:Model {name: 'Lean Product Development'})-[:MODELS]->(ProductDevelopment)
 CREATE (FlowBook:Resource:Book {name: 'The Principles of Product Development Flow'})<-[:WRITTEN_BY]-(DonReinertsen:Person {name: 'Don Reinertsen'})
 CREATE (LeanProductDevelopment)-[:DESCRIBED_BY]->(FlowBook)
 
@@ -718,6 +736,7 @@ CREATE (TestAutomation:Practice {name: 'Test Automation'})-[:IMPACTS]->(Continuo
 CREATE (TestDataManagement:Practice {name: 'Test Data Management'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (ShiftLeft:Practice {name: 'Shift Left on Security'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (LooselyCoupledArch:Practice {name: 'Loosely Coupled Architecture'})-[:IMPACTS]->(ContinuousDelivery)
+CREATE (LooselyCoupledArch)-[:IMPLEMENTS]->(SoftwareDesign)
 CREATE (EmpoweredTeams:Practice {name: 'Empowered Teams'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (Monitoring:Practice {name: 'Monitoring'})-[:IMPACTS]->(ContinuousDelivery)
 CREATE (ProactiveNotification:Practice {name: 'Proactive Notification'})-[:IMPACTS]->(ContinuousDelivery)
@@ -762,6 +781,7 @@ CREATE (SprintReview)-[:FACILITATED_BY]->(ScrumMaster)
 
 // Artifacts
 CREATE (Increment:Artifact {name: 'Increment'})-[:ARTIFACT_OF]->(Scrum)
+CREATE (Increment)-[:ALSO_KNOWN_AS]->(Software)
 CREATE (ProductBacklog:Artifact {name: 'Product Backlog'})-[:ARTIFACT_OF]->(Scrum)
 CREATE (ProductBacklog)-[:SPECIALISM_OF]->(Queue)
 CREATE (SprintBacklog:Artifact {name: 'Sprint Backlog'})-[:Artifact_OF]->(Scrum)
@@ -835,7 +855,8 @@ CREATE (MoSCoW:Practice {name: 'MoSCoW'})-[:PRACTICE_OF]->(DSDM)
 
 CREATE (INVEST:Practice {name: 'INVEST'})-[:IMPROVES]->(UserStories)
 CREATE (StoryMapping:Practice {name: 'Story Mapping'})-[:DESCRIBED_BY]->(StoryMappingBook:Resource:Book {name: 'Story Mapping', isbn: '1491904909'})-[:WRITTEN_BY]->(JeffPatton:Person {name: 'Jeff Patton'})
-CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ImpactMapping:Practice {name: 'Impact Mapping'})
+CREATE (SoftwareRequirementsAnalysis)-[:IMPLEMENTED_BY]->(StoryMapping)
+CREATE (SoftwareRequirementsAnalysis)-[:IMPLEMENTED_BY]->(ImpactMapping:Practice {name: 'Impact Mapping'})
 CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBook:Resource:Book {name: 'Impact Mapping', isbn: '0955683645'})<-[:DESCRIBED_BY]-(ImpactMapping)
 
 // Test Automation
@@ -843,6 +864,7 @@ CREATE (GojkoAdzic:Person {name: 'Gojko Adzic'})<-[:WRITTEN_BY]-(ImpactMappingBo
 CREATE (TestQuadrants:Model {name: 'Test Quadrants'})-[:MODELS]->(SoftwareTesting) // http://www.exampler.com/old-blog/2003/08/22/#agile-testing-project-2 by Brian Marick
 CREATE (TestPyramid:Model {name: 'Test Pyramid'})-[:MODELS]->(TestAutomation) // https://martinfowler.com/articles/practical-test-pyramid.html
 CREATE (DeveloperTesting:Practice {name: 'Developer Testing'})-[:SPECIALISM_OF]->(TestAutomation)
+CREATE (DeveloperTesting)-[:PRACTICE_OF]->(SoftwareConstruction)
 CREATE (SoftwareTesting)-[:IMPLEMENTED_BY]->(DeveloperTesting)
 CREATE (BDD:Practice {name: 'Behaviour-Driven Development (BDD)'})-[:SPECIALISM_OF]->(TestAutomation)
 CREATE (BDD)-[:DESCRIBED_BY]->(IntroducingBDD:Resource:Link {name: 'Introducing BDD', url: 'https://dannorth.net/introducing-bdd/'})
@@ -851,8 +873,10 @@ CREATE (UnitTesting:Practice {name: 'Unit Testing'})-[:SPECIALISM_OF]->(TestAuto
 CREATE (UnitTesting)-[:SPECIALISM_OF]->(DeveloperTesting)
 CREATE (StaticCodeAnalysis:Practice {name: 'Static Code Analysis'})-[:PRACTICE_OF]->(SoftwareDelivery)
 CREATE (CodeCoverage:Measure {name: 'Code Coverage'})-[:MEASUREMENT_OF]->(UnitTesting)
-CREATE (SoftwareRequirements)-[:IMPLEMENTED_BY]->(ThreeAmigos:Practice {name: '3 Amigos'})
+CREATE (SoftwareRequirementsAnalysis)-[:IMPLEMENTED_BY]->(ThreeAmigos:Practice {name: '3 Amigos'})
 CREATE (SBE:Practice {name: 'Specification by Example'})-[:DESCRIBED_BY]->(SBEBook:Resource:Book {name: 'Specification by Example', isbn: '9781617290084'})<-[:WRITTEN_BY]-(GojkoAdzic)
+CREATE (SBE)<-[:PATTERN_OF]-(DerivingScopeFromGoals:Pattern {name: 'Deriving Scope from Goals'})-[:ALSO_KNOWN_AS]->(ImpactMapping)
+
 
 CREATE (UITesting:Practice {name: 'UI Testing'})-[:SPECIALISM_OF]->(SoftwareTesting)
 CREATE (COP:Practice {name: 'Communities of Practice'})
@@ -868,7 +892,7 @@ CREATE (CodeReview:Practice {name: 'Code Review'})-[:PRACTICE_OF]->(SoftwareCons
 
 CREATE (DDD:Method {name: 'Domain-Driven Design'})-[:DESCRIBED_BY]->(DDDBook:Resource:Book {name: 'Domain-Driven Design', isbn: '0321125215'})-[:WRITTEN_BY]->(EricEvans:Person {name: 'Eric Evans'})
 CREATE (SoftwareDesign)-[:IMPLEMENTED_BY]->(DDD)
-CREATE (BDD)-[:SPECIALISM_OF]->(SoftwareDesign)
+CREATE (BDD)-[:SPECIALISM_OF]->(SoftwareDesign) // and construction, and testing!
 CREATE (TestDrivenDevelopment)-[:SPECIALISM_OF]->(SoftwareDesign)
 CREATE (UbiquitousLanguage:Pattern {name: 'Ubiquitous Language'})-[:PATTERN_OF]->(DDD)
 CREATE (BoundedContext:Pattern {name: 'Bounded Context'})-[:PATTERN_OF]->(DDD)
@@ -947,15 +971,27 @@ CREATE (OKRs:Practice {name: 'Objectives and Key Results'})
 CREATE (TShaped:Model {name: 'T-Shaped People'})-[:ALSO_KNOWN_AS]->(GeneralisingSpecialists:Model {name: 'Generalising Specialists'})
 CREATE (SkillsLiquidity:Concept {name: 'Skills Liquidity'})
 
-CREATE (ProductTeams:Model {name: 'Product Teams'})-[:SPECIALISM_OF]->(ValueStream)
-CREATE (CrossFunctionalTeams:Model {name: 'Cross-Functional Teams'})
-CREATE (ComponentTeams:Model {name: 'Component Teams'})
+CREATE (Team:Construct {name: 'Team'})
+CREATE (ProductTeams:Model {name: 'Product Teams'})-[:MODELS]->(Team)
+CREATE (CrossFunctionalTeams:Model {name: 'Cross-Functional Teams'})-[:MODELS]->(Team)
+CREATE (ComponentTeams:Model {name: 'Component Teams'})-[:MODELS]->(Team)
 
-CREATE (KnowledgeDiscoveryProcess:Metaphor {name: 'Knowledge Discovery Process'}) // Alexei Zheglov
+CREATE (KnowledgeDiscoveryProcess:Process {name: 'Knowledge Discovery Process'}) // Alexei Zheglov
 CREATE (WardleyMaps:Model {name: 'Wardley Maps'})
 CREATE (Cynefin:Framework {name: 'Cynefin'})
 
-CREATE (KanoModel:Model {name: 'Kano Model'})
+// Product Management
+CREATE (KanoModel:Model {name: 'Kano Model'})-[:MODELS]->(ProductDevelopment)
 
-CREATE (Workflow:Concept {name: 'Workflow'})
 CREATE (EventStorming:Practice {name: 'Event Storm'})-[:CREATES]->(Workflow)
+
+CREATE (ValuePropositionDesign:Book {name: 'Value Proposition Design'})
+
+CREATE (RoundEarthTestStrategy:Model {name: 'Round Earth Test Strategy'})-[:DESCRIBED_BY]->(RETS:Resource:Link {name: 'Round Earth Test Strategy', url: 'https://www.satisfice.com/blog/archives/4947'})
+// Quality above requires quality below.
+// Quality above reduces dependence on expensive high-level testing.
+// Inexpensive low-level testing reduces dependence on expensive high-level testing.
+// Risk grows toward the user.
+
+// 
+CREATE (SquadHealthCheckModel:Model {name: 'Squad Health Check Model'})-[:DESCRIBED_BY]-(HealthCheckLink:Link {name: 'Spotify Squad Health Check', url: 'https://labs.spotify.com/2014/09/16/squad-health-check-model/'})
